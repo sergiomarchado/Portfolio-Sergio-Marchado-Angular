@@ -1,0 +1,160 @@
+.about-quad {
+    padding: 100px 20px;
+    max-width: 1300px;
+    /* sube a 1400 si quieres más ancho */
+    margin: 0 auto;
+    color: #e5eef8;
+    background: transparent;
+}
+
+.about-quad h2 {
+    font-size: 2.6rem;
+    text-align: center;
+    margin: 0 0 36px;
+    color: #fff;
+}
+
+/* GRID 2x2 */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "photo intro"
+        "details highlight";
+    gap: 40px;
+    align-items: start;
+}
+
+/* 1) Foto */
+.about-photo {
+    grid-area: photo;
+    margin: 0;
+    display: grid;
+    place-items: center;
+}
+
+.about-photo img {
+    width: 100%;
+    max-width: 420px;
+    /* tamaño tope de la foto */
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 6px solid #3b82f6;
+    /* aro azul */
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.about-photo img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 28px 90px rgba(0, 0, 0, 0.45);
+}
+
+/* 2) Bloques de texto */
+.about-block {
+    line-height: 1.8;
+    font-size: 1.06rem;
+}
+
+.about-block p {
+    margin: 0 0 14px;
+}
+
+.intro {
+    grid-area: intro;
+}
+
+.details {
+    grid-area: details;
+}
+
+/* Rail/acento animado sutil (sin “card”) */
+.has-rail {
+    position: relative;
+    padding-left: 16px;
+}
+
+.has-rail::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    bottom: 4px;
+    width: 3px;
+    background: linear-gradient(180deg, #3b82f6, rgba(59, 130, 246, 0.0));
+    opacity: .8;
+    transform: translateY(-6px);
+    animation: railFade 2.4s ease-in-out infinite alternate;
+    border-radius: 2px;
+}
+
+@keyframes railFade {
+    0% {
+        opacity: .35;
+        filter: blur(0px);
+    }
+
+    100% {
+        opacity: .9;
+        filter: blur(0.5px);
+    }
+}
+
+/* 4) Highlight + CTA (sin caja) */
+.about-highlight {
+    grid-area: highlight;
+    align-self: center;
+    font-size: 1.08rem;
+    line-height: 1.85;
+    padding-left: 18px;
+    border-left: 4px solid #3b82f6;
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.10), rgba(59, 130, 246, 0));
+    border-radius: 8px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+
+.about-highlight p {
+    margin: 0 0 14px;
+    font-size: 1.2rem;
+    font-style: italic;
+}
+
+/* Botón ya existente en tu proyecto */
+.btn {
+    display: inline-block;
+    margin-top: 6px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 980px) {
+    .about-grid {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "photo"
+            "intro"
+            "details"
+            "highlight";
+        gap: 28px;
+    }
+
+    .about-photo img {
+        max-width: 360px;
+    }
+
+    .about-quad h2 {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 420px) {
+    .about-photo img {
+        max-width: 300px;
+        border-width: 5px;
+    }
+
+    .about-quad {
+        padding: 80px 16px;
+    }
+}

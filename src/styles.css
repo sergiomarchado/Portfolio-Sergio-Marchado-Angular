@@ -1,1 +1,84 @@
-/* You can add global styles to this file, and also import other style files */
+/* ========== RESETEO GLOBAL Y FIX DE SCROLL ========== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    background: linear-gradient(135deg, #0f172a 0%, #005dbb 100%);
+    background-attachment: fixed;
+    scroll-behavior: smooth;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background: transparent;
+    color: #f1f5f9;
+}
+
+section {
+    padding: 4rem 1rem;
+}
+
+
+/* ========== TIPOGRAFÍA GLOBAL ========== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* ========== ENLACES GENERALES ========== */
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+/* ========== BOTONES GLOBALES ========== */
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+/* ========== IMÁGENES ========== */
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* ========== SCROLLBAR PERSONALIZADO ========== */
+/* Personalización de la barra de desplazamiento para navegadores basados en WebKit */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #334155;
+    border-radius: 4px;
+}

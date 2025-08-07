@@ -1,0 +1,359 @@
+/* ========== GLOBAL RESET ========== */
+html,
+body {
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.content-wrapper {
+    background: linear-gradient(to bottom right,
+            #010d1f 0%,
+            #031a3f 25%,
+            #02375a 60%,
+            #0e4c75 85%,
+            #1d84d8 100%);
+    position: relative;
+    z-index: 1;
+    padding-bottom: 4rem;
+}
+
+/* ========== NAVBAR SCROLL FIX ========== */
+.navbar.scrolled {
+    background-color: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ========== HERO SECTION ========== */
+.hero-video {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: transparent;
+    z-index: 0;
+}
+
+/* 🎥 Overlay oscuro sobre el vídeo */
+.hero-video::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.5);
+    z-index: -1;
+}
+
+.bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    z-index: -2;
+    background-color: #0f172a;
+    transition: transform 0.3s ease, object-position 0.3s ease;
+}
+
+.hero-text {
+    z-index: 1;
+    padding: 0 20px;
+    color: white;
+}
+
+.hero-text h1 {
+    font-size: 3rem;
+}
+
+.hero-text h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #94a3b8;
+}
+
+.hero-text .badge {
+    background: #3b82f6;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.cta-buttons {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* ========== BUTTONS ========== */
+.btn {
+    background: #3b82f6;
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: #2563eb;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid #3b82f6;
+    color: #3b82f6;
+}
+
+.btn-outline:hover {
+    background: #3b82f6;
+    color: white;
+}
+
+/* ========== SCROLL ICON ========== */
+.scroll-down {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    color: white;
+    animation: bounce 2s infinite, fadeIn 1s ease-in-out 1.5s forwards;
+    opacity: 0;
+    z-index: 1;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translate(-50%, 0);
+    }
+
+    50% {
+        transform: translate(-50%, 8px);
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* ========== SECTIONS ========== */
+section:not(.hero-video) {
+    padding: 80px 20px;
+    max-width: 1100px;
+    margin: auto;
+    text-align: center;
+}
+
+.featured-projects .projects-grid {
+    display: grid;
+    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    margin-top: 40px;
+}
+
+.project-card {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+}
+
+.project-card img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+    .hero-text h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-text h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-video {
+        aspect-ratio: auto;
+        min-height: 100svh;
+    }
+
+    .hero-text {
+        padding: 0 20px;
+    }
+
+    .hero-text h1 {
+        font-size: 2rem;
+    }
+
+    .hero-text h2 {
+        font-size: 1.2rem;
+    }
+
+    .bg-video {
+        object-position: center top;
+        transform: scale(1.05);
+        transform-origin: center top;
+    }
+}
+
+@media (max-width: 480px) {
+    .bg-video {
+        transform: scale(1.15);
+    }
+
+    .hero-text h1 {
+        font-size: 1.6rem;
+    }
+
+    .hero-text h2 {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .bg-video {
+        transform: scale(1.25);
+        object-position: center top;
+    }
+
+    .hero-text h1 {
+        font-size: 1.4rem;
+    }
+
+    .hero-text h2 {
+        font-size: 0.9rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn,
+    .btn-outline {
+        width: 100%;
+        max-width: 220px;
+    }
+}
+
+/* 📱 Extra small devices (XS): hasta 320px */
+@media (max-width: 320px) {
+    .bg-video {
+        transform: scale(1.3);
+        object-position: center top;
+    }
+
+    .hero-text h1 {
+        font-size: 1.2rem;
+    }
+
+    .hero-text h2 {
+        font-size: 0.85rem;
+    }
+
+    .cta-buttons {
+        gap: 8px;
+    }
+
+    .btn,
+    .btn-outline {
+        font-size: 0.9rem;
+        max-width: 200px;
+    }
+}
+
+/* 📱 Ultra-narrow: hasta 280px */
+@media (max-width: 280px) {
+    .bg-video {
+        transform: scale(1.35);
+    }
+
+    .hero-text h1 {
+        font-size: 1.1rem;
+    }
+
+    .hero-text h2 {
+        font-size: 0.75rem;
+    }
+
+    .hero-text p {
+        font-size: 0.75rem;
+    }
+
+    .cta-buttons {
+        gap: 6px;
+    }
+
+    .btn,
+    .btn-outline {
+        font-size: 0.85rem;
+        max-width: 180px;
+    }
+}
+
+/* 🧪 Modo extremo/debug o pruebas (240px o menos) */
+@media (max-width: 240px) {
+    .bg-video {
+        transform: scale(1.45);
+        object-position: center top;
+    }
+
+    .hero-text h1 {
+        font-size: 1rem;
+    }
+
+    .hero-text h2,
+    .hero-text p {
+        font-size: 0.7rem;
+    }
+
+    .cta-buttons {
+        gap: 4px;
+    }
+
+    .btn,
+    .btn-outline {
+        font-size: 0.8rem;
+        max-width: 160px;
+    }
+}
+
+/* 🎯 Ajuste para móviles con pantalla muy vertical (Galaxy S20, Pixel, etc.) */
+@media screen and (max-aspect-ratio: 9/16) {
+    .bg-video {
+        object-fit: contain !important;
+        transform: none !important;
+        object-position: top center !important;
+        background-color: #0f172a;
+    }
+}
