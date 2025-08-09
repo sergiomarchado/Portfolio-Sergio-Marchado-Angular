@@ -77,7 +77,7 @@ export const TECH_STACK: TechCategory[] = [
             },
             {
                 label: 'Retrofit',
-                iconUrl: '/assets/img/icons/ic_retrofit.png',
+                iconUrl: '/assets/img/icons/ic_retrofit.webp',
                 level: 'solid', about: 'HTTP client con interceptores y mapeo JSON.'
             },
             {

@@ -9,7 +9,7 @@ export const EXPERIENCE: Experience[] = [
         end: '06/2025',
         duration: '3 meses',
         location: 'Madrid, España',
-        logoUrl: '/assets/img/companies/ic_sinergia.png',
+        logoUrl: '/assets/img/companies/ic_sinergia.webp',
         summary: 'Durante mis prácticas en Sinergia FP, participe en <strong>tareas de backed y frontend</strong> funcional, en entornos de prueba y producción.',
         tasks: [
             'Trabajo en entornos virtualizados de prueba usando <strong>Oracle VirtualBox</strong>, <strong>Ubuntu</strong> y <strong>PuTTY</strong>.',
@@ -34,7 +34,7 @@ export const EXPERIENCE: Experience[] = [
         end: '09/2024',
         duration: '11 años y 4 meses',
         location: 'Madrid, España',
-        logoUrl: '/assets/img/companies/ic_repsol.png',
+        logoUrl: '/assets/img/companies/ic_repsol.webp',
         summary: 'Gestión integral de operaciones en estaciones de servicio, atención al cliente y formación de nuevos empleados, garantizando seguridad, eficiencia y un servicio de excelencia.',
         tasks: [
             '<strong>Formación y mentoría</strong> a nuevos integrantes del equipo, transmitiendo procedimientos y mejores prácticas. <em><strong>Filosofía:</strong> "Cuando entras en un puesto nuevo, no tienes herramientas para defenderte. Cuantas mas herramientas vayas adquiriendo para solucionar problemas, mejor desempeño tendrás en el puesto".</em>',
@@ -66,7 +66,7 @@ export const EXPERIENCE: Experience[] = [
         end: '03/2020',
         duration: '1 año y 6 meses',
         location: 'Madrid, España',
-        logoUrl: '/assets/img/companies/drones.png',
+        logoUrl: '/assets/img/companies/drones.webp',
         summary: 'Operaciones con UAV para captura aérea y postproducción: edición de vídeo/foto, planificación de rutas autónomas con Python y generación de mapas/modelos 3D.',
         tasks: [
             'Planificación y ejecución de vuelos (manual y autónomo) con <strong>waypoints</strong> y control de misiones.',
