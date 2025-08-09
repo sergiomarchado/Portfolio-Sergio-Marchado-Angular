@@ -9,11 +9,7 @@ body {
 
 .content-wrapper {
     background: linear-gradient(to bottom right,
-            #010d1f 0%,
-            #031a3f 25%,
-            #02375a 60%,
-            #0e4c75 85%,
-            #1d84d8 100%);
+            #010d1f 0%, #031a3f 25%, #02375a 60%, #0e4c75 85%, #1d84d8 100%);
     position: relative;
     z-index: 1;
     padding-bottom: 4rem;
@@ -21,17 +17,17 @@ body {
 
 /* ========== NAVBAR SCROLL FIX ========== */
 .navbar.scrolled {
-    background-color: rgba(15, 23, 42, 0.95);
+    background-color: rgba(15, 23, 42, .95);
     backdrop-filter: blur(10px);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, .3);
+    transition: background-color .3s ease, box-shadow .3s ease;
 }
 
 /* ========== HERO SECTION ========== */
 .hero-video {
     position: relative;
     width: 100%;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 16/9;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -40,14 +36,11 @@ body {
     background-color: transparent;
 }
 
-/* 🎥 Overlay oscuro sobre el vídeo */
 .hero-video::before {
     content: "";
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(15, 23, 42, 0.5);
+    background: rgba(15, 23, 42, .5);
     z-index: 1;
 }
 
@@ -60,7 +53,7 @@ body {
     object-position: center center;
     z-index: 0;
     background-color: #0f172a;
-    transition: transform 0.3s ease, object-position 0.3s ease;
+    transition: transform .3s ease, object-position .3s ease;
 }
 
 /* Contenedor del hero */
@@ -71,14 +64,6 @@ body {
     color: #fff;
 }
 
-/*Panel SOLO para el bloque de textos */
-.hero-panel {
-    margin: 0 auto;
-    max-width: 920px;
-    padding: clamp(18px, 2vw, 26px) clamp(18px, 3vw, 30px);
-    position: relative;
-}
-
 /* Titular */
 .hero-h1 {
     margin: 0 0 .4rem;
@@ -86,6 +71,7 @@ body {
     font-weight: 900;
 }
 
+/* Tipeo */
 .type-wrap {
     display: inline-grid;
     grid-auto-flow: column;
@@ -99,25 +85,36 @@ body {
     display: inline-block;
     --steps: 22;
     max-width: 0ch;
+    /* sin animación por defecto */
+}
+
+/* se activa desde TS */
+.type-target.type-run {
     animation: typing 2.1s steps(var(--steps), end) .15s forwards;
 }
 
 .caret {
     width: 4px;
+    /* visible */
     height: 1em;
     background: #3b82f6;
-    margin-left: 6px;
+    margin-left: 4px;
     align-self: center;
+    opacity: 0;
+    /* base sin blink */
+}
+
+.caret.caret-run {
     animation: blink .8s step-end infinite;
 }
 
 @keyframes typing {
     from {
-        max-width: 0ch
+        max-width: 0ch;
     }
 
     to {
-        max-width: 26ch
+        max-width: 26ch;
     }
 }
 
@@ -125,26 +122,29 @@ body {
 
     0%,
     100% {
-        opacity: 0
+        opacity: 0;
     }
 
     50% {
-        opacity: 1
+        opacity: 1;
     }
 }
 
+/* Subtítulo y lead */
 .hero-h2 {
     margin: .1rem 0 .7rem;
     font-size: clamp(1.2rem, .9rem + 1.4vw, 1.9rem);
     font-weight: 800;
     color: #d7e4ff;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, .45);
 }
 
 .hero-lead {
     margin: 0 auto 1.1rem;
     max-width: 70ch;
     color: #eaf2ff;
-    opacity: .98;
+    opacity: .96;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, .35);
 }
 
 /* 🔻 Triángulo invertido de CTA */
@@ -154,7 +154,7 @@ body {
     grid-template-areas:
         "top top"
         "left right";
-    gap: clamp(10px, 2vw, 16px);
+    gap: clamp(8px, 2vw, 12px);
     margin-top: clamp(10px, 2.6vh, 20px);
     justify-items: center;
 }
@@ -173,56 +173,77 @@ body {
     justify-self: start;
 }
 
-/* Botones */
+/* ========== BOTONES (borde azul + relleno animado + glow) ========== */
 .btn {
+    --btn-blue: #3b82f6;
+
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 220px;
-    padding: 12px 22px;
+    gap: 4px;
+
+    min-width: 150px;
+    max-width: 200px;
+    padding: 12px 18px;
     border-radius: 12px;
-    font-weight: 800;
+
+    background: transparent;
+    border: 2px solid var(--btn-blue);
+    color: #fff !important;
+    /* texto siempre blanco */
     text-decoration: none;
-    border: 1px solid transparent;
-    transition: transform .18s ease, box-shadow .25s ease, filter .25s ease, background .25s;
+    font-weight: 600;
+    letter-spacing: .2px;
+
+    overflow: hidden;
+    /* para el relleno */
+    transition: transform .18s ease, box-shadow .25s ease, border-color .25s ease, color .25s ease;
+}
+
+/* Relleno animado */
+.btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--btn-blue);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .35s ease;
+    z-index: 0;
+}
+
+/* contenido por encima del relleno */
+.btn>* {
+    position: relative;
+    z-index: 1;
+}
+
+.btn:hover::before {
+    transform: scaleX(1);
 }
 
 .btn:hover {
     transform: translateY(-2px);
-    filter: saturate(1.05);
+    border-color: #60a5fa;
+    box-shadow: 0 0 18px rgba(59, 130, 246, .65), 0 0 28px rgba(96, 165, 250, .45);
 }
 
-.btn-main {
-    background: #3b82f6;
-    color: #fff;
-    box-shadow: 0 12px 32px rgba(59, 130, 246, .35);
-}
-
-.btn-outline {
-    background: transparent;
-    color: #e0eaff;
-    border-color: rgba(224, 234, 255, .45);
-    box-shadow: 0 10px 22px rgba(0, 0, 0, .18);
-}
-
-.btn-outline:hover {
-    background: rgba(255, 255, 255, .08);
-}
-
-.btn-alt {
-    background: linear-gradient(90deg, #60a5fa, #22d3ee);
-    color: #fff;
-    box-shadow: 0 12px 30px rgba(34, 211, 238, .28);
-}
-
-.btn-alt:hover {
-    box-shadow: 0 16px 38px rgba(34, 211, 238, .38);
+/* Iconos SVG en botones (si los usas) */
+.btn svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    display: block;
 }
 
 /* Responsive triángulo -> columna */
 @media (max-width: 640px) {
     .cta-tri {
-        grid-template-areas: "top top" "left left" "right right";
+        grid-template-areas:
+            "top top"
+            "left left"
+            "right right";
     }
 
     .area-left,
@@ -235,77 +256,61 @@ body {
     }
 }
 
-.hero-h2 {
-    margin: .1rem 0 .7rem;
-    font-size: clamp(1.2rem, .9rem + 1.4vw, 1.9rem);
-    font-weight: 800;
-    color: #d7e4ff;
-    text-shadow: 0 1px 10px rgba(0, 0, 0, .45);
+/* ====== RESPONSIVE HERO VIDEO ====== */
+@media (max-width: 768px) {
+    .hero-video {
+        aspect-ratio: auto;
+        min-height: 100svh;
+    }
+
+    .hero-text {
+        padding: 0 20px;
+    }
+
+    .bg-video {
+        object-position: center top;
+        transform: scale(1.05);
+        transform-origin: center top;
+    }
 }
 
-.hero-lead {
-    margin: 0 auto 1.1rem;
-    max-width: 70ch;
-    color: #eaf2ff;
-    opacity: .96;
-    text-shadow: 0 1px 8px rgba(0, 0, 0, .35);
+@media (max-width: 480px) {
+    .bg-video {
+        transform: scale(1.15);
+    }
+
+    .hero-h1 {
+        font-size: 1.6rem;
+    }
+
+    .hero-h2 {
+        font-size: 1rem;
+    }
 }
 
-/* Triángulo invertido de CTA */
-.cta-tri {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-        "top top"
-        "left right";
-    gap: clamp(10px, 2vw, 16px);
-    margin-top: clamp(8px, 2.8vh, 20px);
+@media (max-width: 360px) {
+    .bg-video {
+        transform: scale(1.25);
+        object-position: center top;
+    }
+
+    .hero-h1 {
+        font-size: 1.4rem;
+    }
+
+    .hero-h2 {
+        font-size: .9rem;
+    }
 }
 
-/* ========== BUTTONS ========== */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 200px;
-    padding: 10px 20px;
-    border-radius: 12px;
-    font-weight: 800;
-    text-decoration: none;
-    border: 1px solid transparent;
-    transition: transform .18s ease, box-shadow .25s ease, filter .25s ease, background .25s;
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-    filter: saturate(1.05);
-}
-
-.btn-main {
-    background: #3b82f6;
-    color: white;
-    box-shadow: 0 12px 32px rgba(59, 130, 246, .35);
-}
-
-.btn-outline {
-    background: transparent;
-    color: #e0eaff;
-    border-color: rgba(224, 234, 255, .45);
-    box-shadow: 0 10px 22px rgba(0, 0, 0, .18);
-}
-
-.btn-outline:hover {
-    background: rgba(255, 255, 255, .08);
-}
-
-.btn-alt {
-    background: linear-gradient(90deg, #60a5fa, #22d3ee);
-    color: white;
-    box-shadow: 0 12px 30px rgba(34, 211, 238, .28);
-}
-
-.btn-alt:hover {
-    box-shadow: 0 16px 38px rgba(34, 211, 238, .38);
+/* Altas pantallas muy verticales */
+@media screen and (max-aspect-ratio: 9/16) {
+    .bg-video {
+        object-fit: contain !important;
+        transform: none !important;
+        object-position: top center !important;
+        background-color: #0f172a;
+    }
 }
 
 /* ========== SCROLL ICON ========== */
