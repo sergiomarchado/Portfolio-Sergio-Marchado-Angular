@@ -1,19 +1,34 @@
 <section class="hero-video" id="hero">
     <video id="bgVideo" autoplay muted loop playsinline preload="auto" class="bg-video" aria-hidden="true">
-        <source src="assets/videos/background.mp4" type="video/mp4" />
+        <source src="/assets/videos/background.mp4" type="video/mp4" />
         Tu navegador no soporta el vídeo.
     </video>
 
-    <div class="hero-text" data-aos="fade-up" data-aos-delay="300">
-        <span class="badge" data-aos="zoom-in" data-aos-delay="400">✅ Disponible para trabajar</span>
-        <h1 data-aos="fade-up" data-aos-delay="500">¡Hola! Soy Sergio Marchado.</h1>
-        <h2 data-aos="fade-up" data-aos-delay="600">Desarrollador de Aplicaciones Multiplataforma</h2>
-        <p data-aos="fade-up" data-aos-delay="700">
-            Me especializo en construir soluciones modernas con Angular, Java y tecnologías multiplataforma.
-        </p>
-        <div class="cta-buttons" data-aos="fade-up" data-aos-delay="800">
-            <a routerLink="/contact" class="btn">Contáctame</a>
-            <a href="https://www.linkedin.com/in/sergi-dev" target="_blank" class="btn btn-outline">LinkedIn</a>
+    <div class="hero-text">
+        <!-- ▶️ Panel SOLO para el contenido -->
+        <div class="hero-panel">
+            <h1 class="hero-h1">
+                ¡Hola! <span class="type-wrap">
+                    <span class="type-target">Soy Sergio Marchado</span>
+                    <span class="caret" aria-hidden="true"></span>
+                </span>.
+            </h1>
+
+            <h2 class="hero-h2">Desarrollador de Aplicaciones Multiplataforma</h2>
+
+            <p class="hero-lead">
+                Me especializo en construir soluciones modernas con Android, Java, Angular y tecnologías
+                multiplataforma.
+            </p>
+
+            <!-- Triángulo invertido -->
+            <div class="cta-tri">
+                <a routerLink="/contact" class="btn btn-main area-top">Contáctame</a>
+                <a href="https://www.linkedin.com/in/sergi-dev" target="_blank" rel="noopener"
+                    class="btn btn-outline area-left">LinkedIn</a>
+                <a href="/assets/cv/sergio-marchado-cv.pdf" download="Sergio_Marchado_CV.pdf"
+                    class="btn btn-alt area-right">Descargar CV</a>
+            </div>
         </div>
     </div>
 </section>
@@ -22,21 +37,14 @@
     <span>↓</span>
 </div>
 
-<div class="content-wrapper">
-    <app-about-preview></app-about-preview>
-    <app-tech-stack></app-tech-stack>
+<!-- Sección Acerca de mí (preview) -->
+<app-about-preview></app-about-preview>
 
-    <section class="featured-projects" data-aos="fade-up" data-aos-delay="200">
-        <h2>Proyectos Destacados</h2>
-        <div class="projects-grid">
-            <div class="project-card" *ngFor="let project of projects" data-aos="zoom-in" data-aos-delay="300">
-                <img [src]="project.img" alt="project image" />
-                <div class="project-info">
-                    <h3>{{ project.title }}</h3>
-                    <p>{{ project.description }}</p>
-                    <a routerLink="/projects" class="btn">Ver más</a>
-                </div>
-            </div>
-        </div>
-    </section>
-</div>
+<!-- Stack técnico -->
+<app-tech-stack></app-tech-stack>
+
+<!-- Proyectos destacados -->
+<app-projects-gallery></app-projects-gallery>
+
+<!-- Experiencia laboral -->
+<app-experience></app-experience>

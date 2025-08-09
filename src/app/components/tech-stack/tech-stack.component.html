@@ -1,83 +1,37 @@
-<section class="tech-stack" id="stack" data-aos="fade-up">
-    <h2 class="section-title">Stack Técnico</h2>
+<section class="tech-stack" id="stack" aria-labelledby="stack-title">
+    <h2 class="section-title" id="stack-title">Stack Técnico</h2>
 
-    <div class="stack-network">
-        <!-- Lenguajes -->
-        <div class="stack-node">
-            <h3><i class="fas fa-code"></i> Lenguajes</h3>
-            <ul>
-                <li><i class="devicon-kotlin-plain colored"></i> Kotlin</li>
-                <li><i class="devicon-java-plain colored"></i> Java</li>
-                <li><i class="devicon-python-plain colored"></i> Python</li>
-                <li><i class="devicon-mysql-plain colored"></i> SQL</li>
-            </ul>
-        </div>
+    <ul class="stack-network" role="list">
+        <li class="stack-node" *ngFor="let cat of categories(); trackBy: trackCat"
+            [attr.aria-labelledby]="cat.id + '-title'">
+            <header class="node-header">
+                <div class="node-chip">
+                    <i *ngIf="cat.iconClass" [class]="cat.iconClass" aria-hidden="true"></i>
+                    <span class="node-title" [id]="cat.id + '-title'">{{ cat.title }}</span>
+                </div>
+            </header>
 
-        <!-- Backend -->
-        <div class="stack-node">
-            <h3><i class="fas fa-server"></i> Backend</h3>
-            <ul>
-                <li><i class="devicon-spring-plain colored"></i> Spring Boot</li>
-                <li>Hibernate / JPA</li>
-                <li>RESTful APIs</li>
-                <li>Maven / Gradle</li>
-                <li><i class="fas fa-key"></i> JWT</li>
-            </ul>
-        </div>
+            <ul class="node-list" role="list">
+                <li class="node-item" *ngFor="let it of cat.items; trackBy: trackItem">
+                    <span class="icon-wrap" [attr.data-level]="it.level || 'solid'">
+                        <i *ngIf="it.iconClass" [class]="it.iconClass" aria-hidden="true"></i>
+                        <img *ngIf="!it.iconClass && it.iconUrl" [src]="it.iconUrl" alt="" loading="lazy"
+                            decoding="async" />
+                    </span>
 
-        <!-- Mobile -->
-        <div class="stack-node">
-            <h3><i class="fas fa-mobile-alt"></i> Mobile</h3>
-            <ul>
-                <li><i class="devicon-androidstudio-plain colored"></i> Android Studio</li>
-                <li>Jetpack Compose</li>
-                <li>Room / Retrofit / Firebase</li>
-                <li>Material Design 3</li>
-                <li>StateFlow / ViewModel / Hilt</li>
-            </ul>
-        </div>
+                    <div class="label-wrap">
+                        <span class="node-label">{{ it.label }}</span>
+                        <!-- Descripción visible si existe -->
+                        <span *ngIf="it.about" class="node-about">{{ it.about }}</span>
+                    </div>
 
-        <!-- Web -->
-        <div class="stack-node">
-            <h3><i class="fas fa-globe"></i> Web</h3>
-            <ul>
-                <li><i class="devicon-html5-plain colored"></i> HTML</li>
-                <li><i class="devicon-css3-plain colored"></i> CSS</li>
-                <li><i class="devicon-javascript-plain colored"></i> JavaScript</li>
-                <li><i class="devicon-wordpress-plain colored"></i> WordPress</li>
+                    <!-- Tooltip extra en desktop si hay about -->
+                    <div *ngIf="it.about" class="desc" aria-hidden="true">
+                        <strong>{{ it.label }}</strong>
+                        <p>{{ it.about }}</p>
+                    </div>
+                </li>
             </ul>
-        </div>
-
-        <!-- Frameworks -->
-        <div class="stack-node">
-            <h3><i class="fas fa-tools"></i> Frameworks</h3>
-            <ul>
-                <li><i class="devicon-angularjs-plain colored"></i> Angular</li>
-                <li><i class="devicon-javafx-plain"></i> JavaFX</li>
-                <li><i class="devicon-git-plain colored"></i> Git & GitHub</li>
-            </ul>
-        </div>
-
-        <!-- Bases de Datos -->
-        <div class="stack-node">
-            <h3><i class="fas fa-database"></i> Bases de Datos</h3>
-            <ul>
-                <li><i class="devicon-mysql-plain colored"></i> MySQL</li>
-                <li><i class="devicon-postgresql-plain colored"></i> PostgreSQL</li>
-                <li><i class="devicon-amazonwebservices-plain colored"></i> AWS</li>
-            </ul>
-        </div>
-
-        <!-- Testing -->
-        <div class="stack-node">
-            <h3><i class="fas fa-vial"></i> Testing & APIs</h3>
-            <ul>
-                <li>Unit Testing</li>
-                <li><i class="fas fa-plug"></i> RESTful APIs</li>
-                <li><i class="fas fa-toolbox"></i> Postman</li>
-                <li><i class="fas fa-stream"></i> JSON</li>
-                <li><i class="fas fa-network-wired"></i> Volley</li>
-            </ul>
-        </div>
-    </div>
+        </li>
+    </ul>
 </section>

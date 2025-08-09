@@ -38,91 +38,274 @@ body {
     justify-content: center;
     text-align: center;
     background-color: transparent;
-    z-index: 0;
 }
 
 /* 🎥 Overlay oscuro sobre el vídeo */
 .hero-video::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
     background: rgba(15, 23, 42, 0.5);
-    z-index: -1;
+    z-index: 1;
 }
 
 .bg-video {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center center;
-    z-index: -2;
+    z-index: 0;
     background-color: #0f172a;
     transition: transform 0.3s ease, object-position 0.3s ease;
 }
 
+/* Contenedor del hero */
 .hero-text {
-    z-index: 1;
+    position: relative;
+    z-index: 2;
     padding: 0 20px;
-    color: white;
+    color: #fff;
 }
 
-.hero-text h1 {
-    font-size: 3rem;
+/*Panel SOLO para el bloque de textos */
+.hero-panel {
+    margin: 0 auto;
+    max-width: 920px;
+    padding: clamp(18px, 2vw, 26px) clamp(18px, 3vw, 30px);
+    position: relative;
 }
 
-.hero-text h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-    color: #94a3b8;
+/* Titular */
+.hero-h1 {
+    margin: 0 0 .4rem;
+    font-size: clamp(2.2rem, 1.2rem + 3vw, 3.2rem);
+    font-weight: 900;
 }
 
-.hero-text .badge {
-    background: #3b82f6;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
+.type-wrap {
+    display: inline-grid;
+    grid-auto-flow: column;
+    align-items: baseline;
+}
+
+.type-target {
+    color: #3b82f6;
+    white-space: nowrap;
+    overflow: hidden;
     display: inline-block;
-    margin-bottom: 15px;
+    --steps: 22;
+    max-width: 0ch;
+    animation: typing 2.1s steps(var(--steps), end) .15s forwards;
 }
 
-.cta-buttons {
-    margin-top: 1.5rem;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-/* ========== BUTTONS ========== */
-.btn {
+.caret {
+    width: 4px;
+    height: 1em;
     background: #3b82f6;
-    color: white;
-    padding: 10px 24px;
-    border: none;
-    border-radius: 6px;
+    margin-left: 6px;
+    align-self: center;
+    animation: blink .8s step-end infinite;
+}
+
+@keyframes typing {
+    from {
+        max-width: 0ch
+    }
+
+    to {
+        max-width: 26ch
+    }
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 0
+    }
+
+    50% {
+        opacity: 1
+    }
+}
+
+.hero-h2 {
+    margin: .1rem 0 .7rem;
+    font-size: clamp(1.2rem, .9rem + 1.4vw, 1.9rem);
+    font-weight: 800;
+    color: #d7e4ff;
+}
+
+.hero-lead {
+    margin: 0 auto 1.1rem;
+    max-width: 70ch;
+    color: #eaf2ff;
+    opacity: .98;
+}
+
+/* 🔻 Triángulo invertido de CTA */
+.cta-tri {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "top top"
+        "left right";
+    gap: clamp(10px, 2vw, 16px);
+    margin-top: clamp(10px, 2.6vh, 20px);
+    justify-items: center;
+}
+
+.area-top {
+    grid-area: top;
+}
+
+.area-left {
+    grid-area: left;
+    justify-self: end;
+}
+
+.area-right {
+    grid-area: right;
+    justify-self: start;
+}
+
+/* Botones */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 220px;
+    padding: 12px 22px;
+    border-radius: 12px;
+    font-weight: 800;
     text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    transition: transform .18s ease, box-shadow .25s ease, filter .25s ease, background .25s;
 }
 
 .btn:hover {
-    background: #2563eb;
+    transform: translateY(-2px);
+    filter: saturate(1.05);
+}
+
+.btn-main {
+    background: #3b82f6;
+    color: #fff;
+    box-shadow: 0 12px 32px rgba(59, 130, 246, .35);
 }
 
 .btn-outline {
     background: transparent;
-    border: 2px solid #3b82f6;
-    color: #3b82f6;
+    color: #e0eaff;
+    border-color: rgba(224, 234, 255, .45);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, .18);
 }
 
 .btn-outline:hover {
+    background: rgba(255, 255, 255, .08);
+}
+
+.btn-alt {
+    background: linear-gradient(90deg, #60a5fa, #22d3ee);
+    color: #fff;
+    box-shadow: 0 12px 30px rgba(34, 211, 238, .28);
+}
+
+.btn-alt:hover {
+    box-shadow: 0 16px 38px rgba(34, 211, 238, .38);
+}
+
+/* Responsive triángulo -> columna */
+@media (max-width: 640px) {
+    .cta-tri {
+        grid-template-areas: "top top" "left left" "right right";
+    }
+
+    .area-left,
+    .area-right {
+        justify-self: center;
+    }
+
+    .btn {
+        min-width: 230px;
+    }
+}
+
+.hero-h2 {
+    margin: .1rem 0 .7rem;
+    font-size: clamp(1.2rem, .9rem + 1.4vw, 1.9rem);
+    font-weight: 800;
+    color: #d7e4ff;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, .45);
+}
+
+.hero-lead {
+    margin: 0 auto 1.1rem;
+    max-width: 70ch;
+    color: #eaf2ff;
+    opacity: .96;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, .35);
+}
+
+/* Triángulo invertido de CTA */
+.cta-tri {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "top top"
+        "left right";
+    gap: clamp(10px, 2vw, 16px);
+    margin-top: clamp(8px, 2.8vh, 20px);
+}
+
+/* ========== BUTTONS ========== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 800;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: transform .18s ease, box-shadow .25s ease, filter .25s ease, background .25s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    filter: saturate(1.05);
+}
+
+.btn-main {
     background: #3b82f6;
     color: white;
+    box-shadow: 0 12px 32px rgba(59, 130, 246, .35);
+}
+
+.btn-outline {
+    background: transparent;
+    color: #e0eaff;
+    border-color: rgba(224, 234, 255, .45);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, .18);
+}
+
+.btn-outline:hover {
+    background: rgba(255, 255, 255, .08);
+}
+
+.btn-alt {
+    background: linear-gradient(90deg, #60a5fa, #22d3ee);
+    color: white;
+    box-shadow: 0 12px 30px rgba(34, 211, 238, .28);
+}
+
+.btn-alt:hover {
+    box-shadow: 0 16px 38px rgba(34, 211, 238, .38);
 }
 
 /* ========== SCROLL ICON ========== */
@@ -355,5 +538,21 @@ section:not(.hero-video) {
         transform: none !important;
         object-position: top center !important;
         background-color: #0f172a;
+    }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .cta-tri {
+        grid-template-areas: "top top" "left left" "right right";
+    }
+
+    .area-left,
+    .area-right {
+        justify-self: center;
+    }
+
+    .btn {
+        min-width: 220px;
     }
 }

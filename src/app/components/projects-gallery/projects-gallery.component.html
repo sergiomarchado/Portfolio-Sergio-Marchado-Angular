@@ -1,0 +1,39 @@
+<section class="projects" data-aos="fade-up">
+    <h2 class="title">Últimos Proyectos</h2>
+
+    <div class="filters" role="tablist" aria-label="Filtros de proyectos">
+        <button *ngFor="let cat of categories" class="pill" [class.active]="cat === active()" (click)="setFilter(cat)"
+            role="tab" [attr.aria-selected]="cat === active()">
+            {{ cat }}
+        </button>
+    </div>
+
+    <div class="grid">
+        <article class="card" *ngFor="let p of filtered(); trackBy: trackById" [class.open]="isOpen(p.id)"
+            (click)="toggleCard(p.id, $event)" (keydown)="onKeydown($event, p.id)" role="button" tabindex="0"
+            [attr.aria-label]="'Ver detalles del proyecto ' + p.title" [attr.aria-expanded]="isOpen(p.id)">
+
+            <!-- capa imagen -->
+            <div class="card-bg" [style.backgroundImage]="'url(' + p.img + ')'"></div>
+            <div class="frame"></div>
+
+            <!-- overlay informativo -->
+            <div class="overlay">
+                <div class="meta">
+                    <h3 class="title-line">{{ p.title }}</h3>
+                    <p class="short-line" [innerHTML]="p.short"></p>
+
+                    <div class="chips">
+                        <span class="chip" *ngFor="let c of p.categories">{{ c }}</span>
+                    </div>
+
+                    <!-- CTA: único lugar que abre GitHub -->
+                    <button class="ghost-cta" type="button" *ngIf="p.url" (click)="openProject($event, p.url)"
+                        [attr.aria-label]="'Abrir ' + p.title + ' en GitHub'">
+                        Ver proyecto en GitHub
+                    </button>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>

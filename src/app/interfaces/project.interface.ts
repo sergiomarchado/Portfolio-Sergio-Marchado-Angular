@@ -1,7 +1,10 @@
-// src/app/interfaces/project.interface.ts
+export type ProjectCategory = 'ANDROID' | 'JAVA/BACK' | 'ANGULAR' | 'PYTHON';
 
 export interface Project {
+    id: string;
     title: string;
-    description: string;
-    img: string;
+    short: string;
+    img: string;             // ruta en /public/assets/...
+    categories: ProjectCategory[];
+    url?: string;            // opcional: enlace a GitHub/Store/etc
 }
