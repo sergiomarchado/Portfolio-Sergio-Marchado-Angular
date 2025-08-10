@@ -140,11 +140,22 @@
 /* meta limpia, sin blur */
 .meta {
     background: rgba(15, 23, 42, .94);
-    border: 1px solid rgba(59, 130, 246, .35);
-    padding: 12px 14px;
+    border: 2px solid rgba(59, 134, 246, 0.35);
     border-radius: 12px;
     max-height: calc(100% - 14px);
+    position: relative;
+    overflow: hidden;
+    padding: 12px 14px;
+    /* padding visual, no para scroll */
+}
+
+/* contenido que scrollea dentro de meta */
+.meta-scroll {
+    max-height: 100%;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-right: 14px;
+    /* deja hueco para la barra custom */
 }
 
 .meta,
@@ -213,7 +224,6 @@
 }
 
 /* ===== Interacciones ===== */
-/* Desktop: hover revela overlay y anima fondo */
 @media (hover:hover) {
     .card:hover::before {
         opacity: .9;
@@ -230,7 +240,6 @@
     }
 }
 
-/* Mobile (y accesible): la clase .open hace lo mismo que el hover */
 .card.open::before {
     opacity: .9;
 }
@@ -245,14 +254,48 @@
     opacity: 1;
 }
 
-/* scroll meta */
-.meta::-webkit-scrollbar {
-    width: 6px;
+/* --- Scroll affordances --- */
+.fade {
+    position: absolute;
+    left: 8px;
+    right: 24px;
+    /* deja hueco para la scrollbar custom */
+    pointer-events: none;
+    height: 24px;
 }
 
-.meta::-webkit-scrollbar-thumb {
-    background: var(--accent);
-    border-radius: 4px;
+.fade-top {
+    top: 12px;
+    background: linear-gradient(to bottom, rgba(15, 29, 42, 0.95), rgba(15, 23, 42, 0));
+}
+
+.fade-bottom {
+    bottom: 12px;
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0));
+}
+
+/* Scrollbar propia (track + thumb) */
+.scrollbar {
+    position: absolute;
+    top: 12px;
+    bottom: 12px;
+    right: 8px;
+    width: 6px;
+    border-radius: 6px;
+    background: rgba(3, 167, 243, 0.08);
+    box-shadow: inset 2px 2px 2px 2px var(--ring);
+    opacity: .95;
+    pointer-events: none;
+}
+
+.scrollbar .thumb {
+    position: absolute;
+    left: 2px;
+    right: 2px;
+    border-radius: 6px;
+    background: linear-gradient(180deg, var(--accent), var(--accent2));
+    box-shadow: 2px 2px 12px rgba(243, 243, 243, 0.35);
+    transition: top .08s linear, height .08s linear;
 }
 
 /* responsive */
@@ -271,7 +314,8 @@
 
     .card .card-bg,
     .overlay,
-    .ghost-cta {
+    .ghost-cta,
+    .scrollbar .thumb {
         transition: none;
     }
 }

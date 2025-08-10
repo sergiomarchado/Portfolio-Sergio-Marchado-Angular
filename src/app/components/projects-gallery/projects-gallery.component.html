@@ -20,19 +20,34 @@
             <!-- overlay informativo -->
             <div class="overlay">
                 <div class="meta">
-                    <h3 class="title-line">{{ p.title }}</h3>
-                    <p class="short-line" [innerHTML]="p.short"></p>
+                    <!-- contenido que scrollea -->
+                    <div class="meta-scroll" #meta (mouseenter)="ensureState(meta, p.id)"
+                        (focus)="ensureState(meta, p.id)" (touchstart)="ensureState(meta, p.id)"
+                        (scroll)="onScroll(meta, p.id)">
 
-                    <div class="chips">
-                        <span class="chip" *ngFor="let c of p.categories">{{ c }}</span>
+                        <h3 class="title-line">{{ p.title }}</h3>
+                        <p class="short-line" [innerHTML]="p.short"></p>
+
+                        <div class="chips">
+                            <span class="chip" *ngFor="let c of p.categories">{{ c }}</span>
+                        </div>
+
+                        <button class="ghost-cta" type="button" *ngIf="p.url" (click)="openProject($event, p.url)"
+                            [attr.aria-label]="'Abrir ' + p.title + ' en GitHub'">
+                            Ver proyecto en GitHub
+                        </button>
                     </div>
 
-                    <!-- CTA: único lugar que abre GitHub -->
-                    <button class="ghost-cta" type="button" *ngIf="p.url" (click)="openProject($event, p.url)"
-                        [attr.aria-label]="'Abrir ' + p.title + ' en GitHub'">
-                        Ver proyecto en GitHub
-                    </button>
+                    <!-- Overlays fijos al viewport de la tarjeta -->
+                    <div class="fade fade-top" *ngIf="!state(p.id).atTop" aria-hidden="true"></div>
+                    <div class="fade fade-bottom" *ngIf="!state(p.id).atBottom" aria-hidden="true"></div>
+
+                    <div class="scrollbar" *ngIf="state(p.id).can" aria-hidden="true">
+                        <div class="thumb" [style.height.%]="state(p.id).thumbH" [style.top.%]="state(p.id).thumbTop">
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </article>
     </div>

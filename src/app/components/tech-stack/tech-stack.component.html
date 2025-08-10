@@ -12,7 +12,12 @@
             </header>
 
             <ul class="node-list" role="list">
-                <li class="node-item" *ngFor="let it of cat.items; trackBy: trackItem">
+                <li class="node-item" *ngFor="let it of cat.items; let i = index; trackBy: trackItem"
+                    (click)="toggleItem(itemId(cat.id, i), $event)" (keydown)="onKeydown($event, itemId(cat.id, i))"
+                    [class.open]="isOpen(itemId(cat.id, i))" role="button" tabindex="0"
+                    [attr.aria-expanded]="isOpen(itemId(cat.id, i)) ? 'true' : 'false'"
+                    [attr.aria-controls]="itemId(cat.id, i) + '-desc'">
+
                     <span class="icon-wrap" [attr.data-level]="it.level || 'solid'">
                         <i *ngIf="it.iconClass" [class]="it.iconClass" aria-hidden="true"></i>
                         <img *ngIf="!it.iconClass && it.iconUrl" [src]="it.iconUrl" alt="" loading="lazy"
@@ -21,12 +26,12 @@
 
                     <div class="label-wrap">
                         <span class="node-label">{{ it.label }}</span>
-                        <!-- Descripción visible si existe -->
                         <span *ngIf="it.about" class="node-about">{{ it.about }}</span>
                     </div>
 
-                    <!-- Tooltip extra en desktop si hay about -->
-                    <div *ngIf="it.about" class="desc" aria-hidden="true">
+                    <!-- Desktop: hover | Mobile: .open -->
+                    <div *ngIf="it.about" class="desc" [id]="itemId(cat.id, i) + '-desc'"
+                        [attr.aria-hidden]="isOpen(itemId(cat.id, i)) ? 'false' : 'true'">
                         <strong>{{ it.label }}</strong>
                         <p>{{ it.about }}</p>
                     </div>

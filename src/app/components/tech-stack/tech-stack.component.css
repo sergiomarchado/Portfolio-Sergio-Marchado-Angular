@@ -83,9 +83,10 @@
     border-radius: inherit;
     padding: 2px;
     background:
-        linear-gradient(135deg, color-mix(in oklab, var(--accent) 80%, transparent), color-mix(in oklab, var(--accent2) 70%, transparent));
+        linear-gradient(135deg,
+            color-mix(in oklab, var(--accent) 80%, transparent),
+            color-mix(in oklab, var(--accent2) 70%, transparent));
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -139,6 +140,7 @@
 }
 
 .node-item {
+    cursor: pointer;
     --bgItem: rgba(255, 255, 255, .04);
     display: flex;
     align-items: center;
@@ -154,9 +156,15 @@
     margin-top: 8px;
 }
 
-.node-item:hover {
+
+/* Estado abierto: feedback visual */
+.node-item.open {
     background: rgba(105, 162, 255, .14);
     transform: translateX(4px);
+}
+
+.node-item.open .icon-wrap {
+    transform: scale(1.08);
 }
 
 /* Icono grande con ring de nivel; zoom al hover */
@@ -181,9 +189,6 @@
     object-fit: contain;
 }
 
-.node-item:hover .icon-wrap {
-    transform: scale(1.08);
-}
 
 /* ring de nivel */
 .icon-wrap::after {
@@ -264,6 +269,22 @@
         opacity: 1;
         transform: translateY(-50%) translateX(14px);
     }
+
+    .node-item:hover {
+        background: rgba(105, 162, 255, .14);
+        transform: translateX(4px);
+    }
+
+    .node-item:hover .icon-wrap {
+        transform: scale(1.08);
+    }
+
+}
+
+/* Feedback claro al navegar con TAB */
+.node-item:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(105, 162, 255, .35);
 }
 
 /* Reveal con stagger (pero visible por defecto gracias a .in-view) */
@@ -323,20 +344,50 @@
         display: none;
     }
 
-    /* móvil: nos quedamos con la descripción bajo el label */
+    /* Cuando el item está abierto, mostramos la desc como bloque bajo el ítem */
+    .node-item.open .desc {
+        display: block;
+        position: static;
+        /* no flotante; ocupa ancho del card */
+        transform: none;
+        opacity: 1;
+        pointer-events: auto;
+        margin-top: 8px;
+        min-width: 0;
+        max-width: none;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: #0b172e;
+        color: var(--text);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, .35);
+        border: 1px solid var(--ring);
+    }
+
+    /* Ocultar el texto breve cuando el ítem está abierto para no duplicar */
+    .node-item.open .node-about {
+        display: none;
+    }
 }
 
 /* Accesibilidad: reduce motion */
+/* Accesibilidad: reduce motion (GLOBAL) */
 @media (prefers-reduced-motion: reduce) {
 
     .stack-node,
     .node-item,
     .icon-wrap {
-        transition: none;
-        transform: none;
+        transition: none !important;
+        transform: none !important;
     }
 
     .reveal-enabled .stack-node {
-        animation: none;
+        animation: none !important;
+    }
+
+}
+
+@media (pointer: coarse) {
+    .node-item:active {
+        transform: translateX(2px) scale(0.995);
     }
 }
