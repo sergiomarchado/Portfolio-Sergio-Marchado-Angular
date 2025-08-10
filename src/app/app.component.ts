@@ -4,11 +4,13 @@ import {
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router, NavigationEnd, UrlTree } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { FooterComponent } from './components/footer/footer.component';
+import { CookieConsentComponent } from './components/cookie-consent/cookie-consent.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FooterComponent, CookieConsentComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -43,6 +45,18 @@ export class AppComponent implements OnInit, AfterViewInit {
     const ro = new ResizeObserver(setVar);
     ro.observe(header);
     this.destroyRef.onDestroy(() => ro.disconnect());
+
+    // ⚙️ Altura dinámica del footer -> --footer-h
+    const footer = document.querySelector('app-footer') as HTMLElement | null;
+    if (footer) {
+      const setFooterVar = () =>
+        document.documentElement.style.setProperty('--footer-h', `${footer.offsetHeight}px`);
+      setFooterVar();
+      const roFooter = new ResizeObserver(setFooterVar);
+      roFooter.observe(footer);
+      this.destroyRef.onDestroy(() => roFooter.disconnect());
+    }
+
   }
 
   private updateActiveByFragment() {
@@ -70,4 +84,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       ?.contains(ev.target as HTMLElement);
     if (!inside && this.menuOpen) this.closeMenu();
   }
+
+
 }

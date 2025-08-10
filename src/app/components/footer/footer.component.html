@@ -1,0 +1,68 @@
+<footer class="footer">
+    <div class="footer-container">
+
+        <!-- Mapa -->
+        <div class="footer-map">
+            <ng-container *ngIf="consent.functional; else noMap">
+                <!-- Definición del gradiente para el pin (oculta) -->
+                <svg width="0" height="0" aria-hidden="true" focusable="false" class="sr-only">
+                    <defs>
+                        <linearGradient id="grad-pin" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#69a2ff" />
+                            <stop offset="100%" stop-color="#22e6ff" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+
+                <div class="map-card">
+                    <!-- Overlay: pin + título -->
+                    <div class="map-overlay">
+                        <svg class="map-pin" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M12 2a7 7 0 0 0-7 7c0 4.6 7 13 7 13s7-8.4 7-13a7 7 0 0 0-7-7Zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z" />
+                        </svg>
+                        <div class="map-title">
+                            <strong>Madrid y Coslada</strong>
+                            <span class="map-note">Ubicación</span>
+                        </div>
+                    </div>
+
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3042.095273289872!2d-3.561!3d40.423!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42287d2fdf57fb%3A0x6a85a4b16a1f09!2sCoslada!5e0!3m2!1ses!2ses!4v0000000000000"
+                        width="100%" height="200" style="border:0" loading="lazy" allowfullscreen
+                        title="Mapa de Coslada, Madrid">
+                    </iframe>
+                </div>
+            </ng-container>
+
+            <ng-template #noMap>
+                <div class="map-placeholder">
+                    <p>
+                        Para ver el mapa, activa las <strong>cookies funcionales</strong> en la
+                        <a href="#" (click)="openCookieSettings($event)">configuración de cookies</a>.
+                    </p>
+                </div>
+            </ng-template>
+        </div>
+
+        <!-- Mini Navbar -->
+        <nav class="footer-nav" aria-label="Navegación del pie">
+            <span class="col-title">Navegación</span>
+            <a routerLink="/">Inicio</a>
+            <a routerLink="/about">Mi historia</a>
+            <a [routerLink]="'/'" [fragment]="'experience'">Experiencia laboral</a>
+            <a routerLink="/projects">Proyectos</a>
+            <a routerLink="/contact">Contacto</a>
+        </nav>
+
+        <!-- Legal -->
+        <div class="footer-legal">
+            <span class="col-title">Legal</span>
+            <a routerLink="/privacy">Política de Privacidad</a>
+            <a routerLink="/cookies">Política de Cookies</a>
+            <a routerLink="/legal">Aviso Legal</a>
+            <p class="copy">&copy; {{ currentYear }} Sergio Marchado</p>
+            <button class="link-btn" (click)="openCookieSettings()">Cambiar preferencias de cookies</button>
+        </div>
+    </div>
+</footer>

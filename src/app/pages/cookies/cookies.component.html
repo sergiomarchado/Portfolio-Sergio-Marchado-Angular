@@ -1,0 +1,74 @@
+<section class="legal-page" aria-labelledby="ck-title">
+    <header class="ck-header">
+        <h1 id="ck-title">Política de Cookies</h1>
+        <p class="ck-lead">
+            En esta web utilizamos <strong>cookies técnicas necesarias</strong>.
+        </p>
+        <p class="ck-lead">Las cookies
+            <strong>funcionales</strong> (p. ej., Google&nbsp;Maps) y las <strong>estadísticas</strong>
+            solo se activarán si das tu consentimiento.
+        </p>
+        <p class="ck-updated">Última actualización: {{ lastUpdated }}</p>
+        <div class="ck-actions">
+            <button class="btn btn-primary" (click)="openSettings()">Configurar cookies</button>
+            <button class="btn btn-ghost" (click)="resetConsent()">Borrar decisión</button>
+        </div>
+    </header>
+
+    <section class="ck-card">
+        <h2>Tipos de cookies que podemos usar</h2>
+        <table class="ck-table" aria-describedby="ck-desc">
+            <caption id="ck-desc" class="sr-only">Detalle de categorías de cookies, finalidad y duración.</caption>
+            <thead>
+                <tr>
+                    <th>Categoría</th>
+                    <th>Finalidad</th>
+                    <th>Proveedor</th>
+                    <th>Duración</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Técnicas (necesarias)</strong></td>
+                    <td>Funcionamiento básico del sitio: seguridad, navegación, preferencias esenciales.</td>
+                    <td>Propias</td>
+                    <td>Sesión</td>
+                </tr>
+                <tr>
+                    <td><strong>Funcionales (opcionales)</strong></td>
+                    <td>Servicios de terceros como <strong>Google&nbsp;Maps</strong> para mostrar ubicaciones.</td>
+                    <td>Google LLC (solo si las aceptas)</td>
+                    <td>Según proveedor</td>
+                </tr>
+                <tr>
+                    <td><strong>Estadísticas (opcionales)</strong></td>
+                    <td>Medición anónima del uso para mejorar el sitio.</td>
+                    <td>— (actualmente no se usan)</td>
+                    <td>—</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="ck-note">
+            <em>Nota:</em> No instalamos cookies no esenciales hasta que las aceptas desde el aviso o desde
+            esta página mediante “Configurar cookies”.
+        </p>
+    </section>
+
+    <section class="ck-card">
+        <h2>Cómo cambiar o revocar tu consentimiento</h2>
+        <ol class="ck-steps">
+            <li>Pulsa <strong>Configurar cookies</strong> para activar/desactivar categorías.</li>
+            <li>También puedes borrar tu decisión con <strong>Borrar decisión</strong> para que el aviso vuelva a
+                mostrarse.</li>
+            <li>Además, puedes gestionar cookies desde tu navegador:
+                <ul>
+                    <li>Chrome: Configuración → Privacidad y seguridad → Cookies y otros datos de sitios.</li>
+                    <li>Firefox: Ajustes → Privacidad y seguridad → Cookies y datos del sitio.</li>
+                    <li>Safari: Preferencias → Privacidad → Gestionar datos de sitios web.</li>
+                    <li>Edge: Configuración → Cookies y permisos de sitio.</li>
+                </ul>
+            </li>
+        </ol>
+        <p>Consulta también la <a routerLink="/privacy">Política de Privacidad</a> para más información.</p>
+    </section>
+</section>

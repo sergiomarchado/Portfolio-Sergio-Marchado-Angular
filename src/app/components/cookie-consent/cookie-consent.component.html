@@ -1,0 +1,72 @@
+<!-- Banner -->
+<div *ngIf="bannerVisible" class="cookie-banner" aria-live="polite">
+    <div class="cb-text">
+        <strong>Cookies</strong> · Usamos cookies propias y de terceros (p. ej., Google Maps).
+        Puedes aceptarlas, rechazarlas o
+        <button class="link-btn" type="button" (click)="openConfig()">configurarlas</button>.
+        <a href (click)="goToCookies($event)">Política de Cookies</a>.
+    </div>
+
+    <div class="cb-actions">
+        <button class="btn btn-ghost" type="button" (click)="rejectAll()">Rechazar</button>
+        <button class="btn btn-soft" type="button" (click)="openConfig()">Configurar</button>
+        <button class="btn btn-primary" type="button" (click)="acceptAll()">Aceptar</button>
+    </div>
+</div>
+
+<!-- Modal Configuración -->
+<div *ngIf="modalVisible" class="cookie-modal" role="dialog" aria-modal="true" aria-labelledby="cookie-modal-title"
+    (click)="closeModal()">
+    <div class="cookie-modal-content" (click)="$event.stopPropagation()">
+        <header class="cm-header">
+            <h2 id="cookie-modal-title">Preferencias de cookies</h2>
+            <button class="cm-close" type="button" aria-label="Cerrar" (click)="closeModal()">✕</button>
+        </header>
+
+        <p class="cm-intro">
+            Selecciona qué categorías permites. Las <strong>Necesarias</strong> siempre están activas
+            (funcionamiento básico). Guarda para aplicar cambios.
+        </p>
+
+        <div class="cookie-option">
+            <div class="co-head">
+                <span class="co-title">Necesarias</span>
+                <label class="switch">
+                    <input type="checkbox" [checked]="consent.necessary" disabled />
+                    <span class="slider disabled"></span>
+                </label>
+            </div>
+            <p class="co-desc">Requeridas para seguridad, navegación y preferencias esenciales.</p>
+        </div>
+
+        <div class="cookie-option">
+            <div class="co-head">
+                <span class="co-title">Funcionales (Google&nbsp;Maps)</span>
+                <label class="switch">
+                    <input type="checkbox" [(ngModel)]="consent.functional" />
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <p class="co-desc">Permiten servicios de terceros como mostrar el mapa de ubicación.</p>
+        </div>
+
+        <div class="cookie-option">
+            <div class="co-head">
+                <span class="co-title">Estadísticas</span>
+                <label class="switch">
+                    <input type="checkbox" [(ngModel)]="consent.analytics" />
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <p class="co-desc">Medición anónima del uso (actualmente no se usan).</p>
+        </div>
+
+        <footer class="cm-actions">
+            <a href (click)="goToCookies($event)" class="cm-link">Más información</a>
+            <div class="cm-buttons">
+                <button class="btn btn-ghost" type="button" (click)="rejectAll()">Rechazar todo</button>
+                <button class="btn btn-primary" type="button" (click)="saveConfig()">Guardar preferencias</button>
+            </div>
+        </footer>
+    </div>
+</div>

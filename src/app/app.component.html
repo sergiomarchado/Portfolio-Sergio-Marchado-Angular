@@ -1,14 +1,12 @@
 <header class="navbar" [class.scrolled]="scrolled" role="banner">
   <div class="logo-icon-container">
     <div class="logo">
-      <!-- Usamos h1 para darle jerarquía semántica y SEO -->
       <a class="logoletters1" routerLink="/" aria-label="Ir al inicio">
         <h1 style="display:inline">Sergio Marchado</h1>
       </a>
       <span class="logoletters2" aria-hidden="true"> Dev Portfolio</span>
     </div>
 
-    <!-- Botón de menú accesible -->
     <button
       class="menu-toggle"
       (click)="toggleMenu()"
@@ -19,43 +17,23 @@
     </button>
   </div>
 
-  <!-- Menú -->
   <nav class="nav-links" [class.open]="menuOpen" id="main-navigation" role="navigation" aria-label="Menú principal">
-    <a
-      routerLink="/"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      (click)="closeMenu()"
-    >Inicio</a>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Inicio</a>
+    <a routerLink="/about" routerLinkActive="active" (click)="closeMenu()">Mi historia</a>
 
-    <a
-      routerLink="/about"
-      routerLinkActive="active"
-      (click)="closeMenu()"
-    >Mi historia</a>
+    <!-- Home + scroll a #experience -->
+    <a [routerLink]="'/'" [fragment]="'experience'" (click)="closeMenu()" [class.active]="experienceActive">
+      Experiencia laboral
+    </a>
 
-    <!-- Ir al Home + scroll a #experience; subrayado controlado por TS -->
-    <a
-      [routerLink]="'/'"
-      [fragment]="'experience'"
-      (click)="closeMenu()"
-      [class.active]="experienceActive"
-    >Experiencia laboral</a>
-
-    <a
-      routerLink="/projects"
-      routerLinkActive="active"
-      (click)="closeMenu()"
-    >Proyectos</a>
-
-    <a
-      routerLink="/contact"
-      routerLinkActive="active"
-      (click)="closeMenu()"
-    >Contacto</a>
+    <a routerLink="/projects" routerLinkActive="active" (click)="closeMenu()">Proyectos</a>
+    <a routerLink="/contact"  routerLinkActive="active" (click)="closeMenu()">Contacto</a>
   </nav>
 </header>
 
 <main>
   <router-outlet></router-outlet>
 </main>
+
+<app-footer></app-footer>
+<app-cookie-consent></app-cookie-consent>

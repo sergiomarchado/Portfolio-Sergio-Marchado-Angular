@@ -14,5 +14,19 @@ export const routes: Routes = [
                 .then(m => m.ProjectsGalleryComponent)
     },
     { path: 'contact', component: ContactComponent },
+    {
+        path: 'privacy',
+        loadComponent: () => import('./pages/privacy/privacy.component').then(m => m.PrivacyComponent)
+    },
+    {
+        path: 'cookies',
+        loadComponent: () => import('./pages/cookies/cookies.component').then(m => m.CookiesComponent)
+    },
+    {
+        path: 'legal',
+        loadComponent: () => import('./pages/legal/legal.component').then(m => m.LegalComponent)
+    },
     { path: '**', redirectTo: '' }
+
+
 ];
