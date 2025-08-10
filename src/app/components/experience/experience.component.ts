@@ -9,7 +9,7 @@ import { Experience } from '../../interfaces/experience.interface';
   imports: [CommonModule],
   templateUrl: './experience.component.html',
   styleUrl: './experience.component.css',
-  host: {id: 'experience'}
+  host: { id: 'experience' }
 })
 export class ExperienceComponent implements AfterViewInit, OnDestroy {
   readonly items = signal<Experience[]>(EXPERIENCE);
@@ -56,7 +56,7 @@ export class ExperienceComponent implements AfterViewInit, OnDestroy {
 
   copyEmail(email: string) {
     navigator.clipboard.writeText(email)
-      .then(() => alert('📋 Email copiado'))
+      .then(() => alert('El email de Sergio se ha copiado al portapapeles.'))
       .catch(() => console.warn('No se pudo copiar el email'));
   }
 
