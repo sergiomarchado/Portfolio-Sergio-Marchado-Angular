@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-about-preview',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './about-preview.component.html',
-  styleUrl: './about-preview.component.css'
+  styleUrls: ['./about-preview.component.css']
 })
 export class AboutPreviewComponent {
 

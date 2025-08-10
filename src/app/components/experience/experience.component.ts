@@ -8,7 +8,8 @@ import { Experience } from '../../interfaces/experience.interface';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './experience.component.html',
-  styleUrl: './experience.component.css'
+  styleUrl: './experience.component.css',
+  host: {id: 'experience'}
 })
 export class ExperienceComponent implements AfterViewInit, OnDestroy {
   readonly items = signal<Experience[]>(EXPERIENCE);

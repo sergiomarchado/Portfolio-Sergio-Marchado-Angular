@@ -85,3 +85,7 @@ img {
     background-color: #0f172a;
     border-radius: 4px;
 }
+
+:root {
+    --header-h: 64px;
+}

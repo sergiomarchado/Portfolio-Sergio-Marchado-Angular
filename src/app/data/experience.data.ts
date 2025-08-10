@@ -4,7 +4,7 @@ export const EXPERIENCE: Experience[] = [
     {
         id: 'fullstack-sinergia',
         company: 'Sinergia FP',
-        role: 'Full Stack Developer (prácticas)',
+        role: 'Full Stack Developer (prácticas DAM)',
         start: '03/2025',
         end: '06/2025',
         duration: '3 meses',
