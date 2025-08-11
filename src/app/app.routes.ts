@@ -13,6 +13,13 @@ export const routes: Routes = [
             import('./components/projects-gallery/projects-gallery.component')
                 .then(m => m.ProjectsGalleryComponent)
     },
+
+    {
+        path: 'experience',
+        loadComponent: () =>
+            import('./components/experience/experience.component')
+                .then(m => m.ExperienceComponent)
+    },
     { path: 'contact', component: ContactComponent },
     {
         path: 'privacy',

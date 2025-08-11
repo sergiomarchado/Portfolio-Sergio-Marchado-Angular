@@ -1,97 +1,50 @@
-<section class="projects" data-aos="fade-up">
-    <!--
-    Sección de “Últimos Proyectos”
-    - data-aos="fade-up": animación de entrada (AOS).
-    - Filtros por categoría (pestañas accesibles) + grid de tarjetas expandibles.
-    -->
+<section class="projects">
     <h2 class="title">Últimos Proyectos</h2>
 
     <div class="filters" role="tablist" aria-label="Filtros de proyectos">
-        <!--
-        role="tablist"/"tab": patrón accesible de pestañas para filtrar.
-          *ngFor="let cat of categories": lista de categorías disponibles.
-        [class.active]="cat === active()": estado visual del filtro seleccionado.
-        (click)="setFilter(cat)": cambia el filtro activo.
-        [attr.aria-selected]="cat === active()": refleja selección para lectores.
-        -->
         <button *ngFor="let cat of categories" class="pill" [class.active]="cat === active()" (click)="setFilter(cat)"
             role="tab" [attr.aria-selected]="cat === active()">
             {{ cat }}
         </button>
     </div>
 
-    <div class="grid">
-        <!--
-        Render de proyectos filtrados:
-          *ngFor="let p of filtered(); trackBy: trackById" -> performance estable al reordenar/filtrar.
-        [class.open]="isOpen(p.id)": tarjeta expandida/colapsada.
-        (click)="toggleCard(p.id, $event)": abre/cierra (evita abrir si el click viene de un botón interno).
-        Teclado: (keydown)="onKeydown($event, p.id)" para Enter/Espacio/Escape (accesibilidad).
-        role="button" + tabindex="0": hace la card navegable y activable con teclado.
-        aria-label/aria-expanded: feedback accesible del estado.
-        -->
-        <article class="card" *ngFor="let p of filtered(); trackBy: trackById" [class.open]="isOpen(p.id)"
+    <div class="projects-grid">
+        <article class="p-card" *ngFor="let p of filtered(); trackBy: trackById; index as i" [class.open]="isOpen(p.id)"
             (click)="toggleCard(p.id, $event)" (keydown)="onKeydown($event, p.id)" role="button" tabindex="0"
-            [attr.aria-label]="'Ver detalles del proyecto ' + p.title" [attr.aria-expanded]="isOpen(p.id)">
+            [attr.aria-label]="'Ver detalles del proyecto ' + p.title" [attr.aria-expanded]="isOpen(p.id)"
+            [attr.data-aos]="'fade-up'" [attr.data-aos-delay]="i * 90" [attr.data-aos-offset]="80">
+            <figure class="p-media">
+                <img class="p-media-img" [src]="p.img" [alt]="p.title" loading="lazy" />
+            </figure>
 
-            <!-- capa imagen: fondo con cover usando style binding -->
-            <div class="card-bg" [style.backgroundImage]="'url(' + p.img + ')'"></div>
-            <div class="frame"></div>
+            <div class="p-frame"></div>
 
-            <!-- overlay informativo: capa superior con contenido y scroll propio -->
-            <div class="overlay">
-                <div class="meta">
-                    <!--
-                    meta-scroll: contenedor con overflow para texto largo
-                    #meta: template ref. local (pasado a handlers TS)
-                    ensureState(meta, p.id): asegura/forza el estado visual (fades/scrollbar)
-                    al entrar con mouse/focus/touch.
-                    (scroll)="onScroll(meta, p.id)": sincroniza estados al desplazarse.
-                    -->
-                    <div class="meta-scroll" #meta (mouseenter)="ensureState(meta, p.id)"
+            <div class="p-content">
+                <div class="p-meta">
+                    <div class="p-meta-scroll" #meta [attr.data-id]="p.id" (mouseenter)="ensureState(meta, p.id)"
                         (focus)="ensureState(meta, p.id)" (touchstart)="ensureState(meta, p.id)"
                         (scroll)="onScroll(meta, p.id)">
-
                         <h3 class="title-line">{{ p.title }}</h3>
-                        <!-- short puede incluir <br/> o markup ligero -> [innerHTML] -->
                         <p class="short-line" [innerHTML]="p.short"></p>
 
                         <div class="chips">
                             <span class="chip" *ngFor="let c of p.categories">{{ c }}</span>
                         </div>
 
-                        <!--
-                        CTA opcional: abre URL externa (GitHub, demo, etc.)
-                        (click)="openProject($event, p.url)": evita el toggle de la card y navega.
-                        aria-label específico por proyecto.
-                        -->
                         <button class="ghost-cta" type="button" *ngIf="p.url" (click)="openProject($event, p.url)"
                             [attr.aria-label]="'Abrir ' + p.title + ' en GitHub'">
                             Ver proyecto en GitHub
                         </button>
                     </div>
 
-                    <!--
-                    Overlays fijos al viewport de la tarjeta:
-                    - Fades top/bottom actúan como indicación de scroll disponible.
-                    - Se muestran/ocultan según el estado calculado en TS:
-                        state(p.id).atTop / atBottom / can (si hay overflow).
-                    aria-hidden: puramente decorativos (no relevantes para lectores).
-                    -->
-                    <div class="fade fade-top" *ngIf="!state(p.id).atTop" aria-hidden="true"></div>
-                    <div class="fade fade-bottom" *ngIf="!state(p.id).atBottom" aria-hidden="true"></div>
+                    <div class="p-fade p-fade-top" *ngIf="!state(p.id).atTop" aria-hidden="true"></div>
+                    <div class="p-fade p-fade-bottom" *ngIf="!state(p.id).atBottom" aria-hidden="true"></div>
 
-                    <!--
-                    Scrollbar custom sincronizada:
-                      *ngIf="state(p.id).can": solo si hay contenido desplazable.
-                    .thumb: altura y posición en porcentaje derivadas (thumbH, thumbTop).
-                    -->
-                    <div class="scrollbar" *ngIf="state(p.id).can" aria-hidden="true">
+                    <div class="p-scrollbar" *ngIf="state(p.id).can" aria-hidden="true">
                         <div class="thumb" [style.height.%]="state(p.id).thumbH" [style.top.%]="state(p.id).thumbTop">
                         </div>
                     </div>
                 </div>
-
             </div>
         </article>
     </div>

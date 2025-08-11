@@ -20,10 +20,7 @@
       (click)="closeMenu()">Inicio</a>
     <a routerLink="/about" routerLinkActive="active" (click)="closeMenu()">Mi historia</a>
 
-    <!-- Home + scroll a #experience -->
-    <a [routerLink]="'/'" [fragment]="'experience'" (click)="closeMenu()" [class.active]="experienceActive">
-      Experiencia laboral
-    </a>
+    <a routerLink="/experience" routerLinkActive="active" (click)="closeMenu()">Experiencia Laboral</a>
 
     <a routerLink="/projects" routerLinkActive="active" (click)="closeMenu()">Proyectos</a>
     <a routerLink="/contact" routerLinkActive="active" (click)="closeMenu()">Contacto</a>

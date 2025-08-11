@@ -1,48 +1,50 @@
-:root {
-    /* 🎨 Variables globales para colores y efectos reutilizables en la sección */
-    --accent: #60a5fa;
-    /* azul principal para acentos/bordes/gradientes */
-    --accent2: #22d3ee;
-    /* cian secundario para gradientes */
-    --title: #fff;
-    /* color de títulos */
-    --text: #e6efff;
-    /* color de texto base en overlays/meta */
-    --muted: #b6c6ea;
-    /* texto secundario/chips */
-    --ring: rgba(255, 255, 255, .14);
-    /* borde tenue (inset) para tarjetas/elementos */
-    --bg1: #0b1631;
-    /* fondos oscuros (si se necesitan) */
-    --bg2: #0f1f3f;
+/* ===== Tokens para armonizar con la otra sección ===== */
+:host {
+    --p-card-w: 400px;
+    /* ancho card */
+    --p-meta-h: 220px;
+    /* alto panel texto */
+
+    /* paleta “neón” coherente */
+    --brand-blue: #3ea0ff;
+    --brand-cyan: #12e1ff;
+    --brand-deep: #06162b;
+
+    /* halo/glow */
+    --halo: rgba(18, 225, 255, .45);
+    --halo-strong: rgba(18, 225, 255, .65);
+
+    /* animaciones */
+    --card-raise: -6px;
+    --tilt: .6deg;
+    --anim-speed: .32s;
+    --ring-speed: 6s;
+    --ring-speed-fast: 3s;
+    --shine-speed: .9s;
 }
 
-/* contenedor */
 .projects {
-    padding: 90px 20px;
+    padding: clamp(56px, 7vw, 96px) 20px;
     max-width: 1300px;
     margin: 0 auto;
     text-align: center;
 }
 
-/* título */
 .title {
     display: block;
     margin: 0 auto 28px;
     width: max-content;
-    /* ⬅ limita el subrayado al contenido del título */
     font-size: clamp(2rem, 1.2rem + 2vw, 2.6rem);
     color: #f8fafc;
-    border-bottom: 2px solid var(--accent);
+    border-bottom: 2px solid var(--brand-blue);
     padding-bottom: 8px;
 }
 
-/* ====== FILTROS ====== */
+/* Filtros */
 .filters {
     display: flex;
-    gap: 10px;
+    gap: 30px;
     font-size: 2rem;
-    /* ✔️ corregido (antes tenía un espacio: `2 rem`) */
     justify-content: center;
     flex-wrap: wrap;
     margin-bottom: 26px;
@@ -50,14 +52,13 @@
 
 .pill {
     background: transparent;
-    border: 1px solid #3b82f6;
+    border: 1px solid var(--brand-blue);
     color: #cbd5e1;
     padding: 8px 14px;
     border-radius: 999px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: .2s;
-    /* 🧪 transición genérica para hover/focus */
+    transition: transform .2s, box-shadow .2s, background .2s, color .2s;
 }
 
 .pill:hover {
@@ -65,148 +66,243 @@
 }
 
 .pill.active {
-    background: #3b82f6;
-    color: #fff;
-    font-weight: 700;
-    /* ✔️ quitado ; extra */
+    background: linear-gradient(90deg, var(--brand-blue), var(--brand-cyan));
+    color: #08121f;
 }
 
 .pill:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, .25);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand-blue) 35%, transparent);
 }
 
-/* grid */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    /* 📐 responsive auto-fill */
+/* ===== GRID ===== */
+.projects-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, var(--p-card-w, 400px)) !important;
+    justify-content: center;
     gap: 18px;
+    align-items: start;
 }
 
-/* card */
-.card {
+@media (max-width:520px) {
+    .projects-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* ===== CARD ===== */
+.p-card {
+    width: var(--p-card-w, 340px) !important;
     position: relative;
-    aspect-ratio: 16/9;
-    /* 🖼 relación panorámica uniforme para todas las tarjetas */
     border-radius: 18px;
     overflow: hidden;
-    /* recorta fondos/overlays a los bordes redondeados */
     isolation: isolate;
-    /* asegura que pseudo-elementos no se “sangren” entre tarjetas */
-    box-shadow: 0 10px 24px rgba(0, 0, 0, .25);
+    background: radial-gradient(120% 140% at 50% -20%, #0b2a4a 0%, var(--brand-deep) 55%, #07101f 100%);
+    box-shadow:
+        0 10px 24px rgba(0, 0, 0, .28),
+        0 0 0 1px color-mix(in oklab, var(--brand-blue) 22%, transparent),
+        0 0 34px rgba(7, 98, 255, .06);
+    display: flex;
+    flex-direction: column;
+    transform-style: preserve-3d;
+    transition: transform var(--anim-speed) ease, box-shadow var(--anim-speed) ease, filter var(--anim-speed) ease;
+    will-change: transform, box-shadow, filter;
 }
 
-/* Accesibilidad: foco claro cuando la card es navegable con TAB */
-.card:focus-visible {
+@media (max-width:520px) {
+    .p-card {
+        width: 100% !important;
+    }
+}
+
+.p-card:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.5);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand-blue) 50%, transparent);
 }
 
-/* fondo (animable) */
-.card .card-bg {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    transition: transform .35s ease, filter .35s ease, box-shadow .35s ease;
-    filter: saturate(.92) brightness(.97);
-    /* 🌗 desatura/oscurece levemente en reposo */
+/* Hover/Open: escala + tilt + halo neón */
+@media (hover:hover) {
+    .p-card:hover {
+        transform: translateY(var(--card-raise)) scale(1.02) rotateX(var(--tilt));
+        box-shadow:
+            0 18px 38px rgba(0, 0, 0, .38),
+            0 0 0 1px color-mix(in oklab, var(--brand-blue) 40%, transparent),
+            0 0 44px var(--halo);
+        filter: drop-shadow(0 0 18px var(--halo));
+    }
 }
 
-/* marco gradiente externo mediante máscara (sin invadir contenido) */
-.card::before {
+.p-card.open {
+    transform: translateY(var(--card-raise)) scale(1.025);
+    box-shadow:
+        0 22px 46px rgba(0, 0, 0, .42),
+        0 0 0 1px color-mix(in oklab, var(--brand-blue) 55%, transparent),
+        0 0 56px var(--halo-strong);
+    filter: drop-shadow(0 0 24px var(--halo-strong));
+}
+
+/* Borde gradiente animado tipo “neón” */
+@keyframes border-pan {
+    0% {
+        background-position: 0% 50%
+    }
+
+    100% {
+        background-position: 200% 50%
+    }
+}
+
+.p-card::before {
     content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
     padding: 2px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    /* 🧩 truco de máscara para dejar solo el borde exterior */
+    background: linear-gradient(135deg, var(--brand-blue), var(--brand-cyan), var(--brand-blue));
+    background-size: 200% 200%;
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
-    opacity: 0;
-    /* se revela en :hover/.open */
+    opacity: .35;
     transition: opacity .35s ease;
     pointer-events: none;
+    animation: border-pan var(--ring-speed) linear infinite;
 }
 
-/* marco interior sutil (glass) */
-.frame {
+.p-card.open::before {
+    opacity: .95;
+    animation-duration: var(--ring-speed-fast);
+}
+
+@media (hover:hover) {
+    .p-card:hover::before {
+        opacity: .95;
+        animation-duration: var(--ring-speed-fast);
+    }
+}
+
+
+/* Shine sweep diagonal */
+.p-card::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, .18) 45%, rgba(255, 255, 255, .08) 55%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform var(--shine-speed) cubic-bezier(.2, .6, .2, 1);
+    pointer-events: none;
+    mix-blend-mode: screen;
+    opacity: .8;
+}
+
+.p-card.open::after {
+    transform: translateX(120%);
+}
+
+@media (hover:hover) {
+    .p-card:hover::after {
+        transform: translateX(120%);
+    }
+}
+
+/* Media */
+.p-media {
+    margin: 12px 12px 0;
+    border-radius: 14px;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .25);
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.p-media-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    filter: saturate(.95) brightness(.98);
+    transform-origin: center;
+    transition: transform var(--anim-speed) ease, filter var(--anim-speed) ease;
+}
+
+@media (hover:hover) {
+    .p-card:hover .p-media-img {
+        transform: translateZ(10px) scale(1.04);
+        filter: saturate(1.02) brightness(1);
+    }
+}
+
+/* Marco interior con glow */
+@keyframes frame-glow {
+
+    0%,
+    100% {
+        opacity: .48
+    }
+
+    50% {
+        opacity: .85
+    }
+}
+
+.p-frame {
     position: absolute;
     inset: 10px;
     border-radius: 14px;
-    box-shadow: inset 0 0 0 1px var(--ring);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14);
     background: radial-gradient(120% 120% at 50% 20%, rgba(255, 255, 255, .06), transparent 40%);
     opacity: .6;
     mix-blend-mode: soft-light;
     pointer-events: none;
+    animation: frame-glow 5.5s ease-in-out infinite;
 }
 
-/* overlay (solo info) */
-.overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    text-decoration: none;
-    color: inherit;
-    padding: 14px;
-    /* 🎚️ Gradiente que mejora legibilidad del texto sobre la imagen */
-    background: linear-gradient(to top, rgba(2, 12, 28, .88) 0%, rgba(2, 12, 28, .52) 55%, rgba(2, 12, 28, 0) 100%);
-    opacity: 0;
-    /* aparece en :hover/.open */
-    transition: opacity .28s ease;
+/* Contenido */
+.p-content {
+    padding: 14px 14px 12px;
 }
 
-/* meta limpia, sin blur: contenedor del texto con su propio overflow */
-.meta {
-    background: rgba(15, 23, 42, .94);
-    border: 2px solid rgba(59, 134, 246, 0.35);
+.p-meta {
+    background: rgba(8, 22, 38, .94);
+    border: 2px solid color-mix(in oklab, var(--brand-cyan) 45%, transparent);
     border-radius: 12px;
-    max-height: calc(100% - 14px);
-    /* deja margen inferior para respiro */
     position: relative;
     overflow: hidden;
     padding: 12px 14px;
-    /* padding visual (el scroll es del hijo .meta-scroll) */
+    height: var(--p-meta-h, 150px);
+    transition: border-color .25s ease, box-shadow .25s ease;
 }
 
-/* contenido que scrollea dentro de meta */
-.meta-scroll {
-    max-height: 100%;
+.p-card.open .p-meta {
+    box-shadow: 0 8px 24px color-mix(in oklab, var(--brand-cyan) 18%, transparent);
+    border-color: color-mix(in oklab, var(--brand-cyan) 70%, transparent);
+}
+
+.p-meta-scroll {
+    height: calc(var(--p-meta-h, 150px) - 24px);
     overflow: auto;
-    /* 🔁 scroll nativo; sincroniza con la barra custom */
     -webkit-overflow-scrolling: touch;
-    /* inercia en iOS */
     padding-right: 14px;
-    /* deja hueco para la barra custom */
 }
 
-.meta,
-.meta * {
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-}
-
-.meta .title-line {
+/* Tipografía & chips */
+.title-line {
     margin: 0 0 6px;
     color: #e2e8f0;
     font-size: 1.08rem;
     font-weight: 800;
 }
 
-.meta .short-line {
+.short-line {
     margin: 0 0 10px;
     color: #cbd5e1;
     font-size: .94rem;
     line-height: 1.45;
 }
 
-/* chips */
 .chips {
     display: flex;
     gap: 6px;
@@ -219,138 +315,113 @@
     letter-spacing: .2px;
     color: #dbe7ff;
     background: rgba(255, 255, 255, .08);
-    box-shadow: inset 0 0 0 1px var(--ring);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14);
     padding: 5px 10px;
     border-radius: 999px;
-    transition: transform .15s ease, background .15s ease;
+    transition: transform .15s ease, background .15s ease, box-shadow .2s ease;
 }
 
-.chip:hover {
-    transform: translateY(-2px);
-    background: rgba(96, 165, 250, .18);
+@media (hover:hover) {
+    .chip:hover {
+        transform: translateY(-2px);
+        background: color-mix(in oklab, var(--brand-blue) 22%, rgba(255, 255, 255, .08));
+        box-shadow: 0 6px 16px color-mix(in oklab, var(--brand-blue) 22%, transparent);
+    }
 }
 
-/* CTA */
+/* CTA coherente con la paleta */
 .ghost-cta {
     align-self: flex-start;
     margin-top: 8px;
     padding: 8px 12px;
     font-weight: 800;
-    color: whitesmoke;
+    color: #07121f;
     border: 0;
     border-radius: 10px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    box-shadow: 0 8px 24px rgba(34, 211, 238, .25);
+    background: linear-gradient(90deg, var(--brand-blue), var(--brand-cyan));
+    box-shadow: 0 8px 24px color-mix(in oklab, var(--brand-cyan) 35%, transparent);
     cursor: pointer;
     transition: transform .18s ease, box-shadow .25s ease, filter .25s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .ghost-cta:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(96, 165, 250, .35);
-    filter: saturate(1.05);
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 12px 28px color-mix(in oklab, var(--brand-cyan) 45%, transparent);
 }
 
-/* ===== Interacciones ===== */
-@media (hover:hover) {
-
-    /* 🖱 Solo equipos con hover real (evita efectos fantasma en pantallas táctiles) */
-    .card:hover::before {
-        opacity: .9;
-    }
-
-    .card:hover .card-bg {
-        transform: translateY(-8px) scale(1.02);
-        filter: saturate(1) brightness(1);
-        box-shadow: 0 26px 54px rgba(30, 64, 175, .32);
-    }
-
-    .card:hover .overlay {
-        opacity: 1;
-    }
+.ghost-cta::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(100deg, transparent 40%, rgba(255, 255, 255, .35) 50%, transparent 60%);
+    transform: translateX(-120%);
+    transition: transform .6s cubic-bezier(.2, .6, .2, 1);
+    mix-blend-mode: screen;
+    opacity: .7;
+    pointer-events: none;
 }
 
-/* Estado persistente cuando la card está “abierta” (móvil/teclado) */
-.card.open::before {
-    opacity: .9;
+.ghost-cta:hover::after {
+    transform: translateX(120%);
 }
 
-.card.open .card-bg {
-    transform: translateY(-8px) scale(1.02);
-    filter: saturate(1) brightness(1);
-    box-shadow: 0 26px 54px rgba(30, 64, 175, .32);
-}
-
-.card.open .overlay {
-    opacity: 1;
-}
-
-/* --- Scroll affordances (indicadores visuales de que hay más contenido) --- */
-.fade {
+/* Fades + scrollbar */
+.p-fade {
     position: absolute;
     left: 8px;
     right: 24px;
-    /* deja hueco para la scrollbar custom */
     pointer-events: none;
     height: 24px;
 }
 
-.fade-top {
+.p-fade-top {
     top: 12px;
-    background: linear-gradient(to bottom, rgba(15, 29, 42, 0.95), rgba(15, 23, 42, 0));
+    background: linear-gradient(to bottom, rgba(10, 22, 38, .95), rgba(10, 22, 38, 0));
 }
 
-.fade-bottom {
+.p-fade-bottom {
     bottom: 12px;
-    background: linear-gradient(to top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0));
+    background: linear-gradient(to top, rgba(10, 22, 38, .95), rgba(10, 22, 38, 0));
 }
 
-/* Scrollbar propia (track + thumb) — sincronizada desde TS */
-.scrollbar {
+.p-scrollbar {
     position: absolute;
     top: 12px;
     bottom: 12px;
     right: 8px;
     width: 6px;
     border-radius: 6px;
-    background: rgba(3, 167, 243, 0.08);
-    box-shadow: inset 2px 2px 2px 2px var(--ring);
+    background: color-mix(in oklab, var(--brand-cyan) 12%, transparent);
+    box-shadow: inset 2px 2px 2px 2px rgba(255, 255, 255, .14);
     opacity: .95;
     pointer-events: none;
-    /* puramente visual; no interfiere con el scroll nativo */
 }
 
-.scrollbar .thumb {
+.p-scrollbar .thumb {
     position: absolute;
     left: 2px;
     right: 2px;
     border-radius: 6px;
-    background: linear-gradient(180deg, var(--accent), var(--accent2));
-    box-shadow: 2px 2px 12px rgba(243, 243, 243, 0.35);
+    background: linear-gradient(90deg, var(--brand-blue), var(--brand-cyan));
+    box-shadow: 0 0 10px color-mix(in oklab, var(--brand-cyan) 40%, transparent);
     transition: top .08s linear, height .08s linear;
-    /* 🔁 animación sutil al desplazar */
 }
 
-/* responsive */
-@media (max-width: 480px) {
+/* Accesibilidad / motion */
+@media (max-width:480px) {
     .title {
         font-size: 2rem;
     }
-
-    .grid {
-        grid-template-columns: 1fr;
-    }
-
-    /* 1 por fila en móviles pequeños */
 }
 
-/* reduce motion: respeta preferencias del usuario desactivando transiciones */
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion:reduce) {
 
-    .card .card-bg,
-    .overlay,
-    .ghost-cta,
-    .scrollbar .thumb {
-        transition: none;
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
     }
 }

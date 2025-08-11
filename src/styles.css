@@ -88,4 +88,8 @@ img {
 
 :root {
     --header-h: 64px;
+    --p-card-w: 340px;
+    /* fallback global */
+    --p-meta-h: 150px;
+    /* fallback global */
 }

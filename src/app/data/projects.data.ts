@@ -12,7 +12,7 @@ export const PROJECTS: Project[] = [
     {
         id: 'flycheck',
         title: 'FLY CHECK',
-        short: 'App Android desarrollada con <b>Jetpack Compose</b>, <b>Material3</b>, <b>Hilt (DI)</b>, Media Store, FileProvider, notificaciones, entre otras. Diseñada para facilitar la creación y gestión de CheckList Aeronáuticas llevada al siguiente nivel.',
+        short: 'App Android desarrollada con <b>Jetpack Compose</b>, <b>Material3</b>, <b>Hilt (DI)</b>, Media Store, FileProvider, notificaciones, entre otras. <br>Diseñada para facilitar la creación y gestión de CheckList Aeronáuticas llevada al siguiente nivel.',
         img: 'assets/img/projects/ic_fly_check.webp',
         categories: ['ANDROID'],
         url: 'https://github.com/sergiomarchado/FlyCheck'
@@ -20,7 +20,7 @@ export const PROJECTS: Project[] = [
     {
         id: 'sharelist-api',
         title: 'ShareList API',
-        short: 'Una <b>API RESTful</b> construida con <b>Spring Boot</b>. Implementa <b>autenticación JWT</b>, gestión de usuarios y acceso seguro a recursos protegidos. Ideal como base para cualquier sistema que requiera autenticación moderna con token.',
+        short: 'Una <b>API RESTful</b> construida con <b>Spring Boot</b>.<br> Implementa <b>autenticación JWT</b>, gestión de usuarios y acceso seguro a recursos protegidos. Ideal como base para cualquier sistema que requiera autenticación moderna con token.',
         img: 'assets/img/projects/ic_sharelistapi_portfolio.webp',
         categories: ['JAVA/BACK'],
         url: 'https://github.com/sergiomarchado/spring-jwt-auth-api'
@@ -36,7 +36,7 @@ export const PROJECTS: Project[] = [
     {
         id: 'wordle',
         title: 'Wordle Multilingüe con Android',
-        short: 'Versión personalizada del clásico Wordle, desarrollada en <b>Kotlin</b> con un enfoque "tradicional" basado en <b>Fragments</b>, <b>ViewModel</b>, <b>ViewBinding</b> y <b>Navigation Component</b>.El proyecto incorpora soporte <b>multilenguaje</b> y está diseñado para ofrecer una experiencia fluida tanto en modo vertical como horizontal.',
+        short: 'Versión personalizada del clásico Wordle, desarrollada en <b>Kotlin</b> con un enfoque "tradicional" basado en <b>Fragments</b>, <b>ViewModel</b>, <b>ViewBinding</b> y <b>Navigation Component</b>.<br>El proyecto incorpora soporte <b>multilenguaje</b> y está diseñado para ofrecer una experiencia fluida tanto en modo vertical como horizontal.',
         img: 'assets/img/projects/ic_wordle.webp',
         categories: ['ANDROID'],
         url: 'https://github.com/sergiomarchado/Wordle_Android'

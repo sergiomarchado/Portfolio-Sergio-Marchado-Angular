@@ -1,5 +1,5 @@
 :root {
-    /* Tokens globales (colores/efectos) reutilizados en toda la sección */
+    /* Paleta */
     --accent: #60a5fa;
     --accent2: #22d3ee;
     --title: #fff;
@@ -8,12 +8,26 @@
     --card1: #0b1631;
     --card2: #0f1f3f;
     --ring: rgba(255, 255, 255, .12);
-    /* borde-tenue para “glass”/separadores */
+
+    /* Neón */
+    --neon-blue: #3ea0ff;
+    --neon-cyan: #12e1ff;
+    --halo-soft: rgba(18, 225, 255, .35);
+    --halo-strong: rgba(18, 225, 255, .55);
+
+    /* Velocidades / tiempos */
+    --flow-speed: 16s;
+    /* timeline flow */
+    --spin-slow: 16s;
+    /* anillo dot base */
+    --spin-fast: 8s;
+    /* anillo dot hover */
+    --border-pan: 10s;
+    /* pan del borde gradiente */
 }
 
 /* ========== CONTENEDOR Y TÍTULO ========== */
 .xp-section {
-    /* clamp() mantiene padding cómodo entre móvil y desktop */
     padding: clamp(48px, 6vw, 96px) 20px;
     max-width: 1300px;
     margin: 0 auto;
@@ -24,10 +38,10 @@
     color: var(--title);
     font-size: clamp(2rem, 1.2rem + 2vw, 3rem);
     margin: 0 0 28px;
+    text-shadow: 0 4px 30px rgba(100, 150, 255, .35);
 }
 
 .xp-title::after {
-    /* Subrayado decorativo con gradiente (acentúa la sección) */
     content: "";
     display: block;
     width: 180px;
@@ -47,7 +61,6 @@
 }
 
 .btn-cv {
-    /* --g1/--g2 permiten cambiar el gradiente del botón si hace falta */
     --g1: var(--accent);
     --g2: var(--accent2);
     position: relative;
@@ -62,29 +75,46 @@
     text-decoration: none;
     box-shadow: 0 8px 24px rgba(34, 211, 238, .25);
     transition: transform .18s ease, box-shadow .25s ease, filter .25s ease;
+    overflow: hidden;
 }
 
 .btn-cv::after {
-    /* Truco de máscara para dibujar un borde-gradiente “hueco” sin cubrir el fondo */
+    /* Borde hueco + barrido */
     content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
     padding: 1px;
     background: linear-gradient(135deg, var(--g1), var(--g2));
-    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
-    opacity: .25;
+    opacity: .28;
+    pointer-events: none;
+}
+
+.btn-cv::before {
+    /* shine sweep */
+    content: "";
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(100deg, transparent 45%, rgba(255, 255, 255, .32) 50%, transparent 55%);
+    transform: translateX(-120%);
+    transition: transform .6s cubic-bezier(.2, .6, .2, 1);
+    mix-blend-mode: screen;
+    opacity: .85;
     pointer-events: none;
 }
 
 .btn-cv:hover {
-    /* Elevación + leve saturación para feedback */
     transform: translateY(-2px);
     box-shadow: 0 12px 32px rgba(96, 165, 250, .35);
     filter: saturate(1.05);
+}
+
+.btn-cv:hover::before {
+    transform: translateX(120%);
 }
 
 .btn-cv__icon svg {
@@ -102,7 +132,6 @@
 }
 
 .btn-ghost {
-    /* Botón secundario con fondo translucido y ring interior */
     color: var(--accent);
     text-decoration: none;
     padding: 6px 10px;
@@ -117,55 +146,83 @@
     transform: translateY(-1px);
 }
 
-
 /* ========== TIMELINE ========== */
 .xp-timeline {
     position: relative;
     list-style: none;
     margin: 0;
-    /* margen superior para que el primer dot respire */
     padding-top: 12px;
 }
 
+/* Barra principal con “flujo” */
+@keyframes lineFlow {
+    0% {
+        background-position: 0 0, 0 0;
+    }
+
+    100% {
+        background-position: 0 100%, 0 0;
+    }
+}
+
 .xp-timeline::before {
-    /* Barra vertical principal del timeline (gradiente para dar vida) */
     content: "";
     position: absolute;
     left: 36px;
     top: 0;
     bottom: 0;
     width: 2px;
-    background: linear-gradient(var(--accent), var(--accent2));
+    /* capa 1: gradiente base, capa 2: máscara de “dashes” que se desplaza */
+    background:
+        linear-gradient(var(--accent), var(--accent2)),
+        repeating-linear-gradient(180deg, rgba(255, 255, 255, .0) 0 8px, rgba(255, 255, 255, .7) 8px 16px);
+    background-blend-mode: overlay;
+    animation: lineFlow var(--flow-speed) linear infinite;
     opacity: .45;
 }
 
-/* ========== ITEM DEL TIMELINE ========== */
+/* ========== ITEM ========== */
 .xp-card {
-    /* Grid 2 columnas: 72px para logo, resto contenido */
     position: relative;
     display: grid;
     grid-template-columns: 72px 1fr;
     gap: 16px;
     padding: 12px 12px 12px 0;
     margin-bottom: 18px;
-    /* se sobreescriben en “reveal” */
     opacity: 1;
     transform: none;
 }
 
-/* Segmento de continuidad del timeline específico al item */
+/* segmento por item */
 .xp-line {
     position: absolute;
     left: 36px;
     top: 0;
-    /* se extiende hasta el margen inferior del item */
     bottom: -18px;
     width: 2px;
     background: rgba(255, 255, 255, .06);
 }
 
+/* Dot con anillo giratorio + pulso */
+@keyframes ringSpin {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+@keyframes dotPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 2px #0a1428, 0 0 14px rgba(56, 140, 255, .35)
+    }
+
+    50% {
+        box-shadow: 0 0 0 2px #0a1428, 0 0 24px rgba(56, 140, 255, .55)
+    }
+}
+
 .xp-dot {
-    /* Marcador circular con glow */
     position: absolute;
     left: 27px;
     top: 18px;
@@ -173,10 +230,26 @@
     height: 20px;
     border-radius: 50%;
     background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent2));
-    box-shadow: 0 0 0 2px #0a1428, 0 0 18px rgba(56, 140, 255, .4);
+    animation: dotPulse 2.6s ease-in-out infinite;
 }
 
-/* Logo de la empresa (contenedor y fallback) */
+.xp-dot::before {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: inherit;
+    padding: 6px;
+    background: conic-gradient(from 0deg, var(--accent), var(--accent2));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: .8;
+    pointer-events: none;
+    animation: ringSpin var(--spin-slow) linear infinite;
+}
+
+/* Logo */
 .xp-logo {
     width: 72px;
     height: 72px;
@@ -194,7 +267,6 @@
     width: 60px;
     height: 60px;
     object-fit: contain;
-    /* evita deformaciones del logo */
 }
 
 .xp-logo-fallback {
@@ -207,45 +279,101 @@
     transform: scale(1.06) rotateZ(-1deg);
 }
 
-/* Tarjeta de contenido */
+/* Contenido */
 .xp-content {
     position: relative;
     border-radius: 18px;
     padding: 14px 16px;
     background: linear-gradient(180deg, var(--card1), var(--card2));
     box-shadow: inset 0 0 0 1px var(--ring), 0 16px 42px rgba(10, 20, 40, .35);
-    transition: transform .28s ease, box-shadow .35s ease, background .25s ease;
+    transition: transform .28s ease, box-shadow .35s ease, background .25s ease, filter .25s ease;
     overflow: hidden;
+    will-change: transform, box-shadow, filter;
+}
+
+/* Borde gradiente animado (border-pan) */
+@keyframes borderPan {
+    0% {
+        background-position: 0% 50%
+    }
+
+    100% {
+        background-position: 200% 50%
+    }
 }
 
 .xp-content::before {
-    /* Borde-gradiente “hueco” con máscara — mismo patrón que en .btn-cv */
     content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
     padding: 2px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    /* Compatibilidad estándar + webkit */
-    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan), var(--neon-blue));
+    background-size: 200% 200%;
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
-    opacity: .7;
+    opacity: .55;
     pointer-events: none;
-    transition: filter .35s ease, opacity .35s ease;
+    animation: borderPan var(--border-pan) linear infinite;
+}
+
+/* === AURORA AMBIENTAL (reemplaza el shine sweep) ======================= */
+@keyframes auroraDrift {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+        filter: blur(20px) saturate(115%);
+    }
+
+    50% {
+        transform: translate3d(2%, -2%, 0) scale(1.02);
+        filter: blur(24px) saturate(125%);
+    }
+
+    100% {
+        transform: translate3d(-2%, 3%, 0) scale(1);
+        filter: blur(20px) saturate(115%);
+    }
+}
+
+/* Capa ambiental dentro de la tarjeta (no es un reflejo direccional) */
+.xp-content::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
+    /* 3 “manchas” radiales muy suaves en lugares diferentes */
+    background:
+        radial-gradient(120% 90% at 70% 10%, rgba(62, 160, 255, .16), transparent 60%),
+        radial-gradient(100% 120% at 15% 85%, rgba(34, 211, 238, .12), transparent 60%),
+        radial-gradient(140% 140% at 85% 45%, rgba(147, 197, 253, .10), transparent 65%);
+    mix-blend-mode: screen;
+    opacity: .85;
+    pointer-events: none;
+    animation: auroraDrift 18s ease-in-out infinite alternate;
+    will-change: transform, filter, opacity;
 }
 
 .xp-card:hover .xp-content {
-    /* Efecto “levitar” con ligera perspectiva */
     transform: translateY(-12px) scale(1.01) rotateX(4deg);
     box-shadow: 0 32px 64px rgba(60, 120, 255, .3);
+    filter: saturate(1.03);
 }
 
-.xp-card:hover .xp-content::before {
-    /* Tinte dinámico del borde en hover */
-    filter: hue-rotate(24deg) saturate(120%);
+/* En hover intensificamos un poco el aura, sin parecer un “brillo” */
+.xp-card:hover .xp-content::after {
     opacity: .95;
+    animation-duration: 12s;
+    /* acelera ligeramente al hover */
+}
+
+/* Intensifica dot/anillo cuando pasas sobre la card */
+@media (hover:hover) {
+    .xp-card:hover .xp-dot::before {
+        animation-duration: var(--spin-fast);
+        opacity: 1;
+    }
 }
 
 /* ========== TIPOGRAFÍA Y METADATOS ========== */
@@ -286,7 +414,6 @@
     opacity: .6;
 }
 
-/* Duración estilo “chip” */
 .xp-duration {
     margin-left: 4px;
     padding: 4px 8px;
@@ -298,15 +425,12 @@
 }
 
 .xp-duration::before {
-    /* Emoji de reloj como adorno (ligero impacto en tipografías/OS) */
     content: "⏱️ ";
     opacity: .9;
 }
 
-/* Texto y bullets */
 .xp-summary {
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding: 12px 0;
     font-size: 1.1rem;
     color: var(--text);
     margin: .35rem 0 .5rem;
@@ -314,7 +438,6 @@
 
 .xp-summary strong,
 .xp-tasks strong {
-    /* Énfasis visual en palabras clave */
     color: var(--accent);
     font-size: 1.2rem;
     font-weight: 800;
@@ -327,9 +450,8 @@
     color: #cfe2ff;
 }
 
-/* Chips de tecnología */
 .xp-tasks {
-    margin: 0.8rem 0 0;
+    margin: .8rem 0 0;
     padding-left: 1.1rem;
     color: var(--text);
 }
@@ -339,7 +461,6 @@
     line-height: 1.4;
 }
 
-/* Chips tecnología */
 .xp-tags {
     display: flex;
     flex-wrap: wrap;
@@ -355,12 +476,15 @@
     color: var(--text);
     background: var(--bg);
     box-shadow: inset 0 0 0 1px var(--ring);
-    transition: transform .15s ease, background .15s ease;
+    transition: transform .15s ease, background .15s ease, box-shadow .2s ease;
 }
 
-.xp-tag:hover {
-    transform: translateY(-2px);
-    background: rgba(96, 165, 250, .16);
+@media (hover:hover) {
+    .xp-tag:hover {
+        transform: translateY(-2px);
+        background: rgba(96, 165, 250, .16);
+        box-shadow: 0 6px 16px color-mix(in oklab, var(--neon-blue) 22%, transparent);
+    }
 }
 
 /* Referencias */
@@ -402,39 +526,73 @@
 
 /* ========== REVEAL (aparición escalonada) ========== */
 .reveal-ready .xp-card {
-    /* Estado inicial: oculto y un poco desplazado */
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(16px) scale(.985);
 }
 
 .reveal-ready.in-view .xp-card {
-    /* Al entrar en viewport, dispara la animación definida abajo */
     animation: xpIn .6s cubic-bezier(.2, .8, .2, 1) both;
-}
-
-/* Pequeños delays por posición para efecto “stagger” */
-.reveal-ready.in-view .xp-card:nth-child(1) {
-    animation-delay: .04s
-}
-
-.reveal-ready.in-view .xp-card:nth-child(2) {
-    animation-delay: .08s
-}
-
-.reveal-ready.in-view .xp-card:nth-child(3) {
-    animation-delay: .12s
 }
 
 @keyframes xpIn {
     from {
         opacity: 0;
-        transform: translateY(18px) scale(.98);
+        transform: translateY(18px) scale(.985);
     }
 
     to {
         opacity: 1;
         transform: translateY(0) scale(1);
     }
+}
+
+/* stagger hasta 12 elementos por si crece el timeline */
+.reveal-ready.in-view .xp-card:nth-child(1) {
+    animation-delay: .04s;
+}
+
+.reveal-ready.in-view .xp-card:nth-child(2) {
+    animation-delay: .08s;
+}
+
+.reveal-ready.in-view .xp-card:nth-child(3) {
+    animation-delay: .12s;
+}
+
+.reveal-ready.in-view .xp-card:nth-child(4) {
+    animation-delay: .16s;
+}
+
+.reveal-ready.in-view .xp-card:nth-child(5) {
+    animation-delay: .20s;
+}
+
+.reveal-ready.in-view .xp-card:nth-child(6) {
+    animation-delay: .24s;
+}
+
+.reveal-ready.in-view .xp-card:nth-child(7) {
+    animation-delay: .28s;
+}
+
+.reveal-ready.in-view .xp-card:nth-child(8) {
+    animation-delay: .32s;
+}
+
+.reveal-ready.in-view .xp-card:nth-child(9) {
+    animation-delay: .36s;
+}
+
+.reveal-ready.in-view .xp-card:nth-child(10) {
+    animation-delay: .40s;
+}
+
+.reveal-ready.in-view .xp-card:nth-child(11) {
+    animation-delay: .44s;
+}
+
+.reveal-ready.in-view .xp-card:nth-child(12) {
+    animation-delay: .48s;
 }
 
 /* ========== RESPONSIVE ========== */
@@ -461,13 +619,23 @@
 /* ========== ACCESIBILIDAD: REDUCE MOTION ========== */
 @media (prefers-reduced-motion: reduce) {
 
+    .xp-timeline::before,
+    .xp-dot,
+    .xp-dot::before,
+    .xp-content::before {
+        animation: none !important;
+    }
+
+    .xp-content::after {
+        animation: none !important;
+    }
+
     .xp-content,
     .xp-logo,
     .xp-tag,
     .xp-card {
-        /* Elimina transiciones/transformaciones para usuarios que lo prefieran */
-        transition: none;
-        transform: none;
+        transition: none !important;
+        transform: none !important;
     }
 
     .reveal-ready .xp-card {
