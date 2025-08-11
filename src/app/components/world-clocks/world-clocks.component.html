@@ -1,0 +1,23 @@
+<section class="clocks" aria-label="Relojes mundiales">
+    <article class="clock-card" *ngFor="let c of clocks()">
+        <div class="dial" [attr.aria-label]="'Hora en ' + c.label">
+            <div class="ticks" aria-hidden="true"></div>
+
+            <!-- Usamos variable CSS --angle -->
+            <div class="hand hour" aria-hidden="true" [style.--angle]="c.hAngle + 'deg'"></div>
+            <div class="hand minute" aria-hidden="true" [style.--angle]="c.mAngle + 'deg'"></div>
+            <div class="hand second" aria-hidden="true" [style.--angle]="c.sAngle + 'deg'"></div>
+
+            <div class="pin" aria-hidden="true"></div>
+        </div>
+
+        <header class="c-head">
+            <span class="flag" aria-hidden="true">{{ c.flag }}</span>
+            <h4 class="city">{{ c.label }}</h4>
+            <span class="tz">{{ c.offset }}</span>
+        </header>
+
+        <div class="c-digital">{{ c.time }}</div>
+        <div class="c-date">{{ c.date }}</div>
+    </article>
+</section>

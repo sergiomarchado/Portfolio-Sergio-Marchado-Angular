@@ -1,61 +1,104 @@
 <section class="contact-wrap" aria-labelledby="contact-title">
-    <!-- Banner hero (solo una imagen) -->
-    <h1 id="contact-title" class="title">Contacto</h1>
-    <p class="lead">
-        ¿Hablamos? Puedes contactarme a través de las siguientes opciones:
-    </p>
+    <!-- HERO -->
+    <header class="contact-hero">
+        <h1 id="contact-title" class="title">Contacto</h1>
+        <p class="lead">¿Hablamos? Elige el canal que prefieras:</p>
 
-    <!-- Fila principal -->
-    <div class="btn-grid">
-        <!-- Descargar CV -->
-        <a class="btn btn-solid" href="/assets/cv/cv-sergio-marchado-android-developer.pdf" target="_blank"
-            rel="noopener" aria-label="Descargar CV en PDF">
-            <span class="ico" aria-hidden="true">
-                <!-- download -->
-                <svg viewBox="0 0 24 24">
-                    <path d="M11 3h2v9h3l-4 5-4-5h3V3Zm-7 14h16v2H4v-2Z" />
-                </svg>
-            </span>
-            <span>Descargar CV</span>
-        </a>
+        <ul class="hero-badges" role="list">
+            <li class="badge"><span class="dot"></span> Disponibilidad: {{ availability }}</li>
+            <li class="badge"><span class="dot"></span> Respuesta típica: {{ responseTime }}</li>
+            <li class="badge"><span class="dot"></span> Zona horaria: {{ timezoneLabel }}</li>
+        </ul>
+    </header>
 
-        <!-- Email directo -->
-        <a class="btn btn-solid" [href]="mailtoHref" aria-label="Escribir email">
-            <span class="ico" aria-hidden="true">
-                <!-- mail -->
-                <svg viewBox="0 0 24 24">
-                    <path
-                        d="M20 4H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z" />
-                </svg>
-            </span>
-            <span>Contáctame</span>
-        </a>
+    <!-- LAYOUT -->
+    <div class="contact-layout">
+        <!-- Columna izquierda: acciones -->
+        <div class="left">
+            <!-- Acciones principales -->
+            <div class="panel btn-grid primary">
+                <a class="btn btn-solid btn-lg" href="/assets/cv/cv-sergio-marchado-android-developer.pdf"
+                    target="_blank" rel="noopener" aria-label="Descargar CV en PDF">
+                    <span class="ico" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M11 3h2v9h3l-4 5-4-5h3V3Zm-7 14h16v2H4v-2Z" />
+                        </svg>
+                    </span>
+                    <span>Descargar CV</span>
+                </a>
 
-        <!-- Copiar email -->
-        <button class="btn btn-solid" type="button" (click)="copyEmail()">
-            <span class="ico" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                    <path
-                        d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
-                </svg>
-            </span>
-            <span>Copiar email</span>
-        </button>
+                <a class="btn btn-solid btn-lg" [href]="mailtoHref" aria-label="Escribir email">
+                    <span class="ico" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M20 4H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z" />
+                        </svg>
+                    </span>
+                    <span>Contáctame</span>
+                </a>
+
+                <button class="btn btn-solid btn-lg" type="button" (click)="copyEmail()">
+                    <span class="ico" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+                        </svg>
+                    </span>
+                    <span>Copiar email</span>
+                </button>
+
+                <button class="btn btn-solid btn-lg" type="button" (click)="downloadVCard()">
+                    <span class="ico" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M3 5h18v14H3V5zm2 2v10h14V7H5zm2 2h4v2H7V9zm0 4h10v2H7v-2z" />
+                        </svg>
+                    </span>
+                    <span>Guardar contacto (vCard)</span>
+                </button>
+            </div>
+
+            <!-- Acciones secundarias -->
+            <div class="panel btn-grid compact secondary">
+                <a class="btn btn-ghost" [href]="gmailHref" target="_blank" rel="noopener">Abrir en Gmail</a>
+                <a class="btn btn-ghost" [href]="outlookHref" target="_blank" rel="noopener">Abrir en Outlook Web</a>
+                <a class="btn btn-ghost" [href]="whatsHref" target="_blank" rel="noopener"
+                    aria-label="Enviar WhatsApp">WhatsApp</a>
+                <a class="btn btn-ghost" href="https://www.linkedin.com/in/sergio-marchado-ropero-82b8b914b/"
+                    target="_blank" rel="noopener">LinkedIn</a>
+                <a *ngIf="telegramUser" class="btn btn-ghost" [href]="telegramHref" target="_blank"
+                    rel="noopener">Telegram</a>
+            </div>
+        </div>
+
+        <!-- Columna derecha: info de valor -->
+        <aside class="right">
+            <div class="panel info-cards">
+                <article class="info-card">
+                    <h3 class="info-title">Ubicación</h3>
+                    <p class="info-body">Madrid, España · Remoto / Híbrido</p>
+                </article>
+                <article class="info-card">
+                    <h3 class="info-title">☎️ Horario</h3>
+                    <p class="info-body">L–V · {{ officeHours }}</p>
+                </article>
+                <article class="info-card">
+                    <h3 class="info-title">Idiomas</h3>
+                    <p class="info-body">Español (nativo), Inglés (intermedio)</p>
+                </article>
+                <article class="info-card">
+                    <h3 class="info-title">Interés</h3>
+                    <p class="info-body">Android • Front Angular • Backend Java</p>
+                </article>
+            </div>
+
+        </aside>
     </div>
 
-    <!-- Fila secundaria -->
-    <div class="btn-grid compact">
-        <a class="btn btn-ghost" [href]="gmailHref" target="_blank" rel="noopener">Abrir en Gmail</a>
-        <a class="btn btn-ghost" [href]="outlookHref" target="_blank" rel="noopener">Abrir en Outlook Web</a>
-        <a class="btn btn-ghost" [href]="whatsHref" target="_blank" rel="noopener" aria-label="Enviar WhatsApp">
-            WhatsApp
-        </a>
-        <a class="btn btn-ghost" href="https://www.linkedin.com/in/sergio-marchado-ropero-82b8b914b/" target="_blank"
-            rel="noopener">
-            LinkedIn
-        </a>
+    <!-- RELOJES MUNDIALES -->
+    <div class="panel" style="margin-top:16px">
+        <app-world-clocks></app-world-clocks>
     </div>
 
-    <!-- Toast copiar -->
+    <!-- Toast (único, fijo) -->
     <div class="toast" *ngIf="copied">¡Email copiado!</div>
 </section>

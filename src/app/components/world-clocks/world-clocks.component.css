@@ -1,0 +1,178 @@
+:host {
+    --ring: rgba(255, 255, 255, .12);
+    --text: #e9f0ff;
+    --muted: #b6c6ea;
+    --neon-blue: #3ea0ff;
+    --neon-cyan: #12e1ff;
+}
+
+.clocks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    padding: 16px;
+}
+
+.clock-card {
+    border-radius: 16px;
+    padding: 12px 12px 14px;
+    background: rgba(255, 255, 255, .06);
+    box-shadow: inset 0 0 0 1px var(--ring), 0 18px 40px rgba(0, 0, 0, .28);
+    color: var(--text);
+    text-align: center;
+    transition: transform .2s ease, box-shadow .25s ease;
+}
+
+.clock-card:hover {
+    transform: translateY(-4px);
+    box-shadow: inset 0 0 0 1px var(--ring), 0 24px 56px rgba(60, 120, 255, .28);
+}
+
+.c-head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+    margin-bottom: 2px;
+}
+
+.flag {
+    font-size: 1rem;
+}
+
+.city {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.tz {
+    color: var(--muted);
+    font-size: .8rem;
+    margin-left: 6px;
+}
+
+.c-digital {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-top: 2px;
+}
+
+.c-date {
+    color: var(--muted);
+    font-size: .85rem;
+}
+
+/* ===== Esfera del reloj ===== */
+.dial {
+    width: 110px;
+    height: 110px;
+    margin: 6px auto 6px;
+    position: relative;
+    border-radius: 50%;
+    background:
+        radial-gradient(70% 70% at 50% 35%, rgba(255, 255, 255, .12), transparent 60%),
+        repeating-conic-gradient(from 0deg, rgba(255, 255, 255, .18) 0 2deg, transparent 2deg 6deg),
+        linear-gradient(180deg, rgba(255, 255, 255, .10), rgba(255, 255, 255, .06));
+    box-shadow: inset 0 0 0 1px var(--ring), 0 0 20px rgba(62, 160, 255, .12);
+}
+
+/* aro central por DETRÁS de las agujas */
+.dial::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px rgba(11, 23, 46, .9);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* marcas gruesas en 12/3/6/9 */
+.dial .ticks::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background:
+        conic-gradient(from 0deg,
+            rgba(255, 255, 255, .55) 0deg 2deg, transparent 2deg 88deg,
+            rgba(255, 255, 255, .55) 90deg 92deg, transparent 92deg 178deg,
+            rgba(255, 255, 255, .55) 180deg 182deg, transparent 182deg 268deg,
+            rgba(255, 255, 255, .55) 270deg 272deg, transparent 272deg 358deg);
+    -webkit-mask: radial-gradient(circle at center, transparent 44px, #000 45px);
+    mask: radial-gradient(circle at center, transparent 44px, #000 45px);
+}
+
+/* ===== Manecillas (con variable --angle) ===== */
+.hand {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-origin: bottom center;
+    /* pivota en la base */
+    transform: translate(-50%, -100%) rotate(var(--angle, 0deg));
+    border-radius: 999px;
+    z-index: 2;
+    /* por ENCIMA del aro */
+}
+
+.hand.hour {
+    width: 4px;
+    height: 28px;
+    background: #e9f0ff;
+}
+
+.hand.minute {
+    width: 3px;
+    height: 38px;
+    background: #e9f0ff;
+    opacity: .9;
+}
+
+.hand.second {
+    width: 2px;
+    height: 44px;
+    background: linear-gradient(var(--neon-blue), var(--neon-cyan));
+    box-shadow: 0 0 10px rgba(34, 211, 238, .5);
+}
+
+/* pin por ENCIMA */
+.pin {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e9f0ff;
+    box-shadow: 0 0 10px rgba(62, 160, 255, .35);
+    z-index: 3;
+}
+
+/* ===== Responsive ===== */
+@media (max-width:540px) {
+    .clocks {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 12px;
+    }
+
+    .dial {
+        width: 96px;
+        height: 96px;
+    }
+}
+
+/* ===== Reduce motion ===== */
+@media (prefers-reduced-motion:reduce) {
+    .clock-card {
+        transition: none !important;
+    }
+}
