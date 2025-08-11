@@ -1,11 +1,23 @@
+<!--HOME.COMPONENT.HTML  -->
 <section class="hero-video" id="hero">
+    <!--
+    Vídeo de fondo:
+    - autoplay + muted + playsinline: requisitos para que el autoplay funcione en móviles (sin sonido).
+    - loop: reproducción continua.
+    - preload="auto": intenta precargar datos; si el LCP sufre, valora "metadata" o técnica de poster + lazy.
+    - aria-hidden="true": contenido puramente decorativo (no lo anuncian los lectores).
+    -->
     <video id="bgVideo" autoplay muted loop playsinline preload="auto" class="bg-video" aria-hidden="true">
         <source src="/assets/videos/backgroundd.mp4" type="video/mp4" />
+        <!-- Fallback de texto si no soporta <video> -->
         Tu navegador no soporta el vídeo.
     </video>
 
+    <!-- Capa de contenido por encima del vídeo, HERO -->
     <div class="hero-text">
-        <!-- ▶️ Panel SOLO para el contenido -->
+        <!--
+        Panel central: contiene el copy y CTAs.
+        -->
         <div class="hero-panel">
             <h1 class="hero-h1">
                 ¡Hola! <span class="type-wrap">
@@ -14,6 +26,7 @@
                 </span>.
             </h1>
 
+            <!-- Subtítulo -->
             <h2 class="hero-h2">Desarrollador de Aplicaciones Multiplataforma</h2>
 
             <p class="hero-lead">
@@ -21,9 +34,15 @@
                 multiplataforma.
             </p>
 
-            <!-- Triángulo invertido -->
+            <!--
+            Triángulo invertido de CTAs:
+            - Tres botones distribuidos (area-top / area-left / area-right) para layout destacado.
+            - Accesibilidad:
+                • aria-labels específicos en enlaces de acción.
+                • svg con aria-hidden porque son iconos decorativos; el texto accesible está en .btn__label.
+            -->
             <div class="cta-tri">
-                <!-- Contáctame -->
+                <!-- Contáctame (ruta interna Angular) -->
                 <a routerLink="/contact" class="btn hero-btn area-top" aria-label="Abrir formulario de contacto">
                     <span class="btn__icon" aria-hidden="true">
                         <!-- mail icon -->
@@ -35,7 +54,7 @@
                     <span class="btn__label">Contáctame</span>
                 </a>
 
-                <!-- LinkedIn -->
+                <!-- LinkedIn (salida a dominio externo) -->
                 <a href="https://www.linkedin.com/in/sergio-marchado-ropero-82b8b914b/" target="_blank" rel="noopener"
                     class="btn hero-btn area-left" aria-label="Abrir perfil de LinkedIn">
                     <span class="btn__icon" aria-hidden="true">
@@ -48,7 +67,7 @@
                     <span class="btn__label">LinkedIn</span>
                 </a>
 
-                <!-- Descargar CV -->
+                <!-- Descargar CV (archivo estático) -->
                 <a href="/assets/cv/cv-sergio-marchado-android-developer.pdf" download="Sergio_Marchado_CV.pdf"
                     class="btn hero-btn area-right" aria-label="Descargar CV en PDF">
                     <span class="btn__icon" aria-hidden="true">
@@ -65,10 +84,17 @@
     </div>
 </section>
 
+<!--
+Indicador de scroll:
+- data-aos="fade-up" + delay: animación de entrada (AOS).-->
 <div class="scroll-down" data-aos="fade-up" data-aos-delay="1000">
     <span>↓</span>
 </div>
 
+<!--
+Resto de secciones “hero below the fold” (componentes standalone):
+- Mantienen la página como landing con bloques bien definidos.
+-->
 <!-- Sección Acerca de mí (preview) -->
 <app-about-preview></app-about-preview>
 

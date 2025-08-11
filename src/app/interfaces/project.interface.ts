@@ -1,3 +1,7 @@
+/**
+ * MODELO DE PROYECTO, SE RELLENA CON DATA PROJECTS.DATA.TS
+ */
+
 export type ProjectCategory = 'ANDROID' | 'JAVA/BACK' | 'ANGULAR' | 'PYTHON';
 
 export interface Project {

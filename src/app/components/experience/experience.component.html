@@ -1,4 +1,13 @@
 <section class="xp-section" id="experience" aria-labelledby="xp-title">
+    <!--
+    Sección "Experiencia Laboral"
+    - id="experience": destino del enlace con [fragment] en el navbar.
+    - aria-labelledby vincula con el <h2> para accesibilidad.
+    - Estructura:
+        • Acciones (descargar CV / contactar / copiar email)
+        • Accesos rápidos a clientes web de correo (Gmail/Outlook)
+        • Timeline cronológico (<ol>) de experiencias
+    -->
     <h2 class="xp-title" id="xp-title">Experiencia Laboral</h2>
     <div class="xp-actions">
         <!-- Descargar CV -->
@@ -45,24 +54,25 @@
     </div>
 
 
-
+    <!--TimeLine Cronológico-->
     <ol class="xp-timeline">
         <li class="xp-card" *ngFor="let exp of items(); trackBy: trackById">
             <!-- Línea/marker timeline -->
             <span class="xp-line" aria-hidden="true"></span>
             <span class="xp-dot" aria-hidden="true"></span>
 
-            <!-- Logo -->
+            <!-- Logo de la Empresa -->
             <div class="xp-logo">
                 <img *ngIf="exp.logoUrl" [src]="exp.logoUrl" [alt]="exp.company" />
                 <div *ngIf="!exp.logoUrl" class="xp-logo-fallback">{{ exp.company[0] || '?' }}</div>
             </div>
 
-            <!-- Contenido -->
+            <!-- Contenido Principal o Descripción -->
             <div class="xp-content">
                 <header class="xp-header">
                     <h3 class="xp-role">{{ exp.role }}</h3>
                     <div class="xp-meta">
+                        <!-- Nombre de la Empresa-->
                         <span class="xp-company">
                             <a *ngIf="exp.url; else plain" [href]="exp.url" target="_blank" rel="noopener noreferrer">
                                 {{ exp.company }}
@@ -70,24 +80,34 @@
                             <ng-template #plain>{{ exp.company }}</ng-template>
                         </span>
                         <span class="xp-dot-sep">•</span>
+                        <!-- Fechas -->
                         <span class="xp-dates">{{ exp.start }} - {{ exp.end || 'Actualidad' }}</span>
 
-                        <!-- Duración opcional -->
+                        <!-- Duración (opcional en el json) -->
                         <span *ngIf="exp.duration" class="xp-duration" title="Duración">{{ exp.duration }}</span>
 
+                        <!-- Ubicación (opcional en el json)-->
                         <span *ngIf="exp.location" class="xp-dot-sep">•</span>
                         <span *ngIf="exp.location" class="xp-location">{{ exp.location }}</span>
                     </div>
                 </header>
 
-                <!-- Renderiza HTML en summary -->
+                <!--
+                Resumen con HTML:
+                - [innerHTML] permite énfasis/listas breves.
+                - Asegura que el origen de 'exp.summary' sea confiable o sanitizado para evitar XSS.
+                -->
                 <p *ngIf="exp.summary" class="xp-summary" [innerHTML]="exp.summary"></p>
 
-                <!-- Renderiza HTML en cada task -->
+                <!--
+                Tareas/logros:
+                - Lista con HTML por item (mismo aviso de sanitización).
+                -->
                 <ul *ngIf="exp.tasks?.length" class="xp-tasks">
                     <li *ngFor="let t of exp.tasks" [innerHTML]="t"></li>
                 </ul>
 
+                <!-- Tecnologías/badges -->
                 <div *ngIf="exp.tech?.length" class="xp-tags">
                     <span class="xp-tag" *ngFor="let t of exp.tech">{{ t }}</span>
                 </div>

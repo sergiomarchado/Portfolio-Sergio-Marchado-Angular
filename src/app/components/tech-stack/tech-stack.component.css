@@ -1,35 +1,45 @@
 :root {
     /* Colores base y contraste */
+    /* Fondo general */
     --page-bg: #051227;
+    /* Gradiente inicio para cards */
     --card-bg1: #0a1b37;
+    /* Gradiente fin para cards */
     --card-bg2: #0f2346;
+    /* Texto principal */
     --text: #e9f0ff;
+    /* Texto secundario */
     --muted: #b6c6ea;
+    /* Títulos */
     --title: #ffffff;
+    /* Azul vivo */
     --accent: #69a2ff;
-    /* azul vivo */
+    /* Cian */
     --accent2: #22e6ff;
-    /* cian */
+    /* Borde tenue */
     --ring: rgba(255, 255, 255, .12);
 }
 
 /* Contenedor general */
 .tech-stack {
     padding: clamp(56px, 7vw, 96px) 20px;
+    /* Espaciado adaptativo según viewport */
     max-width: 1300px;
     margin: 0 auto;
     text-align: center;
 }
 
-/* Título */
+/* Título con subrayado animado */
 .section-title {
     font-size: clamp(2.2rem, 1.2rem + 2.4vw, 3.2rem);
     color: var(--title);
     margin-bottom: 28px;
     text-shadow: 0 4px 30px rgba(100, 150, 255, .35);
+    /* Efecto brillante */
 }
 
 .section-title::after {
+    /* Línea decorativa debajo del título */
     content: "";
     display: block;
     height: 3px;
@@ -39,7 +49,7 @@
     border-radius: 2px;
 }
 
-/* Grid con fondo discreto */
+/* Grid con fondo de puntos animados */
 .stack-network {
     --gap: 28px;
     display: grid;
@@ -48,8 +58,10 @@
     position: relative;
     background-image: radial-gradient(circle at 50% 50%, rgba(105, 162, 255, .14) 1px, transparent 1px);
     background-size: 44px 44px;
+    /* Mueve el patrón para dar dinamismo */
     animation: gridMove 26s linear infinite;
 }
+
 
 @keyframes gridMove {
     from {
@@ -61,11 +73,12 @@
     }
 }
 
-/* Cards con más contraste + borde animado */
+/* Card individual con gradiente y sombra */
 .stack-node {
     list-style: none;
     position: relative;
     isolation: isolate;
+    /* Evita que pseudo-elementos se mezclen con otros */
     border-radius: 22px;
     text-align: left;
     padding: 18px 18px 14px;
@@ -75,7 +88,7 @@
     transform-style: preserve-3d;
 }
 
-/* Borde: gradiente que se ANIMA al hover (sin “círculo blanco”) */
+/* Borde animado con gradiente y transparencia mediante mask */
 .stack-node::before {
     content: "";
     position: absolute;
@@ -96,6 +109,7 @@
     filter: hue-rotate(0deg);
 }
 
+/* Hover: levanta la card y ajusta color del borde */
 .stack-node:hover {
     transform: translateY(-8px) scale(1.02) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
     box-shadow: 0 28px 60px rgba(60, 120, 255, .35);
@@ -106,13 +120,14 @@
     opacity: .95;
 }
 
-/* Header centrado en chip */
+/* Cabecera de la card */
 .node-header {
     display: flex;
     justify-content: center;
 }
 
 .node-chip {
+    /* “Píldora” con icono y título de la categoría */
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -132,7 +147,7 @@
     letter-spacing: .2px;
 }
 
-/* Lista interior */
+/* Lista de tecnologías dentro de la card */
 .node-list {
     list-style: none;
     margin: 16px 0 0;
@@ -167,7 +182,7 @@
     transform: scale(1.08);
 }
 
-/* Icono grande con ring de nivel; zoom al hover */
+/* Contenedor de icono con “ring” de nivel */
 .icon-wrap {
     --s: 48px;
     width: var(--s);
@@ -190,7 +205,7 @@
 }
 
 
-/* ring de nivel */
+/* Anillo de nivel (conic-gradient) */
 .icon-wrap::after {
     content: "";
     position: absolute;
@@ -220,7 +235,7 @@
     opacity: 1
 }
 
-/* Texto + descripción visible (si existe) */
+/* Etiqueta + breve descripción */
 .label-wrap {
     display: flex;
     flex-direction: column;
@@ -238,7 +253,7 @@
     margin-top: 2px;
 }
 
-/* Tooltip tipo “card” solo desktop (extra) */
+/* Tooltip tipo card (solo desktop) */
 .desc {
     position: absolute;
     right: 10px;
@@ -264,6 +279,7 @@
     font-size: .9rem;
 }
 
+/* Hover (desktop) */
 @media (hover:hover) {
     .node-item:hover .desc {
         opacity: 1;
@@ -287,7 +303,7 @@
     box-shadow: 0 0 0 3px rgba(105, 162, 255, .35);
 }
 
-/* Reveal con stagger (pero visible por defecto gracias a .in-view) */
+/* Animación de aparición con retrasos escalonados */
 .reveal-enabled .stack-node {
     opacity: 1;
     transform: none;
@@ -309,6 +325,7 @@
     }
 }
 
+/* Delays escalonados para cada card */
 .reveal-enabled.in-view .stack-node:nth-child(1) {
     animation-delay: .02s
 }
@@ -344,7 +361,7 @@
         display: none;
     }
 
-    /* Cuando el item está abierto, mostramos la desc como bloque bajo el ítem */
+    /* En móvil, la descripción se muestra dentro del item al abrirlo */
     .node-item.open .desc {
         display: block;
         position: static;
@@ -363,14 +380,13 @@
         border: 1px solid var(--ring);
     }
 
-    /* Ocultar el texto breve cuando el ítem está abierto para no duplicar */
+    /* Evita duplicar texto breve */
     .node-item.open .node-about {
         display: none;
     }
 }
 
-/* Accesibilidad: reduce motion */
-/* Accesibilidad: reduce motion (GLOBAL) */
+/* Accesibilidad: reducir movimiento */
 @media (prefers-reduced-motion: reduce) {
 
     .stack-node,
@@ -386,6 +402,7 @@
 
 }
 
+/* Feedback táctil (móviles/pantallas táctiles) */
 @media (pointer: coarse) {
     .node-item:active {
         transform: translateX(2px) scale(0.995);

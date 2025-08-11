@@ -1,7 +1,22 @@
 <section class="tech-stack" id="stack" aria-labelledby="stack-title">
+    <!-- Sección "Stack Técnico"
+    - Muestra categorías de tecnologías y herramientas, cada una con sus elementos.
+    - Estructura accesible:
+        • id="stack" para anclas/navegación interna.
+        • aria-labelledby vincula al título <h2>.
+    - Uso de *ngFor con trackBy para rendimiento al renderizar listas grandes.
+    - Permite expandir/cerrar detalles de cada tecnología (hover en desktop / click en móvil).
+    -->
     <h2 class="section-title" id="stack-title">Stack Técnico</h2>
 
+    <!-- Lista de categorías -->
     <ul class="stack-network" role="list">
+        <!--
+          *ngFor="let cat of categories(); trackBy: trackCat"
+        - categories(): método en TS que devuelve un array de categorías.
+        - trackBy: trackCat permite a Angular reutilizar elementos y no recrearlos al cambiar datos.
+        [attr.aria-labelledby]: referencia accesible al título de cada categoría.
+        -->
         <li class="stack-node" *ngFor="let cat of categories(); trackBy: trackCat"
             [attr.aria-labelledby]="cat.id + '-title'">
             <header class="node-header">
@@ -11,25 +26,44 @@
                 </div>
             </header>
 
+
+            <!-- Lista de items/tecnologías dentro de la categoría -->
             <ul class="node-list" role="list">
+                <!--
+                  *ngFor="let it of cat.items; let i = index; trackBy: trackItem"
+                - it: elemento/tecnología dentro de la categoría.
+                - i: índice para generar IDs únicos.
+                - trackBy: trackItem optimiza re-renderizado.
+                (click)="toggleItem(...)": alterna apertura/cierre del detalle.
+                (keydown)="onKeydown(...)": permite controlar con teclado (Enter/Espacio) -> accesibilidad.
+                [class.open]: estado visual de apertura.
+                role="button" y tabindex="0": convierten <li> en elemento interactivo accesible.
+                aria-expanded y aria-controls: atributos ARIA para lectores de pantalla.
+                -->
                 <li class="node-item" *ngFor="let it of cat.items; let i = index; trackBy: trackItem"
                     (click)="toggleItem(itemId(cat.id, i), $event)" (keydown)="onKeydown($event, itemId(cat.id, i))"
                     [class.open]="isOpen(itemId(cat.id, i))" role="button" tabindex="0"
                     [attr.aria-expanded]="isOpen(itemId(cat.id, i)) ? 'true' : 'false'"
                     [attr.aria-controls]="itemId(cat.id, i) + '-desc'">
 
+                    <!-- Icono o imagen de la tecnología -->
                     <span class="icon-wrap" [attr.data-level]="it.level || 'solid'">
                         <i *ngIf="it.iconClass" [class]="it.iconClass" aria-hidden="true"></i>
                         <img *ngIf="!it.iconClass && it.iconUrl" [src]="it.iconUrl" alt="" loading="lazy"
                             decoding="async" />
                     </span>
 
+                    <!-- Etiqueta y breve descripción -->
                     <div class="label-wrap">
                         <span class="node-label">{{ it.label }}</span>
                         <span *ngIf="it.about" class="node-about">{{ it.about }}</span>
                     </div>
 
-                    <!-- Desktop: hover | Mobile: .open -->
+                    <!-- Descripción detallada -->
+                    <!--
+                    • Se muestra en desktop al hover, en mobile si el item está abierto (.open).
+                    • aria-hidden: indica si el contenido está oculto o visible para lectores de pantalla.
+                    -->
                     <div *ngIf="it.about" class="desc" [id]="itemId(cat.id, i) + '-desc'"
                         [attr.aria-hidden]="isOpen(itemId(cat.id, i)) ? 'false' : 'true'">
                         <strong>{{ it.label }}</strong>

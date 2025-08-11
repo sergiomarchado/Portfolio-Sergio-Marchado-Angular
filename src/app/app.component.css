@@ -10,8 +10,10 @@ body {
     background-color: transparent;
     color: #f8fafc;
     scroll-behavior: smooth;
+    /* Refuerza el smooth scroll en navegadores que lo respetan en body */
     min-height: 100vh;
     overflow-x: hidden;
+    /* Previene “saltos” horizontales por desbordes en secciones */
 }
 
 /* ========== TIPOGRAFÍA ========== */
@@ -30,6 +32,7 @@ p {
 /* ========== NAVBAR ========== */
 .navbar {
     position: fixed;
+    /* Fija la barra en la parte superior del viewport */
     top: 0;
     left: 0;
     width: 100%;
@@ -40,13 +43,17 @@ p {
     align-items: center;
     background-color: transparent;
     z-index: 9999;
+    /* Asegura que la navbar quede por encima del contenido */
     transition:
         background-color 0.4s ease-in-out,
         box-shadow 0.4s ease-in-out,
         padding 0.3s ease-in-out,
         height 0.3s ease-in-out;
+    /* Transiciones suaves entre estado “top” y “scrolled” */
 }
 
+/* Estado controlado por Angular (this.scrolled):
+       - Se aplica fondo translúcido + blur para legibilidad al hacer scroll o al salir de Home. */
 .navbar.scrolled {
     background-color: rgba(15, 23, 42, 0.85);
     backdrop-filter: blur(8px);
@@ -83,6 +90,7 @@ p {
 .nav-links {
     display: flex;
     gap: 30px;
+    /* Espacio entre enlaces */
 }
 
 .nav-links a {
@@ -95,6 +103,7 @@ p {
     transition: color 0.3s ease;
 }
 
+/* Subrayado animado “de izquierda a derecha” */
 .nav-links a::after {
     content: '';
     position: absolute;
@@ -106,6 +115,7 @@ p {
     transition: width 0.3s ease;
 }
 
+/* Se “dibuja” el subrayado completo al hover o si la ruta está activa */
 .nav-links a:hover::after,
 .nav-links a.active::after {
     width: 100%;
@@ -116,6 +126,7 @@ p {
 }
 
 /* ========== HAMBURGER MENU ========== */
+/* Oculto en desktop; se muestra en breakpoints móviles */
 .menu-toggle {
     display: none;
     font-size: 28px;
@@ -231,6 +242,8 @@ p {
 
 
 /* Afecta solo a pantallas pequeñas */
+/* Afecta solo a pantallas muy pequeñas */
+/* Afecta solo a pantallas muy pequeñas */
 @media (max-width: 430px) {
     .logo-icon-container {
         display: flex;
@@ -246,48 +259,41 @@ p {
         justify-content: center;
         gap: 8px;
         margin-bottom: 0;
-
     }
 
+    /* ↓ Ajustes tipográficos más pequeños que en 768px */
     .logoletters1 {
-        .logoletters1 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #f8fafc;
-        }
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #f8fafc;
+    }
 
-        .logoletters2 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #3b82f6;
-        }
+    .logoletters2 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #3b82f6;
+    }
 
-        .nav-links {
-            display: none;
-            /* 🔴 OCULTAR MENÚ POR DEFECTO */
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            width: 100%;
-            background-color: #0f172a;
-            border-radius: 16px;
-            opacity: 0.9;
-            padding: 20px 0;
-            margin-top: 12px;
-            border-top: 1px solid #1e293b;
-        }
+    /* Menú colapsado por defecto; se controla con la clase .open desde Angular */
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+        background-color: #0f172a;
+        border-radius: 16px;
+        opacity: 0.9;
+        padding: 20px 0;
+        margin-top: 12px;
+        border-top: 1px solid #1e293b;
+    }
 
-        .nav-links.open {
-            display: flex;
-            /* 🟢 MOSTRAR CUANDO menuOpen ESTÉ ACTIVO */
-        }
+    .nav-links.open {
+        display: flex;
+    }
 
-        .nav-links a {
-            font-size: 1.1rem;
-        }
-
-
-
-
+    .nav-links a {
+        font-size: 1.1rem;
     }
 }

@@ -1,11 +1,17 @@
 :root {
+    /* Tokens base del footer: colores y transparencias reutilizables */
     --ring: rgba(255, 255, 255, .10);
+    /* “ring” tenue para bordes/contornos sutiles */
     --panel: rgba(11, 23, 46, .72);
+    /* panel translúcido (glass) sobre el fondo */
     --text: #e6f0ff;
+    /* texto principal en el pie */
     --muted: #b6c6ea;
+    /* texto secundario */
 }
 
 .footer {
+    /*  Barra inferior con efecto glass + separación del contenido anterior */
     position: relative;
     background: rgba(8, 18, 38, .72);
     backdrop-filter: blur(10px);
@@ -15,6 +21,7 @@
 }
 
 .footer::before {
+    /* Degradado superior para integrar visualmente el footer con la página */
     content: "";
     position: absolute;
     left: 0;
@@ -23,9 +30,11 @@
     height: 40px;
     background: linear-gradient(to bottom, rgba(4, 12, 26, .55), rgba(4, 12, 26, 0));
     pointer-events: none;
+    /* decorativo: no intercepta clics */
 }
 
 .footer-container {
+    /* Grid de 3 columnas: mapa (un poco más ancho) + 2 columnas (nav/legal) */
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
@@ -35,6 +44,7 @@
 }
 
 .col-title {
+    /* Encabezado de columna (nav/legal) */
     font-size: .95rem;
     font-weight: 800;
     color: #cfe5ff;
@@ -44,22 +54,26 @@
 
 /* ===== Mapa ===== */
 .footer-map {
+    /* Contenedor del mapa y su placeholder (si no hay consentimiento) */
     display: grid;
     gap: 8px;
 }
 
 .map-card {
+    /* Tarjeta que envuelve el iframe con borde y sombra propia */
     position: relative;
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 14px 38px rgba(0, 0, 0, .35);
     border: 1px solid var(--ring);
     isolation: isolate;
+    /* asegura que overlays usen su propio stacking context */
     background: #000;
-    /* fallback mientras carga */
+    /* fallback mientras carga el mapa */
 }
 
 .map-card iframe {
+    /* Iframe responsive al ancho del contenedor con altura fija */
     display: block;
     width: 100%;
     height: 200px;
@@ -68,6 +82,7 @@
 
 /* Overlay: pin + título */
 .map-overlay {
+    /* Chip flotante con icono y texto encima del mapa */
     position: absolute;
     left: 10px;
     top: 10px;
@@ -82,9 +97,11 @@
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     z-index: 2;
+    /* por encima del iframe */
 }
 
 .map-pin {
+    /* Icono del pin con gradiente definido en <defs> (id="grad-pin") */
     width: 18px;
     height: 18px;
     fill: url(#grad-pin);
@@ -99,6 +116,7 @@
 }
 
 .map-note {
+    /* Subtítulo “Ubicación” más suave */
     color: #8fb1d9;
     font-size: .78rem;
     opacity: .85;
@@ -107,6 +125,7 @@
 
 /* Placeholder cuando no hay consentimiento funcional */
 .map-placeholder {
+    /* Muestra un panel con aviso y enlace para abrir la configuración de cookies */
     background: var(--panel);
     border: 1px solid var(--ring);
     border-radius: 12px;
@@ -124,6 +143,7 @@
 /* ===== Mini navbar & Legal ===== */
 .footer-nav,
 .footer-legal {
+    /* Columnas tipo lista vertical (enlaces uno debajo del otro) */
     display: grid;
     gap: 8px;
 }
@@ -131,6 +151,7 @@
 .footer-nav a,
 .footer-legal a,
 .link-btn {
+    /* Estilo de enlace del footer: seminegrita + transición sutil */
     color: #dbe7ff;
     text-decoration: none;
     font-weight: 600;
@@ -141,11 +162,13 @@
 .footer-nav a:hover,
 .footer-legal a:hover,
 .link-btn:hover {
+    /* Feedback al hover: más opacidad + leve desplazamiento */
     opacity: 1;
     transform: translateX(2px);
 }
 
 .link-btn {
+    /* Botón con aspecto de link (para abrir preferencias de cookies) */
     background: transparent;
     border: 0;
     padding: 0;
@@ -154,6 +177,7 @@
 }
 
 .copy {
+    /* Línea de copyright al final de la columna legal */
     margin-top: 8px;
     color: var(--muted);
     font-size: .9rem;
@@ -161,6 +185,7 @@
 
 /* Accesibilidad utilitaria */
 .sr-only {
+    /* Solo para lectores de pantalla (oculta visualmente) */
     position: absolute;
     width: 1px;
     height: 1px;
@@ -175,10 +200,12 @@
 /* Responsive */
 @media (max-width: 900px) {
     .footer-container {
+        /* En móvil: stack vertical de las 3 columnas */
         grid-template-columns: 1fr;
     }
 
     .map-card iframe {
+        /* Un pelín más alto para tocar mejor en móvil */
         height: 220px;
     }
 }
@@ -186,6 +213,7 @@
 /* Reduce motion */
 @media (prefers-reduced-motion: reduce) {
 
+    /* Elimina transiciones en el footer para usuarios que prefieren menos animación */
     .footer-nav a,
     .footer-legal a,
     .link-btn {

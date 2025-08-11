@@ -1,8 +1,12 @@
 :root {
+    /* Tokens de color/estética reutilizados en el banner y el modal */
     --accent: #69a2ff;
     --accent2: #22e6ff;
+    /* borde tenue “glass” */
     --ring: rgba(255, 255, 255, .12);
+    /* panel translúcido (sobre fondo) */
     --panel-bg: rgba(11, 23, 46, .72);
+    /* sólido si se necesitara */
     --panel-solid: #0b172e;
     --text: #e9f0ff;
     --muted: #b6c6ea;
@@ -10,14 +14,17 @@
 
 /* ===== Banner ===== */
 .cookie-banner {
+    /* Fijo en la parte inferior, con algo de margen lateral */
     position: fixed;
     left: 16px;
     right: 16px;
     bottom: 16px;
     z-index: 10000;
+    /* Layout: texto + acciones a la derecha (columna auto) */
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 12px 16px;
+    /* Estética “glass” con blur del fondo */
     padding: 14px 16px;
     color: var(--text);
     background: var(--panel-bg);
@@ -30,13 +37,16 @@
 
 .cb-text {
     line-height: 1.5;
+    /* legibilidad del párrafo */
 }
 
 .cb-text a {
+    /* coherencia con links del sistema */
     color: var(--accent);
 }
 
 .link-btn {
+    /* Botón con aspecto de enlace (para “configurar”) */
     background: none;
     border: 0;
     color: var(--accent);
@@ -44,9 +54,11 @@
     cursor: pointer;
     padding: 0;
     font: inherit;
+    /* hereda tipografía del texto alrededor */
 }
 
 .cb-actions {
+    /* Grupo de botones a la derecha (o debajo en móvil) */
     display: inline-flex;
     gap: 8px;
     align-items: center;
@@ -54,6 +66,7 @@
 }
 
 .btn {
+    /* Base para las variantes de botón */
     padding: 8px 12px;
     border-radius: 10px;
     font-weight: 800;
@@ -63,10 +76,12 @@
 }
 
 .btn:hover {
-    transform: translateY(-1px);
+    /* micro-elevación al hover */
+    transform: translateY(-1.5px);
 }
 
 .btn-primary {
+    /* CTA principal: gradiente + glow */
     color: #fafafa;
     border-color: #60a5fa;
     background: linear-gradient(90deg, var(--accent), var(--accent2));
@@ -74,12 +89,14 @@
 }
 
 .btn-soft {
+    /* Variante “suave”: fondo translúcido + ring */
     color: var(--text);
     background: rgba(255, 255, 255, .08);
     border: 1px solid var(--ring);
 }
 
 .btn-ghost {
+    /* Variante bordeada y transparente */
     color: var(--text);
     background: transparent;
     border: 1px solid var(--ring);
@@ -87,16 +104,21 @@
 
 /* ===== Modal ===== */
 .cookie-modal {
+    /* Capa oscura que cubre toda la pantalla */
     position: fixed;
     inset: 0;
     z-index: 10001;
+    /* por encima del banner */
     background: rgba(0, 0, 0, .45);
+    /* Centrado del contenido */
     display: grid;
     place-items: center;
+    /* margen interno en pantallas pequeñas */
     padding: 16px;
 }
 
 .cookie-modal-content {
+    /* Caja del modal con borde-gradiente y blur */
     width: min(560px, 100%);
     border-radius: 16px;
     padding: 16px;
@@ -107,7 +129,7 @@
         linear-gradient(135deg, var(--accent), var(--accent2)) border-box;
     border: 2px solid transparent;
 
-    /* Glow exterior para remarcar el borde */
+    /* Glow exterior para realzar el borde del modal */
     box-shadow:
         12px 24px 64px rgba(0, 0, 0, .5),
         0 0 10px rgba(1, 212, 240, 0.45),
@@ -119,6 +141,7 @@
 }
 
 .cm-header {
+    /* Cabecera con título + botón de cierre */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -132,6 +155,7 @@
 }
 
 .cm-close {
+    /* Botón cerrar, coherente con el resto de UI “glass” */
     border: 0;
     background: rgba(255, 255, 255, .08);
     color: var(--text);
@@ -149,6 +173,7 @@
 
 /* Opción */
 .cookie-option {
+    /* Bloques por categoría (necesarias, funcionales, etc.) */
     padding: 10px 0;
     border-bottom: 1px solid rgba(255, 255, 255, .06);
 }
@@ -158,6 +183,7 @@
 }
 
 .co-head {
+    /* Título de la categoría + switch a la derecha */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -174,6 +200,7 @@
 
 /* Switch */
 .switch {
+    /* Contenedor del interruptor (ancho/alto del control) */
     position: relative;
     display: inline-block;
     width: 50px;
@@ -181,21 +208,24 @@
 }
 
 .switch input {
+    /* El input es invisible pero accesible (usamos el + .slider para representar el estado) */
     opacity: 0;
     width: 0;
     height: 0;
 }
 
 .slider {
+    /* Pista del switch */
     position: absolute;
     inset: 0;
     border-radius: 999px;
-    background: rgba(255, 255, 255, .15);
-    border: 1px solid var(--ring);
+    background: rgba(255, 0, 0, 0.15);
+    border: 2px solid var(--ring);
     transition: background .2s ease, box-shadow .2s ease;
 }
 
 .slider::before {
+    /* “Thumb” circular que se desplaza */
     content: "";
     position: absolute;
     left: 3px;
@@ -207,10 +237,11 @@
     transition: transform .2s ease;
 }
 
+/* ✅ Estado activado: cambia la pista y desplaza el thumb */
 input:checked+.slider {
     background: linear-gradient(90deg, var(--accent), var(--accent2));
     box-shadow: 0 8px 24px rgba(34, 230, 255, .25);
-    border-color: transparent;
+    border-color: green;
 }
 
 input:checked+.slider::before {
@@ -218,11 +249,13 @@ input:checked+.slider::before {
 }
 
 .slider.disabled {
+    /* Apariencia atenuada para “Necesarias” bloqueadas */
     opacity: .5;
 }
 
 /* Footer modal */
 .cm-actions {
+    /* Zona de enlaces y botones del modal */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -243,10 +276,12 @@ input:checked+.slider::before {
 /* Responsive banner: stack en móvil */
 @media (max-width: 720px) {
     .cookie-banner {
+        /* En móvil, texto y acciones en filas (stack) */
         grid-template-columns: 1fr;
     }
 
     .cb-actions {
+        /* botones alineados a la izquierda */
         justify-content: start;
     }
 }
@@ -254,6 +289,7 @@ input:checked+.slider::before {
 /* Reduce motion */
 @media (prefers-reduced-motion: reduce) {
 
+    /* Desactiva animaciones/transiciones relevantes para accesibilidad */
     .btn,
     .slider,
     .cookie-banner,

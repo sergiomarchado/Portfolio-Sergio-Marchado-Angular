@@ -22,19 +22,38 @@ import { ExperienceComponent } from '../../components/experience/experience.comp
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
 
+  /**
+   * Registro de funciones de limpieza (removeEventListener / etc.)
+   * - Se van apilando aquí y se ejecutan en ngOnDestroy.
+   * - Evita fugas al cambiar de ruta o destruir el componente.
+   */
   private cleanup: Array<() => void> = [];
 
+  /**
+   * El DOM ya está renderizado:
+   *  - Inicializa reproducción robusta del vídeo de fondo.
+   *  - Reinicia la animación de “escritura” del H1 para que arranque en cada visita.
+   *  - Configura AOS (animaciones on-scroll) con una vez por carga.
+   */
   ngAfterViewInit(): void {
     this.initBackgroundVideo();
     this.restartTyping();      // <- relanza la animación del H1 al entrar
     this.initAOS();
   }
 
+  /** Ejecuta todos los “dispose” registrados. */
   ngOnDestroy(): void {
     this.cleanup.forEach(fn => fn());
   }
 
-  /** Autoplay robusto del vídeo de fondo */
+  /**
+   * Autoplay robusto del vídeo de fondo.
+   * Consideraciones:
+   *  - Autoplay en móvil requiere muted + playsInline.
+   *  - Si el autoplay falla (políticas del navegador), reintenta en el primer “user gesture”.
+   *  - Reanuda la reproducción cuando la pestaña vuelve a ser visible.
+   *  - Suscribe a eventos y los añade al array cleanup para limpiar al destruir.
+   */
   private initBackgroundVideo(): void {
     const video = document.getElementById('bgVideo') as HTMLVideoElement | null;
     if (!video) return;
@@ -47,6 +66,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     video.setAttribute('playsinline', 'true'); // iOS
     video.preload = 'auto';
 
+    // Función que intenta reproducir y, si no puede, programa un reintento tras gesto de usuario.
     const tryPlay = () => {
       video.play().catch(() => {
         // Si falla (autoplay policy), reintenta en primer gesto del usuario
@@ -81,7 +101,15 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     this.cleanup.push(() => document.removeEventListener('visibilitychange', onVis));
   }
 
-  /** Re-lanza la animación de tipeo del fragmento “Soy Sergio Marchado” */
+  /**
+   * Re-lanza la animación de tipeo del fragmento “Soy Sergio Marchado”.
+   * Técnica:
+   *  - La animación en CSS debe estar asociada a una clase (p. ej. .type-run / .caret-run),
+   *    no a los selectores base, para poder “resetearla”.
+   *  - Quitamos la clase, forzamos reflow (offsetWidth) y la volvemos a añadir en el siguiente frame.
+   *  - Esto hace que la animación empiece desde 0 cada vez que entras al Home.
+   *   CSS usar .type-run/.caret-run para las @keyframes.
+   */
   private restartTyping(): void {
     // Importante: en el CSS mueve la animación de .type-target a una clase .type-run (ver nota abajo)
     const target = document.querySelector<HTMLElement>('.type-target');
@@ -92,7 +120,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     target.classList.remove('type-run');
     caret.classList.remove('caret-run');
 
-    // Forzar reflow
+    // Forzar reflow (hack común para reiniciar animaciones CSS)
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     target.offsetWidth;
 
@@ -103,6 +131,12 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     });
   }
 
+  /**
+   * Configura AOS (Animate On Scroll):
+   *  - duration/easing: timing global de las animaciones.
+   *  - once: las animaciones se ejecutan una vez (no repiten al hacer scroll arriba/abajo).
+   *  - delay: retardo base (puede superponerse con data-aos-delay en HTML).
+   */
   private initAOS(): void {
     AOS.init({
       duration: 1000,

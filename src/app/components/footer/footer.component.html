@@ -1,10 +1,18 @@
 <footer class="footer">
     <div class="footer-container">
 
-        <!-- Mapa -->
+        <!-- Mapa
+            - Se carga SOLO si el usuario ha aceptado cookies funcionales (consent.functional).
+            - Esto evita realizar peticiones a servicios de terceros (Google Maps) antes del consentimiento.
+        -->
         <div class="footer-map">
             <ng-container *ngIf="consent.functional; else noMap">
-                <!-- Definición del gradiente para el pin (oculta) -->
+                <!--
+                Definición de gradiente para el “pin”.
+                • Se renderiza en un <svg> invisible (width/height 0) para que el id="grad-pin" esté disponible en el DOM.
+                • La aplicación del gradiente suele hacerse desde CSS con: .map-pin path { fill: url(#grad-pin); }
+                • aria-hidden + focusable="false": no expone contenido a tecnologías asistivas.
+                -->
                 <svg width="0" height="0" aria-hidden="true" focusable="false" class="sr-only">
                     <defs>
                         <linearGradient id="grad-pin" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -15,7 +23,11 @@
                 </svg>
 
                 <div class="map-card">
-                    <!-- Overlay: pin + título -->
+                    <!--
+                    Capa overlay con icono + título:
+                    • aria-hidden en el SVG: decorativo (no necesario para lectores).
+                    • El título refuerza el contexto “Ubicación”.
+                    -->
                     <div class="map-overlay">
                         <svg class="map-pin" viewBox="0 0 24 24" aria-hidden="true">
                             <path
@@ -27,6 +39,14 @@
                         </div>
                     </div>
 
+                    <!--
+                    Iframe de Google Maps:
+                    • loading="lazy": rendimiento (carga diferida).
+                    • title: accesible (describe el contenido del iframe).
+                    • width="100%": adapta al contenedor; height fijo (200px).
+                    • allowfullscreen: permite modo pantalla completa si procede.
+                    Nota: el src incluye parámetros pb con la vista embebida de Coslada.
+                    -->
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3042.095273289872!2d-3.561!3d40.423!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42287d2fdf57fb%3A0x6a85a4b16a1f09!2sCoslada!5e0!3m2!1ses!2ses!4v0000000000000"
                         width="100%" height="200" style="border:0" loading="lazy" allowfullscreen
@@ -35,6 +55,11 @@
                 </div>
             </ng-container>
 
+            <!--
+            Placeholder cuando no hay consentimiento funcional:
+            • Mensaje educativo + enlace para abrir la configuración de cookies.
+            • El (click) debería prevenir la navegación por defecto si el <a href="#"> se usa como gatillo (en TS).
+            -->
             <ng-template #noMap>
                 <div class="map-placeholder">
                     <p>
@@ -45,7 +70,10 @@
             </ng-template>
         </div>
 
-        <!-- Mini Navbar -->
+        <!-- Mini Navbar
+            - Navegación secundaria en el pie con rutas internas de Angular.
+            - Incluye ancla a la sección de experiencia usando [fragment].
+        -->
         <nav class="footer-nav" aria-label="Navegación del pie">
             <span class="col-title">Navegación</span>
             <a routerLink="/">Inicio</a>
@@ -55,13 +83,17 @@
             <a routerLink="/contact">Contacto</a>
         </nav>
 
-        <!-- Legal -->
+        <!-- Legal
+            - Enlaces a páginas de políticas legales (rutas internas).
+            - Botón para reabrir el modal de cookies y cambiar preferencias.
+        -->
         <div class="footer-legal">
             <span class="col-title">Legal</span>
             <a routerLink="/privacy">Política de Privacidad</a>
             <a routerLink="/cookies">Política de Cookies</a>
             <a routerLink="/legal">Aviso Legal</a>
             <p class="copy">&copy; {{ currentYear }} Sergio Marchado</p>
+            <!-- Botón (no enlace) para abrir configuración de cookies; evita navegación accidental -->
             <button class="link-btn" (click)="openCookieSettings()">Cambiar preferencias de cookies</button>
         </div>
     </div>

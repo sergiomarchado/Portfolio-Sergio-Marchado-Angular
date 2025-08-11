@@ -1,3 +1,7 @@
+
+/**
+ * MODELO DE ITEM Y TABLA DE TECH STACK, SE RELLENA CON DATA TECH-STACK.DATA.TS
+ */
 export type SkillLevel = 'expert' | 'solid' | 'familiar';
 
 export interface TechItem {

@@ -1,25 +1,45 @@
 <!-- Banner -->
+<!--
+Aviso de cookies: aparece si `bannerVisible` es true.
+- aria-live="polite": los lectores de pantalla anuncian cambios sin interrumpir.
+- Botones: rechazar/configurar/aceptar -> llaman a métodos del componente.
+- Enlace "Política de Cookies": usa (click) para navegar sin recargar.
+-->
 <div *ngIf="bannerVisible" class="cookie-banner" aria-live="polite">
     <div class="cb-text">
         <strong>Cookies</strong> · Usamos cookies propias y de terceros (p. ej., Google Maps).
         Puedes aceptarlas, rechazarlas o
+        <!-- Botón con aspecto de enlace: abre el modal de preferencias -->
         <button class="link-btn" type="button" (click)="openConfig()">configurarlas</button>.
+        <!-- Enlace manejado por (click) para dirigir a la página de cookies -->
         <a href (click)="goToCookies($event)">Política de Cookies</a>.
     </div>
 
     <div class="cb-actions">
+        <!-- Rechaza todas las categorías opcionales -->
         <button class="btn btn-ghost" type="button" (click)="rejectAll()">Rechazar</button>
+        <!-- Abre el modal de configuración granular -->
         <button class="btn btn-soft" type="button" (click)="openConfig()">Configurar</button>
+        <!-- Acepta todas las categorías opcionales -->
         <button class="btn btn-primary" type="button" (click)="acceptAll()">Aceptar</button>
     </div>
 </div>
 
 <!-- Modal Configuración -->
+<!--
+Diálogo de preferencias (modal).
+  - *ngIf="modalVisible": render condicional (no ocupa DOM si está oculto).
+- role="dialog" + aria-modal="true": semántica de modal accesible.
+- aria-labelledby: asocia el título del modal.
+- (click)="closeModal()": clic en el backdrop cierra el modal.
+-->
 <div *ngIf="modalVisible" class="cookie-modal" role="dialog" aria-modal="true" aria-labelledby="cookie-modal-title"
     (click)="closeModal()">
+    <!-- Evita que los clics dentro del contenido cierren el modal -->
     <div class="cookie-modal-content" (click)="$event.stopPropagation()">
         <header class="cm-header">
             <h2 id="cookie-modal-title">Preferencias de cookies</h2>
+            <!-- Botón de cierre con aria-label -->
             <button class="cm-close" type="button" aria-label="Cerrar" (click)="closeModal()">✕</button>
         </header>
 
@@ -28,9 +48,11 @@
             (funcionamiento básico). Guarda para aplicar cambios.
         </p>
 
+        <!-- Categoría: Necesarias (bloqueadas) -->
         <div class="cookie-option">
             <div class="co-head">
                 <span class="co-title">Necesarias</span>
+                <!--Checkbox deshabilitado: siempre true, no modificable -->
                 <label class="switch">
                     <input type="checkbox" [checked]="consent.necessary" disabled />
                     <span class="slider disabled"></span>
@@ -39,9 +61,11 @@
             <p class="co-desc">Requeridas para seguridad, navegación y preferencias esenciales.</p>
         </div>
 
+        <!-- Categoría: Funcionales (ej. Google Maps) -->
         <div class="cookie-option">
             <div class="co-head">
                 <span class="co-title">Funcionales (Google&nbsp;Maps)</span>
+                <!-- Two-way binding con [(ngModel)] sobre consent.functional -->
                 <label class="switch">
                     <input type="checkbox" [(ngModel)]="consent.functional" />
                     <span class="slider"></span>
@@ -50,10 +74,12 @@
             <p class="co-desc">Permiten servicios de terceros como mostrar el mapa de ubicación.</p>
         </div>
 
+        <!-- Categoría: Estadísticas -->
         <div class="cookie-option">
             <div class="co-head">
                 <span class="co-title">Estadísticas</span>
                 <label class="switch">
+                    <!-- Activa/desactiva analíticas (si en el futuro se habilitan) -->
                     <input type="checkbox" [(ngModel)]="consent.analytics" />
                     <span class="slider"></span>
                 </label>
@@ -61,10 +87,13 @@
             <p class="co-desc">Medición anónima del uso (actualmente no se usan).</p>
         </div>
 
+        <!-- Enlace a la página con detalles legales de cookies -->
         <footer class="cm-actions">
             <a href (click)="goToCookies($event)" class="cm-link">Más información</a>
             <div class="cm-buttons">
+                <!-- Resetea a todo rechazado (salvo necesarias) -->
                 <button class="btn btn-ghost" type="button" (click)="rejectAll()">Rechazar todo</button>
+                <!-- Persiste las preferencias actuales en `consent` -->
                 <button class="btn btn-primary" type="button" (click)="saveConfig()">Guardar preferencias</button>
             </div>
         </footer>

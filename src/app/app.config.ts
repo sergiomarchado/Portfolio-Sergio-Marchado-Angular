@@ -10,8 +10,6 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({
         anchorScrolling: 'enabled',
         scrollPositionRestoration: 'enabled'
-        // Si prefieres offset fijo en vez de CSS:
-        // , scrollOffset: [0, 80]
       })
     )
   ]

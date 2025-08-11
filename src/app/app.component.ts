@@ -14,10 +14,15 @@ import { CookieConsentComponent } from './components/cookie-consent/cookie-conse
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
+
+// CLASE PRINCIPAL DE LA APLICACIÓN
+// Maneja el estado del navbar, el menú y la experiencia en Home.
 export class AppComponent implements OnInit, AfterViewInit {
+
+  // Estado de UI compartido por la plantilla:
   scrolled = false;
   menuOpen = false;
-  experienceActive = false;
+  experienceActive = false; // marca el enlace "Experiencia laboral" como activo cuando estamos en /#experience.
 
   constructor(
     private elementRef: ElementRef,
@@ -25,14 +30,22 @@ export class AppComponent implements OnInit, AfterViewInit {
     private destroyRef: DestroyRef
   ) { }
 
+
+
   ngOnInit(): void {
-    this.onScroll();
-    this.updateActiveByFragment(); // estado correcto al primer render
+    this.onScroll();   // Inicializa 'scrolled' con la posición actual (por si ya hay desplazamiento).
+    this.updateActiveByFragment(); // Asegura estado correcto al primer render.
     this.router.events
       .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
       .subscribe(() => this.updateActiveByFragment());
   }
 
+
+  /**
+   * Lifecycle: se ejecuta tras renderizar la vista.
+   * Objetivo: medir alturas reales de header y footer y exponerlas como variables CSS:
+   *  - --header-h y --footer-h
+   */
   ngAfterViewInit(): void {
     // Actualiza --header-h con la altura real del navbar
     const header = this.elementRef.nativeElement.querySelector('.navbar') as HTMLElement | null;
@@ -46,7 +59,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     ro.observe(header);
     this.destroyRef.onDestroy(() => ro.disconnect());
 
-    // ⚙️ Altura dinámica del footer -> --footer-h
+    // Altura dinámica del footer -> --footer-h
     const footer = document.querySelector('app-footer') as HTMLElement | null;
     if (footer) {
       const setFooterVar = () =>
@@ -59,6 +72,12 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   }
 
+
+  /**
+     * Recalcula el estado "experienceActive" en función de la URL actual:
+     * - Debe estar en la ruta raíz ('/') y con fragmento 'experience' para activarse.
+     * - Además refresca 'scrolled' para que el navbar actualice su transparencia tras navegar.
+     */
   private updateActiveByFragment() {
     const url: UrlTree = this.router.parseUrl(this.router.url);
     const primary = url.root.children['primary'];
@@ -67,9 +86,18 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.onScroll(); // refresca transparencia del navbar tras navegar
   }
 
+  /** Alterna la apertura del menú responsive (hamburguesa). */
   toggleMenu() { this.menuOpen = !this.menuOpen; }
+
+  /** Cierra el menú responsive. Útil al navegar o al hacer click fuera. */
   closeMenu() { this.menuOpen = false; }
 
+/**
+   * Listener de scroll global.
+   * Regla de negocio:
+   *  - Navbar transparente SOLO cuando estamos en Home ('/') y en la parte muy superior (scrollY <= 10).
+   *  - En cualquier otra situación, se aplica fondo/sombra (scrolled = true).
+   */
   @HostListener('window:scroll', [])
   onScroll() {
     // Navbar transparente solo en Home y arriba del todo
@@ -77,6 +105,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.scrolled = !onHome || window.scrollY > 10;
   }
 
+  /**
+   * Cierra el menú al hacer click en cualquier parte del documento fuera del <header>.
+   *  - Se comprueba si el click ocurrió dentro del header (contains).
+   *  - Si no y el menú está abierto, se cierra.
+   *
+   * Nota: Evita que el menú quede abierto tras interactuar con el contenido.
+   */
   @HostListener('document:click', ['$event'])
   onClickOutside(ev: MouseEvent) {
     const inside = (this.elementRef.nativeElement

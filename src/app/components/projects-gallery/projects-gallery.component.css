@@ -1,11 +1,19 @@
 :root {
+    /* 🎨 Variables globales para colores y efectos reutilizables en la sección */
     --accent: #60a5fa;
+    /* azul principal para acentos/bordes/gradientes */
     --accent2: #22d3ee;
+    /* cian secundario para gradientes */
     --title: #fff;
+    /* color de títulos */
     --text: #e6efff;
+    /* color de texto base en overlays/meta */
     --muted: #b6c6ea;
+    /* texto secundario/chips */
     --ring: rgba(255, 255, 255, .14);
+    /* borde tenue (inset) para tarjetas/elementos */
     --bg1: #0b1631;
+    /* fondos oscuros (si se necesitan) */
     --bg2: #0f1f3f;
 }
 
@@ -22,6 +30,7 @@
     display: block;
     margin: 0 auto 28px;
     width: max-content;
+    /* ⬅ limita el subrayado al contenido del título */
     font-size: clamp(2rem, 1.2rem + 2vw, 2.6rem);
     color: #f8fafc;
     border-bottom: 2px solid var(--accent);
@@ -32,8 +41,8 @@
 .filters {
     display: flex;
     gap: 10px;
-    font-size: 2 rem;
-    ;
+    font-size: 2rem;
+    /* ✔️ corregido (antes tenía un espacio: `2 rem`) */
     justify-content: center;
     flex-wrap: wrap;
     margin-bottom: 26px;
@@ -48,6 +57,7 @@
     font-weight: 500;
     cursor: pointer;
     transition: .2s;
+    /* 🧪 transición genérica para hover/focus */
 }
 
 .pill:hover {
@@ -58,7 +68,7 @@
     background: #3b82f6;
     color: #fff;
     font-weight: 700;
-    ;
+    /* ✔️ quitado ; extra */
 }
 
 .pill:focus-visible {
@@ -70,6 +80,7 @@
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    /* 📐 responsive auto-fill */
     gap: 18px;
 }
 
@@ -77,10 +88,19 @@
 .card {
     position: relative;
     aspect-ratio: 16/9;
+    /* 🖼 relación panorámica uniforme para todas las tarjetas */
     border-radius: 18px;
     overflow: hidden;
+    /* recorta fondos/overlays a los bordes redondeados */
     isolation: isolate;
+    /* asegura que pseudo-elementos no se “sangren” entre tarjetas */
     box-shadow: 0 10px 24px rgba(0, 0, 0, .25);
+}
+
+/* Accesibilidad: foco claro cuando la card es navegable con TAB */
+.card:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.5);
 }
 
 /* fondo (animable) */
@@ -91,9 +111,10 @@
     background-position: center;
     transition: transform .35s ease, filter .35s ease, box-shadow .35s ease;
     filter: saturate(.92) brightness(.97);
+    /* 🌗 desatura/oscurece levemente en reposo */
 }
 
-/* marco gradiente */
+/* marco gradiente externo mediante máscara (sin invadir contenido) */
 .card::before {
     content: "";
     position: absolute;
@@ -101,16 +122,18 @@
     border-radius: inherit;
     padding: 2px;
     background: linear-gradient(135deg, var(--accent), var(--accent2));
+    /* 🧩 truco de máscara para dejar solo el borde exterior */
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     opacity: 0;
+    /* se revela en :hover/.open */
     transition: opacity .35s ease;
     pointer-events: none;
 }
 
-/* marco interior */
+/* marco interior sutil (glass) */
 .frame {
     position: absolute;
     inset: 10px;
@@ -132,28 +155,33 @@
     text-decoration: none;
     color: inherit;
     padding: 14px;
+    /* 🎚️ Gradiente que mejora legibilidad del texto sobre la imagen */
     background: linear-gradient(to top, rgba(2, 12, 28, .88) 0%, rgba(2, 12, 28, .52) 55%, rgba(2, 12, 28, 0) 100%);
     opacity: 0;
+    /* aparece en :hover/.open */
     transition: opacity .28s ease;
 }
 
-/* meta limpia, sin blur */
+/* meta limpia, sin blur: contenedor del texto con su propio overflow */
 .meta {
     background: rgba(15, 23, 42, .94);
     border: 2px solid rgba(59, 134, 246, 0.35);
     border-radius: 12px;
     max-height: calc(100% - 14px);
+    /* deja margen inferior para respiro */
     position: relative;
     overflow: hidden;
     padding: 12px 14px;
-    /* padding visual, no para scroll */
+    /* padding visual (el scroll es del hijo .meta-scroll) */
 }
 
 /* contenido que scrollea dentro de meta */
 .meta-scroll {
     max-height: 100%;
     overflow: auto;
+    /* 🔁 scroll nativo; sincroniza con la barra custom */
     -webkit-overflow-scrolling: touch;
+    /* inercia en iOS */
     padding-right: 14px;
     /* deja hueco para la barra custom */
 }
@@ -225,6 +253,8 @@
 
 /* ===== Interacciones ===== */
 @media (hover:hover) {
+
+    /* 🖱 Solo equipos con hover real (evita efectos fantasma en pantallas táctiles) */
     .card:hover::before {
         opacity: .9;
     }
@@ -240,6 +270,7 @@
     }
 }
 
+/* Estado persistente cuando la card está “abierta” (móvil/teclado) */
 .card.open::before {
     opacity: .9;
 }
@@ -254,7 +285,7 @@
     opacity: 1;
 }
 
-/* --- Scroll affordances --- */
+/* --- Scroll affordances (indicadores visuales de que hay más contenido) --- */
 .fade {
     position: absolute;
     left: 8px;
@@ -274,7 +305,7 @@
     background: linear-gradient(to top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0));
 }
 
-/* Scrollbar propia (track + thumb) */
+/* Scrollbar propia (track + thumb) — sincronizada desde TS */
 .scrollbar {
     position: absolute;
     top: 12px;
@@ -286,6 +317,7 @@
     box-shadow: inset 2px 2px 2px 2px var(--ring);
     opacity: .95;
     pointer-events: none;
+    /* puramente visual; no interfiere con el scroll nativo */
 }
 
 .scrollbar .thumb {
@@ -296,10 +328,11 @@
     background: linear-gradient(180deg, var(--accent), var(--accent2));
     box-shadow: 2px 2px 12px rgba(243, 243, 243, 0.35);
     transition: top .08s linear, height .08s linear;
+    /* 🔁 animación sutil al desplazar */
 }
 
 /* responsive */
-@media (max-width:480px) {
+@media (max-width: 480px) {
     .title {
         font-size: 2rem;
     }
@@ -307,9 +340,11 @@
     .grid {
         grid-template-columns: 1fr;
     }
+
+    /* 1 por fila en móviles pequeños */
 }
 
-/* reduce motion */
+/* reduce motion: respeta preferencias del usuario desactivando transiciones */
 @media (prefers-reduced-motion: reduce) {
 
     .card .card-bg,

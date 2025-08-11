@@ -1,3 +1,4 @@
+<!-- NAVBAR -->
 <header class="navbar" [class.scrolled]="scrolled" role="banner">
   <div class="logo-icon-container">
     <div class="logo">
@@ -6,19 +7,17 @@
       </a>
       <span class="logoletters2" aria-hidden="true"> Dev Portfolio</span>
     </div>
-
-    <button
-      class="menu-toggle"
-      (click)="toggleMenu()"
-      aria-label="Abrir o cerrar menú de navegación"
-      [attr.aria-expanded]="menuOpen"
-      aria-controls="main-navigation">
+    <!-- Botón Menú Hamburguesa-->
+    <button class="menu-toggle" (click)="toggleMenu()" aria-label="Abrir o cerrar menú de navegación"
+      [attr.aria-expanded]="menuOpen" aria-controls="main-navigation">
       <span [class.open]="menuOpen" aria-hidden="true">&#9776;</span>
     </button>
   </div>
 
+  <!-- Menú de Navegación Principal-->
   <nav class="nav-links" [class.open]="menuOpen" id="main-navigation" role="navigation" aria-label="Menú principal">
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Inicio</a>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+      (click)="closeMenu()">Inicio</a>
     <a routerLink="/about" routerLinkActive="active" (click)="closeMenu()">Mi historia</a>
 
     <!-- Home + scroll a #experience -->
@@ -27,7 +26,7 @@
     </a>
 
     <a routerLink="/projects" routerLinkActive="active" (click)="closeMenu()">Proyectos</a>
-    <a routerLink="/contact"  routerLinkActive="active" (click)="closeMenu()">Contacto</a>
+    <a routerLink="/contact" routerLinkActive="active" (click)="closeMenu()">Contacto</a>
   </nav>
 </header>
 

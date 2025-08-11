@@ -1,4 +1,5 @@
 :root {
+    /* Tokens globales (colores/efectos) reutilizados en toda la sección */
     --accent: #60a5fa;
     --accent2: #22d3ee;
     --title: #fff;
@@ -7,10 +8,12 @@
     --card1: #0b1631;
     --card2: #0f1f3f;
     --ring: rgba(255, 255, 255, .12);
+    /* borde-tenue para “glass”/separadores */
 }
 
-/* Sección */
+/* ========== CONTENEDOR Y TÍTULO ========== */
 .xp-section {
+    /* clamp() mantiene padding cómodo entre móvil y desktop */
     padding: clamp(48px, 6vw, 96px) 20px;
     max-width: 1300px;
     margin: 0 auto;
@@ -24,6 +27,7 @@
 }
 
 .xp-title::after {
+    /* Subrayado decorativo con gradiente (acentúa la sección) */
     content: "";
     display: block;
     width: 180px;
@@ -33,6 +37,7 @@
     border-radius: 2px;
 }
 
+/* ========== ACCIONES (CV / CONTACTO) ========== */
 .xp-actions {
     display: flex;
     justify-content: center;
@@ -42,6 +47,7 @@
 }
 
 .btn-cv {
+    /* --g1/--g2 permiten cambiar el gradiente del botón si hace falta */
     --g1: var(--accent);
     --g2: var(--accent2);
     position: relative;
@@ -59,6 +65,7 @@
 }
 
 .btn-cv::after {
+    /* Truco de máscara para dibujar un borde-gradiente “hueco” sin cubrir el fondo */
     content: "";
     position: absolute;
     inset: 0;
@@ -74,6 +81,7 @@
 }
 
 .btn-cv:hover {
+    /* Elevación + leve saturación para feedback */
     transform: translateY(-2px);
     box-shadow: 0 12px 32px rgba(96, 165, 250, .35);
     filter: saturate(1.05);
@@ -94,6 +102,7 @@
 }
 
 .btn-ghost {
+    /* Botón secundario con fondo translucido y ring interior */
     color: var(--accent);
     text-decoration: none;
     padding: 6px 10px;
@@ -109,15 +118,17 @@
 }
 
 
-/* Timeline base */
+/* ========== TIMELINE ========== */
 .xp-timeline {
     position: relative;
     list-style: none;
     margin: 0;
+    /* margen superior para que el primer dot respire */
     padding-top: 12px;
 }
 
 .xp-timeline::before {
+    /* Barra vertical principal del timeline (gradiente para dar vida) */
     content: "";
     position: absolute;
     left: 36px;
@@ -128,29 +139,33 @@
     opacity: .45;
 }
 
-/* Card */
+/* ========== ITEM DEL TIMELINE ========== */
 .xp-card {
+    /* Grid 2 columnas: 72px para logo, resto contenido */
     position: relative;
     display: grid;
     grid-template-columns: 72px 1fr;
     gap: 16px;
     padding: 12px 12px 12px 0;
     margin-bottom: 18px;
+    /* se sobreescriben en “reveal” */
     opacity: 1;
     transform: none;
 }
 
-/* Línea/dot por item (para continuidad) */
+/* Segmento de continuidad del timeline específico al item */
 .xp-line {
     position: absolute;
     left: 36px;
     top: 0;
+    /* se extiende hasta el margen inferior del item */
     bottom: -18px;
     width: 2px;
     background: rgba(255, 255, 255, .06);
 }
 
 .xp-dot {
+    /* Marcador circular con glow */
     position: absolute;
     left: 27px;
     top: 18px;
@@ -161,7 +176,7 @@
     box-shadow: 0 0 0 2px #0a1428, 0 0 18px rgba(56, 140, 255, .4);
 }
 
-/* Logo */
+/* Logo de la empresa (contenedor y fallback) */
 .xp-logo {
     width: 72px;
     height: 72px;
@@ -179,6 +194,7 @@
     width: 60px;
     height: 60px;
     object-fit: contain;
+    /* evita deformaciones del logo */
 }
 
 .xp-logo-fallback {
@@ -191,7 +207,7 @@
     transform: scale(1.06) rotateZ(-1deg);
 }
 
-/* Contenido */
+/* Tarjeta de contenido */
 .xp-content {
     position: relative;
     border-radius: 18px;
@@ -203,6 +219,7 @@
 }
 
 .xp-content::before {
+    /* Borde-gradiente “hueco” con máscara — mismo patrón que en .btn-cv */
     content: "";
     position: absolute;
     inset: 0;
@@ -220,16 +237,18 @@
 }
 
 .xp-card:hover .xp-content {
+    /* Efecto “levitar” con ligera perspectiva */
     transform: translateY(-12px) scale(1.01) rotateX(4deg);
     box-shadow: 0 32px 64px rgba(60, 120, 255, .3);
 }
 
 .xp-card:hover .xp-content::before {
+    /* Tinte dinámico del borde en hover */
     filter: hue-rotate(24deg) saturate(120%);
     opacity: .95;
 }
 
-/* Cabecera */
+/* ========== TIPOGRAFÍA Y METADATOS ========== */
 .xp-header {
     display: flex;
     flex-wrap: wrap;
@@ -267,7 +286,7 @@
     opacity: .6;
 }
 
-/* Duración como chip */
+/* Duración estilo “chip” */
 .xp-duration {
     margin-left: 4px;
     padding: 4px 8px;
@@ -279,6 +298,7 @@
 }
 
 .xp-duration::before {
+    /* Emoji de reloj como adorno (ligero impacto en tipografías/OS) */
     content: "⏱️ ";
     opacity: .9;
 }
@@ -287,15 +307,14 @@
 .xp-summary {
     padding-top: 12px;
     padding-bottom: 12px;
-    ;
     font-size: 1.1rem;
-    ;
     color: var(--text);
     margin: .35rem 0 .5rem;
 }
 
 .xp-summary strong,
 .xp-tasks strong {
+    /* Énfasis visual en palabras clave */
     color: var(--accent);
     font-size: 1.2rem;
     font-weight: 800;
@@ -308,6 +327,7 @@
     color: #cfe2ff;
 }
 
+/* Chips de tecnología */
 .xp-tasks {
     margin: 0.8rem 0 0;
     padding-left: 1.1rem;
@@ -380,16 +400,19 @@
     text-decoration: underline;
 }
 
-/* Reveal (stagger) */
+/* ========== REVEAL (aparición escalonada) ========== */
 .reveal-ready .xp-card {
+    /* Estado inicial: oculto y un poco desplazado */
     opacity: 0;
     transform: translateY(16px);
 }
 
 .reveal-ready.in-view .xp-card {
+    /* Al entrar en viewport, dispara la animación definida abajo */
     animation: xpIn .6s cubic-bezier(.2, .8, .2, 1) both;
 }
 
+/* Pequeños delays por posición para efecto “stagger” */
 .reveal-ready.in-view .xp-card:nth-child(1) {
     animation-delay: .04s
 }
@@ -414,7 +437,7 @@
     }
 }
 
-/* Responsive */
+/* ========== RESPONSIVE ========== */
 @media (max-width: 640px) {
     .xp-timeline::before {
         left: 20px;
@@ -435,12 +458,14 @@
     }
 }
 
+/* ========== ACCESIBILIDAD: REDUCE MOTION ========== */
 @media (prefers-reduced-motion: reduce) {
 
     .xp-content,
     .xp-logo,
     .xp-tag,
     .xp-card {
+        /* Elimina transiciones/transformaciones para usuarios que lo prefieran */
         transition: none;
         transform: none;
     }

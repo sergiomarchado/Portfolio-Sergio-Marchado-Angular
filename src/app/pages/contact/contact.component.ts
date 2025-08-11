@@ -12,7 +12,7 @@ export class ContactComponent {
   // ==== Configura aquí tus datos =====
   readonly subject = 'Contacto desde el portfolio';
   readonly body = 'Hola Sergio,%0D%0A%0D%0AHe visto tu portfolio y me gustaría hablar contigo.';
-  readonly phone = ''; // ← si tienes WhatsApp en número internacional, ej: '34600111222'
+  readonly phone = '34618486352'; // ← si tienes WhatsApp en número internacional, ej: '34600111222'
   readonly telegramUser = ''; // ej: 'sergio_username' (sin @). Deja vacío para ocultar.
   // ===================================
 

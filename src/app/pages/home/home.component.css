@@ -1,4 +1,5 @@
 /* ========== GLOBAL RESET ========== */
+/* Base: quita márgenes y evita scroll horizontal por desbordes de layout. */
 html,
 body {
     background-color: transparent;
@@ -7,6 +8,7 @@ body {
     overflow-x: hidden;
 }
 
+/* Fondo gradiente principal de la página (detrás de secciones). */
 .content-wrapper {
     background: linear-gradient(to bottom right,
             #010d1f 0%, #031a3f 25%, #02375a 60%, #0e4c75 85%, #1d84d8 100%);
@@ -16,6 +18,7 @@ body {
 }
 
 /* ========== NAVBAR SCROLL FIX ========== */
+/* Navbar opaca al hacer scroll (se activa con .scrolled desde TS). */
 .navbar.scrolled {
     background-color: rgba(15, 23, 42, .95);
     backdrop-filter: blur(10px);
@@ -24,10 +27,12 @@ body {
 }
 
 /* ========== HERO SECTION ========== */
+/* Contenedor del hero con vídeo de fondo en 16:9 por defecto (desktop). */
 .hero-video {
     position: relative;
     width: 100%;
     aspect-ratio: 16/9;
+    /* se ajusta en móviles más abajo */
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -36,6 +41,7 @@ body {
     background-color: transparent;
 }
 
+/* Overlay oscuro sobre el vídeo para mejorar contraste del texto. */
 .hero-video::before {
     content: "";
     position: absolute;
@@ -44,19 +50,22 @@ body {
     z-index: 1;
 }
 
+/* Vídeo cubre todo el hero. Se escala/posiciona con object-fit/position. */
 .bg-video {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
+    /* rellena sin distorsión, recortando si hace falta */
     object-fit: cover;
     object-position: center center;
     z-index: 0;
+    /* color de fondo por si el vídeo tarda */
     background-color: #0f172a;
     transition: transform .3s ease, object-position .3s ease;
 }
 
-/* Contenedor del hero */
+/* Contenedor del copy por encima del overlay/vídeo. */
 .hero-text {
     position: relative;
     z-index: 2;
@@ -64,35 +73,39 @@ body {
     color: #fff;
 }
 
-/* Titular */
+/* Titular principal del hero (fluid con clamp). */
 .hero-h1 {
     margin: 0 0 .4rem;
     font-size: clamp(2.2rem, 1.2rem + 3vw, 3.2rem);
     font-weight: 900;
 }
 
-/* Tipeo */
+/* ====== EFECTO “TIPEO” ====== */
+/* Contenedor del texto + caret en una misma línea (grid en fila). */
 .type-wrap {
     display: inline-grid;
     grid-auto-flow: column;
     align-items: baseline;
 }
 
+/* Texto que “se escribe”: se oculta con max-width 0ch hasta activar animación. */
 .type-target {
     color: #3b82f6;
     white-space: nowrap;
     overflow: hidden;
     display: inline-block;
+    /* nº de pasos (caracteres) del typing */
     --steps: 22;
-    max-width: 0ch;
     /* sin animación por defecto */
+    max-width: 0ch;
 }
 
-/* se activa desde TS */
+/* La animación se activa añadiendo la clase .type-run desde TS */
 .type-target.type-run {
     animation: typing 2.1s steps(var(--steps), end) .15s forwards;
 }
 
+/* Cursor “caret” (barra vertical que parpadea). */
 .caret {
     width: 4px;
     /* visible */
@@ -100,14 +113,16 @@ body {
     background: #3b82f6;
     margin-left: 4px;
     align-self: center;
-    opacity: 0;
     /* base sin blink */
+    opacity: 0;
 }
 
+/* Blink del caret se activa con .caret-run desde TS */
 .caret.caret-run {
     animation: blink .8s step-end infinite;
 }
 
+/* Anima max-width en ch para descubrir el texto “escrito”. */
 @keyframes typing {
     from {
         max-width: 0ch;
@@ -118,6 +133,7 @@ body {
     }
 }
 
+/* Parpadeo del caret. */
 @keyframes blink {
 
     0%,
@@ -130,7 +146,7 @@ body {
     }
 }
 
-/* Subtítulo y lead */
+/* Subtítulo y lead del hero (con sombra sutil para legibilidad). */
 .hero-h2 {
     margin: .1rem 0 .7rem;
     font-size: clamp(1.2rem, .9rem + 1.4vw, 1.9rem);
@@ -147,7 +163,7 @@ body {
     text-shadow: 0 1px 8px rgba(0, 0, 0, .35);
 }
 
-/* 🔻 Triángulo invertido de CTA */
+/*  Triángulo invertido de CTAs: 3 botones en layout “top / left / right”. */
 .cta-tri {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -190,18 +206,17 @@ body {
 
     background: transparent;
     border: 2px solid var(--btn-blue);
+    /* fuerza blanco para texto/íconos */
     color: #fff !important;
-    /* texto siempre blanco */
     text-decoration: none;
     font-weight: 600;
     letter-spacing: .2px;
-
+    /* para el relleno animado */
     overflow: hidden;
-    /* para el relleno */
     transition: transform .18s ease, box-shadow .25s ease, border-color .25s ease, color .25s ease;
 }
 
-/* Relleno animado */
+/* “Relleno” que se expande en hover (barre de izquierda a derecha). */
 .btn::before {
     content: "";
     position: absolute;
@@ -213,7 +228,7 @@ body {
     z-index: 0;
 }
 
-/* contenido por encima del relleno */
+/* Asegura que el contenido del botón quede por encima del relleno. */
 .btn>* {
     position: relative;
     z-index: 1;
@@ -229,7 +244,7 @@ body {
     box-shadow: 0 0 18px rgba(59, 130, 246, .65), 0 0 28px rgba(96, 165, 250, .45);
 }
 
-/* Iconos SVG en botones (si los usas) */
+/* Iconos SVG dentro del botón: heredan color (currentColor). */
 .btn svg {
     width: 18px;
     height: 18px;
@@ -237,7 +252,7 @@ body {
     display: block;
 }
 
-/* Responsive triángulo -> columna */
+/* Responsive triángulo -> columna (los 3 CTAs apilados). */
 @media (max-width: 640px) {
     .cta-tri {
         grid-template-areas:
@@ -257,9 +272,11 @@ body {
 }
 
 /* ====== RESPONSIVE HERO VIDEO ====== */
+/* En móviles: el hero deja el aspect-ratio fijo y ocupa la altura de la viewport. */
 @media (max-width: 768px) {
     .hero-video {
         aspect-ratio: auto;
+        /* viewport “small” height: estable con UI móvil */
         min-height: 100svh;
     }
 
@@ -268,12 +285,14 @@ body {
     }
 
     .bg-video {
+        /* prioriza la parte superior del vídeo */
         object-position: center top;
         transform: scale(1.05);
         transform-origin: center top;
     }
 }
 
+/* Ajustes adicionales para pantallas muy pequeñas: aumenta el “zoom” del vídeo. */
 @media (max-width: 480px) {
     .bg-video {
         transform: scale(1.15);
@@ -303,17 +322,20 @@ body {
     }
 }
 
-/* Altas pantallas muy verticales */
+/* Altas pantallas muy verticales: prioriza ver el vídeo completo sin recortes. */
 @media screen and (max-aspect-ratio: 9/16) {
     .bg-video {
+        /* evita recortes, pueden quedar “barras” laterales */
         object-fit: contain !important;
         transform: none !important;
         object-position: top center !important;
+        /* color para las “barras” */
         background-color: #0f172a;
     }
 }
 
 /* ========== SCROLL ICON ========== */
+/* Indicador de desplazamiento con animación combinada (rebote + aparición). */
 .scroll-down {
     position: absolute;
     bottom: 30px;
@@ -322,10 +344,12 @@ body {
     font-size: 2rem;
     color: white;
     animation: bounce 2s infinite, fadeIn 1s ease-in-out 1.5s forwards;
+    /* queda oculto hasta completar fadeIn */
     opacity: 0;
     z-index: 1;
 }
 
+/* Rebote vertical del indicador. */
 @keyframes bounce {
 
     0%,
@@ -338,6 +362,7 @@ body {
     }
 }
 
+/* Aparición diferida del indicador (sin parpadeo inicial). */
 @keyframes fadeIn {
     to {
         opacity: 1;
@@ -345,6 +370,7 @@ body {
 }
 
 /* ========== SECTIONS ========== */
+/* Padding y ancho máximo consistente en secciones bajo el hero. */
 section:not(.hero-video) {
     padding: 80px 20px;
     max-width: 1100px;
@@ -352,6 +378,7 @@ section:not(.hero-video) {
     text-align: center;
 }
 
+/* Grid de “proyectos destacados” (si se usa en otra sección). */
 .featured-projects .projects-grid {
     display: grid;
     gap: 30px;
@@ -379,6 +406,7 @@ section:not(.hero-video) {
 }
 
 /* ========== RESPONSIVE ========== */
+/* Ajustes fluidos de tipografía del hero con breakpoints genéricos. */
 @media (max-width: 1024px) {
     .hero-text h1 {
         font-size: 2.5rem;
@@ -442,19 +470,13 @@ section:not(.hero-video) {
         font-size: 0.9rem;
     }
 
-    .cta-buttons {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .btn,
-    .btn-outline {
+    .btn {
         width: 100%;
         max-width: 220px;
     }
 }
 
-/* 📱 Extra small devices (XS): hasta 320px */
+/* Extra small devices (XS): hasta 320px */
 @media (max-width: 320px) {
     .bg-video {
         transform: scale(1.3);
@@ -480,7 +502,7 @@ section:not(.hero-video) {
     }
 }
 
-/* 📱 Ultra-narrow: hasta 280px */
+/* Ultra-narrow: hasta 280px */
 @media (max-width: 280px) {
     .bg-video {
         transform: scale(1.35);
@@ -509,7 +531,7 @@ section:not(.hero-video) {
     }
 }
 
-/* 🧪 Modo extremo/debug o pruebas (240px o menos) */
+/* Modo extremo/debug o pruebas (240px o menos) */
 @media (max-width: 240px) {
     .bg-video {
         transform: scale(1.45);
@@ -536,28 +558,12 @@ section:not(.hero-video) {
     }
 }
 
-/* 🎯 Ajuste para móviles con pantalla muy vertical (Galaxy S20, Pixel, etc.) */
+/* Ajuste para móviles con pantalla muy vertical (Galaxy S20, Pixel, etc.) */
 @media screen and (max-aspect-ratio: 9/16) {
     .bg-video {
         object-fit: contain !important;
         transform: none !important;
         object-position: top center !important;
         background-color: #0f172a;
-    }
-}
-
-/* Responsive */
-@media (max-width: 640px) {
-    .cta-tri {
-        grid-template-areas: "top top" "left left" "right right";
-    }
-
-    .area-left,
-    .area-right {
-        justify-self: center;
-    }
-
-    .btn {
-        min-width: 220px;
     }
 }

@@ -1,3 +1,7 @@
+/**
+ * MODELO DE EXPERIENCIA LABORAL, SE RELLENA CON DATA EXPERIENCE.DATA.TS
+ */
+
 export interface ExperienceReference {
     name: string;
     position: string;
