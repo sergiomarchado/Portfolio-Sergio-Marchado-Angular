@@ -6,6 +6,7 @@ import { AboutPreviewComponent } from '../../components/about-preview/about-prev
 import { TechStackComponent } from '../../components/tech-stack/tech-stack.component';
 import { ProjectsGalleryComponent } from '../../components/projects-gallery/projects-gallery.component';
 import { ExperienceComponent } from '../../components/experience/experience.component';
+import { EducationTimelineComponent } from '../../components/education-timeline/education-timeline.component';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,8 @@ import { ExperienceComponent } from '../../components/experience/experience.comp
     AboutPreviewComponent,
     TechStackComponent,
     ProjectsGalleryComponent,
-    ExperienceComponent
+    ExperienceComponent,
+    EducationTimelineComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'

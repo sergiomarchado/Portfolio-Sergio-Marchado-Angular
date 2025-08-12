@@ -46,27 +46,14 @@
                     </span>
                     <span>Copiar email</span>
                 </button>
-
-                <button class="btn btn-solid btn-lg" type="button" (click)="downloadVCard()">
-                    <span class="ico" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M3 5h18v14H3V5zm2 2v10h14V7H5zm2 2h4v2H7V9zm0 4h10v2H7v-2z" />
-                        </svg>
-                    </span>
-                    <span>Guardar contacto (vCard)</span>
-                </button>
             </div>
 
             <!-- Acciones secundarias -->
             <div class="panel btn-grid compact secondary">
                 <a class="btn btn-ghost" [href]="gmailHref" target="_blank" rel="noopener">Abrir en Gmail</a>
                 <a class="btn btn-ghost" [href]="outlookHref" target="_blank" rel="noopener">Abrir en Outlook Web</a>
-                <a class="btn btn-ghost" [href]="whatsHref" target="_blank" rel="noopener"
-                    aria-label="Enviar WhatsApp">WhatsApp</a>
                 <a class="btn btn-ghost" href="https://www.linkedin.com/in/sergio-marchado-ropero-82b8b914b/"
                     target="_blank" rel="noopener">LinkedIn</a>
-                <a *ngIf="telegramUser" class="btn btn-ghost" [href]="telegramHref" target="_blank"
-                    rel="noopener">Telegram</a>
             </div>
         </div>
 
@@ -83,11 +70,7 @@
                 </article>
                 <article class="info-card">
                     <h3 class="info-title">Idiomas</h3>
-                    <p class="info-body">Español (nativo), Inglés (intermedio)</p>
-                </article>
-                <article class="info-card">
-                    <h3 class="info-title">Interés</h3>
-                    <p class="info-body">Android • Front Angular • Backend Java</p>
+                    <p class="info-body">Español (nativo), Inglés (B2)</p>
                 </article>
             </div>
 

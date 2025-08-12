@@ -35,7 +35,7 @@ export class CookieConsentComponent implements OnDestroy {
   modalVisible = false;
 
   /** Estado actual (reactivo manual vía ngModel en el template). */
-  consent: Consent = { necessary: true, functional: false, analytics: false };
+  consent: Consent = { necessary: true, functional: true, analytics: false };
 
   /* ======= Internos ======= */
   private readonly isBrowser: boolean;

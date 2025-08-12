@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { CarrerComponent } from './pages/carrer/carrer.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -17,8 +18,7 @@ export const routes: Routes = [
     {
         path: 'experience',
         loadComponent: () =>
-            import('./components/experience/experience.component')
-                .then(m => m.ExperienceComponent)
+            import('./pages/carrer/carrer.component').then(m => m.CarrerComponent)
     },
     { path: 'contact', component: ContactComponent },
     {
@@ -37,3 +37,4 @@ export const routes: Routes = [
 
 
 ];
+

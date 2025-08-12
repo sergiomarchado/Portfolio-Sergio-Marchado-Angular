@@ -12,8 +12,6 @@ import { WorldClocksComponent } from '../../components/world-clocks/world-clocks
 export class ContactComponent {
   fullName = 'Sergio Marchado';
   email = 'sergio.marchadoropero3@gmail.com';
-  phone = '34618486352';
-  telegramUser = ''; // deja vacío para ocultar el botón
   subject = 'Contacto desde el portfolio';
   body = 'Hola Sergio,%0D%0A%0D%0AHe visto tu portfolio y me gustaría hablar contigo.';
   availability = 'Inmediata';
@@ -32,15 +30,6 @@ export class ContactComponent {
   get outlookHref() {
     return `https://outlook.office.com/mail/deeplink/compose?to=${encodeURIComponent(this.email)}&subject=${encodeURIComponent(this.subject)}&body=${this.body}`;
   }
-  get whatsHref() {
-    const txt = `Hola ${this.fullName.split(' ')[0]}, te escribo desde tu portfolio.`;
-    return this.phone
-      ? `https://wa.me/${this.phone}?text=${encodeURIComponent(txt)}`
-      : `https://wa.me/?text=${encodeURIComponent(txt + ' (' + this.email + ')')}`;
-  }
-  get telegramHref() {
-    return this.telegramUser ? `https://t.me/${this.telegramUser}` : '';
-  }
 
   async copyEmail() {
     try {
@@ -57,27 +46,6 @@ export class ContactComponent {
     }
   }
 
-  downloadVCard() {
-    const lines = [
-      'BEGIN:VCARD',
-      'VERSION:3.0',
-      `N:${this.fullName};;;;`,
-      `FN:${this.fullName}`,
-      `EMAIL;TYPE=INTERNET,WORK:${this.email}`,
-      this.phone ? `TEL;TYPE=CELL:+${this.phone}` : '',
-      'NOTE:Contacto generado desde el portfolio',
-      'END:VCARD'
-    ].filter(Boolean);
-    const blob = new Blob([lines.join('\r\n')], { type: 'text/vcard;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${this.fullName.replace(/\s+/g, '_')}.vcf`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 0);
-  }
 
   private showToast() {
     this.copied = true;
