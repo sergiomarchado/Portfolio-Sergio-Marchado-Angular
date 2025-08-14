@@ -1,0 +1,56 @@
+name: Deploy Angular to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - run: npm ci
+
+      # IMPORTANTE: tu sitio será username.github.io/Portfolio-Sergio-Marchado-Angular
+      # Por eso base-href va con /Portfolio-Sergio-Marchado-Angular/
+      - run: npx ng build --configuration production --base-href=/Portfolio-Sergio-Marchado-Angular/
+
+      # SPA fallback: copia index.html como 404.html (para refrescos en rutas internas)
+      - name: Add 404.html for SPA
+        run: |
+          if [ -d "dist/portfolio-app/browser" ]; then
+            cp dist/portfolio-app/browser/index.html dist/portfolio-app/browser/404.html
+          else
+            cp dist/portfolio-app/index.html dist/portfolio-app/404.html
+          fi
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          # Sube la carpeta de build. En tu angular.json es dist/portfolio-app
+          # (si existiera /browser también queda cubierto por el paso anterior)
+          path: dist/portfolio-app
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
