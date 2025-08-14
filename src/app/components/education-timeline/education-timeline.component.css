@@ -450,6 +450,7 @@
         gap: 0;
     }
 
+    /* El eje se va a la izquierda */
     .ed-timeline::before {
         left: 16px;
         transform: none;
@@ -460,10 +461,23 @@
         margin-left: 6px;
     }
 
-    .ed-item .ed-card {
-        grid-column: 1/2;
+    /* IMPORTANTE: anular odd/even con la misma especificidad */
+    .ed-item:nth-child(odd) .ed-card,
+    .ed-item:nth-child(even) .ed-card {
+        grid-column: 1 / -1;
+        /* ocupar la única columna */
+        margin-left: 32px;
+        /* separar del eje izquierdo */
+    }
+
+    /* Si quieres mantener el mismo margen vertical que ya tienes: */
+    .ed-item:nth-child(odd) .ed-card,
+    .ed-item:nth-child(even) .ed-card {
+        margin-top: 8px;
+        margin-bottom: 22px;
     }
 }
+
 
 /* ===== Reduce motion ===== */
 @media (prefers-reduced-motion:reduce) {
