@@ -506,6 +506,7 @@ section:not(.hero-video) {
 
     .hero-text h1 {
         font-size: 1.6rem;
+        padding-top: 200px;
     }
 
     .hero-text h2 {
@@ -521,6 +522,7 @@ section:not(.hero-video) {
 
     .hero-text h1 {
         font-size: 1.4rem;
+        padding-top: 150px;
     }
 
     .hero-text h2 {
@@ -623,4 +625,5 @@ section:not(.hero-video) {
         object-position: top center !important;
         background-color: #0f172a;
     }
+
 }
