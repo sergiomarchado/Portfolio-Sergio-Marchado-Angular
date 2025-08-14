@@ -319,7 +319,7 @@
     animation: borderPan var(--border-pan) linear infinite;
 }
 
-/* === AURORA AMBIENTAL (reemplaza el shine sweep) ======================= */
+/* === AURORA AMBIENTAL ======================= */
 @keyframes auroraDrift {
     0% {
         transform: translate3d(0, 0, 0) scale(1);
@@ -337,13 +337,11 @@
     }
 }
 
-/* Capa ambiental dentro de la tarjeta (no es un reflejo direccional) */
 .xp-content::after {
     content: "";
     position: absolute;
     inset: -4px;
     border-radius: inherit;
-    /* 3 “manchas” radiales muy suaves en lugares diferentes */
     background:
         radial-gradient(120% 90% at 70% 10%, rgba(62, 160, 255, .16), transparent 60%),
         radial-gradient(100% 120% at 15% 85%, rgba(34, 211, 238, .12), transparent 60%),
@@ -361,7 +359,6 @@
     filter: saturate(1.03);
 }
 
-/* En hover intensificamos un poco el aura, sin parecer un “brillo” */
 .xp-card:hover .xp-content::after {
     opacity: .95;
     animation-duration: 12s;
@@ -613,6 +610,13 @@
     .xp-logo img {
         width: 46px;
         height: 46px;
+    }
+
+    /* 🔧 Fallback móvil: mostrar siempre las cards si el IO no añade .in-view */
+    .xp-timeline.reveal-ready .xp-card {
+        opacity: 1;
+        transform: none;
+        animation: none;
     }
 }
 
