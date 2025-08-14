@@ -96,7 +96,7 @@ export class EducationTimelineComponent implements AfterViewInit, OnDestroy {
       title: 'Jetpack Compose: Curso definitivo desde 0 [2025]',
       provider: 'Udemy',
       year: '2025',
-      imageUrl: '/assets/img/certificates/jetpackcomposearis.webp',
+      imageUrl: 'assets/img/certificates/jetpackcomposearis.webp',
       url: 'https://www.udemy.com/course/jetpack-compose-desde-0-a-profesional/',
       pdfUrl: 'https://www.udemy.com/certificate/UC-32c9ee64-db1a-4ebf-a58e-4cd5ca21c579/'
     },
@@ -105,7 +105,7 @@ export class EducationTimelineComponent implements AfterViewInit, OnDestroy {
       title: 'Máster Completo en Java de cero a experto 2025 +180 hrs',
       provider: 'Udemy',
       year: '2025',
-      imageUrl: '/assets/img/certificates/javaudemy.webp',
+      imageUrl: 'assets/img/certificates/javaudemy.webp',
       url: 'https://www.udemy.com/course/master-completo-java-de-cero-a-experto/',
       pdfUrl: 'https://www.udemy.com/certificate/UC-13db953b-5501-4323-ac3a-0938d5044300/'
     }

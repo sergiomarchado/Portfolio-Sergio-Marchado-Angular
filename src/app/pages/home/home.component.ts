@@ -25,8 +25,8 @@ import { EducationTimelineComponent } from '../../components/education-timeline/
 export class HomeComponent implements AfterViewInit, OnDestroy {
   /** Ajusta aquí tus vídeos (mp4/H.264 idealmente, con bitrate razonable) */
   videos: string[] = [
-    '/assets/videos/backgroundd.mp4',
-    '/assets/videos/demoheader.mp4'
+    'assets/videos/backgroundd.mp4',
+    'assets/videos/demoheader.mp4'
     // puedes añadir más...
   ];
   index = 0;          // índice actual
