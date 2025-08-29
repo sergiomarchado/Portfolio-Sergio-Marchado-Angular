@@ -1,6 +1,15 @@
 import { Project } from '../interfaces/project.interface';
 
 export const PROJECTS: Project[] = [
+
+    {
+        id: 'the-best-dam-kebap',
+        title: 'THE BEST DAM KEBAB',
+        short: 'App Android muestrario de comida a domicilio. Solución a pequeños negocios que no disponen de una solución nativa propia para poder ofrecer sus servicios. <br> <b>Jetpack Compose</b>, <b>Material3</b>, <b>Hilt (DI)</b>, <b>Firebase</b> y <b>DataStore</b>',
+        img: 'assets/img/projects/ic_thebestdamkebab.webp',
+        categories: ['ANDROID'],
+        url: 'https://github.com/sergiomarchado/TheBestDAMKebap'
+    },
     {
         id: 'pet-explorer',
         title: 'PET EXPLORER',
