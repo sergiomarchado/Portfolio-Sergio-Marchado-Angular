@@ -10,5 +10,6 @@ export interface Project {
     short: string;
     img: string;             // ruta en /public/assets/...
     categories: ProjectCategory[];
-    url?: string;            // opcional: enlace a GitHub/Store/etc
+    url?: string;             // opcional: enlace a GitHub/Store/etc
+    videoUrl?: string           
 }

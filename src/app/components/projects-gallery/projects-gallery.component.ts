@@ -137,6 +137,13 @@ export class ProjectsGalleryComponent implements OnDestroy, AfterViewInit {
     if (url) window.open(url, '_blank', 'noopener');
   }
 
+  // NUEVO: abre la demo en vídeo (YouTube/Vimeo/etc.) en nueva pestaña.
+  // Mantiene el mismo patrón que openProject: evita burbujeo y usa 'noopener' por seguridad.
+  openVideo(ev: MouseEvent, videoUrl?: string | null) {
+    ev.stopPropagation();
+    if (videoUrl) window.open(videoUrl, '_blank', 'noopener');
+  }
+
   // Devuelve el estado de scroll para un id. Si no existe, devuelve uno por defecto (sin overflow).
   state(id: string): ScrollState {
     return this.scrollStates()[id] ?? { can: false, atTop: true, atBottom: true, thumbH: 100, thumbTop: 0 };

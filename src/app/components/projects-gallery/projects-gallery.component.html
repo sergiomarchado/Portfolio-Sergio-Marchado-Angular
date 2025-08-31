@@ -35,6 +35,13 @@
                             [attr.aria-label]="'Abrir ' + p.title + ' en GitHub'">
                             Ver proyecto en GitHub
                         </button>
+
+                        <!-- NUEVO: Botón Video Demo (solo si existe p.videoUrl) -->
+                        <button class="ghost-cta" type="button" *ngIf="p.videoUrl"
+                            (click)="openVideo($event, p.videoUrl)"
+                            aria-label="Ver Video Demo en YouTube (se abre en pestaña nueva)">
+                            Video Demo
+                        </button>
                     </div>
 
                     <div class="p-fade p-fade-top" *ngIf="!state(p.id).atTop" aria-hidden="true"></div>
