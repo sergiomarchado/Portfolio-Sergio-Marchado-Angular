@@ -1,7 +1,8 @@
 /* ===== Tokens para armonizar con la otra sección ===== */
 :host {
-    --p-card-w: 400px;
-    /* ancho card */
+    display: block;
+    --p-card-w: 420px;
+    /* ancho "ideal" de card */
     --p-meta-h: 220px;
     /* alto panel texto */
 
@@ -9,8 +10,8 @@
     --brand-blue: #3ea0ff;
     --brand-cyan: #12e1ff;
     --brand-deep: #06162b;
-    /* NUEVO: matiz rojizo para el botón de Video Demo */
     --brand-red: #ff3b3b;
+    /* para botón Video Demo */
 
     /* halo/glow */
     --halo: rgba(18, 225, 255, .45);
@@ -23,6 +24,9 @@
     --ring-speed: 6s;
     --ring-speed-fast: 3s;
     --shine-speed: .9s;
+
+    /* columnas por página (TS las sobreescribe según viewport) */
+    --cols: 3;
 }
 
 .projects {
@@ -77,22 +81,112 @@
     box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand-blue) 35%, transparent);
 }
 
-/* ===== GRID ===== */
-.projects-grid {
+/* ====== CARRUSEL (estructura) ============================================ */
+
+/* Viewport del carrusel: ocultamos solo en X, dejamos visible en Y y
+   añadimos "bleed" vertical y horizontal para que el hover no se corte */
+.projects-viewport {
+    overflow-x: hidden;
+    overflow-y: visible;
+    padding-inline: clamp(8px, 1.5vw, 14px);
+    padding-block: clamp(12px, 1.6vw, 18px);
+    /* un pelín más de aire vertical */
+}
+
+/* Pista horizontal */
+.projects-track {
+    display: flex;
+    transition: transform .45s cubic-bezier(.22, .61, .36, 1);
+    will-change: transform;
+}
+
+/* Cada página ocupa el 100% del viewport y contiene la grid de cards */
+.projects-page {
+    inline-size: 100%;
+    flex: 0 0 100%;
     display: grid !important;
-    grid-template-columns: repeat(auto-fit, var(--p-card-w, 400px)) !important;
+    grid-auto-flow: row;
+    grid-auto-rows: auto;
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr)) !important;
     justify-content: center;
     gap: 18px;
     align-items: start;
+    overflow: visible;
+    /* deja salir la card cuando se escala */
 }
 
-@media (max-width:520px) {
-    .projects-grid {
-        grid-template-columns: 1fr !important;
+/* Asegura que la card ocupa toda su columna dentro de la página */
+.projects-page .p-card {
+    width: 100% !important;
+}
+
+/* Breakpoints de respaldo */
+@media (max-width: 992px) {
+    .projects-page {
+        --cols: 2;
     }
 }
 
-/* ===== CARD ===== */
+@media (max-width: 520px) {
+    .projects-page {
+        --cols: 1;
+    }
+}
+
+/* Controles */
+.carousel-controls {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1300px;
+    margin: 0 auto 10px;
+    padding: 0 8px;
+}
+
+.nav-btn {
+    inline-size: 42px;
+    block-size: 42px;
+    border-radius: 999px;
+    border: 1px solid var(--brand-blue);
+    background: rgba(8, 18, 31, .6);
+    color: #dbe7ff;
+    font-size: 22px;
+    cursor: pointer;
+    transition: transform .18s ease, box-shadow .25s ease, opacity .2s ease;
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px color-mix(in oklab, var(--brand-cyan) 28%, transparent);
+}
+
+.nav-btn:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+/* Dots */
+.dots {
+    display: flex;
+    gap: .5rem;
+    justify-content: center;
+    margin-top: 14px;
+}
+
+.dot {
+    inline-size: .55rem;
+    block-size: .55rem;
+    border-radius: 999px;
+    border: none;
+    background: #4b6b8c;
+    opacity: .55;
+}
+
+.dot.active {
+    opacity: 1;
+    background: linear-gradient(90deg, var(--brand-blue), var(--brand-cyan));
+}
+
+/* ===== CARD =============================================================== */
 .p-card {
     width: var(--p-card-w, 340px) !important;
     position: relative;
@@ -107,8 +201,12 @@
     display: flex;
     flex-direction: column;
     transform-style: preserve-3d;
+    transform-origin: top center;
+    /* <-- anti-corte vertical */
     transition: transform var(--anim-speed) ease, box-shadow var(--anim-speed) ease, filter var(--anim-speed) ease;
     will-change: transform, box-shadow, filter;
+    z-index: 0;
+    /* base */
 }
 
 @media (max-width:520px) {
@@ -122,15 +220,16 @@
     box-shadow: 0 0 0 3px color-mix(in oklab, var(--brand-blue) 50%, transparent);
 }
 
-/* Hover/Open: escala + tilt + halo neón */
+/* Hover/Open: escala + tilt + halo neón + elevar z-index */
 @media (hover:hover) {
     .p-card:hover {
         transform: translateY(var(--card-raise)) scale(1.02) rotateX(var(--tilt));
         box-shadow:
             0 18px 38px rgba(0, 0, 0, .38),
             0 0 0 1px color-mix(in oklab, var(--brand-blue) 40%, transparent),
-            0 0 44px var(--halo);
+            0 0 24px var(--halo);
         filter: drop-shadow(0 0 18px var(--halo));
+        z-index: 5;
     }
 }
 
@@ -141,12 +240,18 @@
         0 0 0 1px color-mix(in oklab, var(--brand-blue) 55%, transparent),
         0 0 56px var(--halo-strong);
     filter: drop-shadow(0 0 24px var(--halo-strong));
+    z-index: 6;
 }
 
 /* Borde gradiente animado tipo “neón” */
 @keyframes border-pan {
-    0% { background-position: 0% 50% }
-    100% { background-position: 200% 50% }
+    0% {
+        background-position: 0% 50%
+    }
+
+    100% {
+        background-position: 200% 50%
+    }
 }
 
 .p-card::before {
@@ -233,8 +338,15 @@
 
 /* Marco interior con glow */
 @keyframes frame-glow {
-    0%, 100% { opacity: .48 }
-    50% { opacity: .85 }
+
+    0%,
+    100% {
+        opacity: .48
+    }
+
+    50% {
+        opacity: .85
+    }
 }
 
 .p-frame {
@@ -335,9 +447,8 @@
     overflow: hidden;
 }
 
-/* separa cualquier botón que vaya justo después de otro */
-.ghost-cta + .ghost-cta {
-  margin-left: 10px;   /* ajusta a 12/14 si lo quieres un pelín más amplio */
+.ghost-cta+.ghost-cta {
+    margin-left: 10px;
 }
 
 .ghost-cta:hover {
@@ -361,7 +472,7 @@
     transform: translateX(120%);
 }
 
-/* NUEVO: variante para el botón “Video Demo” (YouTube) */
+/* Variante YouTube */
 .ghost-cta.youtube {
     background: linear-gradient(90deg, var(--brand-red), #ff8a8a);
     color: #07121f;
@@ -423,6 +534,7 @@
 }
 
 @media (prefers-reduced-motion:reduce) {
+
     *,
     *::before,
     *::after {

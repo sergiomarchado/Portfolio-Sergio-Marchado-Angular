@@ -35,7 +35,7 @@ type CourseItem = {
 })
 export class EducationTimelineComponent implements AfterViewInit, OnDestroy {
 
-  // ====== DATA DEMO (cámbiala por la tuya) ======
+  // ====== DATA ======
   readonly education = signal<EduItem[]>([
     {
       id: 'dam',
@@ -108,6 +108,15 @@ export class EducationTimelineComponent implements AfterViewInit, OnDestroy {
       imageUrl: 'assets/img/certificates/javaudemy.webp',
       url: 'https://www.udemy.com/course/master-completo-java-de-cero-a-experto/',
       pdfUrl: 'https://www.udemy.com/certificate/UC-13db953b-5501-4323-ac3a-0938d5044300/'
+    },
+    {
+      id: 'cloudpracticioner',
+      title: 'AWS Cloud Quest: Cloud Practitioner - Training Badge',
+      provider: 'Amazon Web Services Training and Certification',
+      year: '2025',
+      imageUrl: 'assets/img/certificates/certifiawscloudpracticioner.webp',
+      url: 'https://www.credly.com/badges/48ef373d-6395-424a-927e-c2d96a92a6b6/linked_in_profile',
+      pdfUrl: 'https://www.credly.com/badges/48ef373d-6395-424a-927e-c2d96a92a6b6/linked_in_profile'
     }
   ]);
   // ==============================================

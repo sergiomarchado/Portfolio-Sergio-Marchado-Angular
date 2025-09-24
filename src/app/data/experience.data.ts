@@ -3,21 +3,6 @@ import { Experience } from '../interfaces/experience.interface';
 export const EXPERIENCE: Experience[] = [
 
     {
-        id: 'android-developer',
-        company: 'Proyectos personales & Freelance',
-        role: 'Android Developer',
-        start: '2023',
-        end: 'actualidad',
-        duration: 'actualidad',
-        location: 'Madrid, España',
-        logoUrl: '',
-        summary: 'Desarrollo de apps Android nativas con <strong>Kotlin</strong>, <strong>Jetpack Compose</strong>, <strong>Firebase</strong>. Implementación de arquitecturas MVVM, Hilt para inyección de dependencias y APIs REST con Retrofit. Publicación y preparación de apps para Google Play. Uso de Git y GitHub y prácticas de CI/CD.',
-        tasks: [
-            'Ver sección de Proyectos en el portafolio para ver apps desarrolladas.'
-        ],
-        tech: ['Android SDK', 'Android', 'Kotlin', 'Android Studio', 'Firebase', 'Material Design 3', 'Jetpack Compose', 'Hilt', 'RESTful APIs', 'UX/UI', 'Unit Testing'],
-    },
-    {
         id: 'fullstack-sinergia',
         company: 'Sinergia FP',
         role: 'Full Stack Developer (prácticas DAM)',

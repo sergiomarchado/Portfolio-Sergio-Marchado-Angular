@@ -8,51 +8,76 @@
         </button>
     </div>
 
-    <div class="projects-grid">
-        <article class="p-card" *ngFor="let p of filtered(); trackBy: trackById; index as i" [class.open]="isOpen(p.id)"
-            (click)="toggleCard(p.id, $event)" (keydown)="onKeydown($event, p.id)" role="button" tabindex="0"
-            [attr.aria-label]="'Ver detalles del proyecto ' + p.title" [attr.aria-expanded]="isOpen(p.id)"
-            [attr.data-aos]="'fade-up'" [attr.data-aos-delay]="i * 90" [attr.data-aos-offset]="80">
-            <figure class="p-media">
-                <img class="p-media-img" [src]="p.img" [alt]="p.title" loading="lazy" />
-            </figure>
+    <!-- NAV -->
+    <div class="carousel-controls" *ngIf="totalPages() > 1">
+        <button class="nav-btn prev" type="button" (click)="prevPage()" [disabled]="page() === 0"
+            aria-label="Anterior">‹</button>
+        <button class="nav-btn next" type="button" (click)="nextPage()" [disabled]="(page()+1) >= totalPages()"
+            aria-label="Siguiente">›</button>
+    </div>
 
-            <div class="p-frame"></div>
+    <!-- VIEWPORT + TRACK -->
+    <div class="projects-viewport" #viewport (pointerdown)="onPointerDown($event)" (pointermove)="onPointerMove($event)"
+        (pointerup)="onPointerUp()" (pointercancel)="onPointerUp()">
 
-            <div class="p-content">
-                <div class="p-meta">
-                    <div class="p-meta-scroll" #meta [attr.data-id]="p.id" (mouseenter)="ensureState(meta, p.id)"
-                        (focus)="ensureState(meta, p.id)" (touchstart)="ensureState(meta, p.id)"
-                        (scroll)="onScroll(meta, p.id)">
-                        <h3 class="title-line">{{ p.title }}</h3>
-                        <p class="short-line" [innerHTML]="p.short"></p>
+        <div class="projects-track" [style.transform]="trackTransform()">
+            <!-- Cada página contiene una grid idéntica a la tuya -->
+            <div class="projects-page" *ngFor="let pg of pages(); let pgIdx = index">
+                <article class="p-card" *ngFor="let p of pg; trackBy: trackById; index as i" [class.open]="isOpen(p.id)"
+                    (click)="toggleCard(p.id, $event)" (keydown)="onKeydown($event, p.id)" role="button" tabindex="0"
+                    [attr.aria-label]="'Ver detalles del proyecto ' + p.title" [attr.aria-expanded]="isOpen(p.id)"
+                    [attr.data-aos]="'fade-up'" [attr.data-aos-delay]="(pgIdx * itemsPerView() + i) * 90"
+                    [attr.data-aos-offset]="80">
 
-                        <div class="chips">
-                            <span class="chip" *ngFor="let c of p.categories">{{ c }}</span>
+                    <figure class="p-media">
+                        <img class="p-media-img" [src]="p.img" [alt]="p.title" loading="lazy" />
+                    </figure>
+
+                    <div class="p-frame"></div>
+
+                    <div class="p-content">
+                        <div class="p-meta">
+                            <div class="p-meta-scroll" #meta [attr.data-id]="p.id"
+                                (mouseenter)="ensureState(meta, p.id)" (focus)="ensureState(meta, p.id)"
+                                (touchstart)="ensureState(meta, p.id)" (scroll)="onScroll(meta, p.id)">
+                                <h3 class="title-line">{{ p.title }}</h3>
+                                <p class="short-line" [innerHTML]="p.short"></p>
+
+                                <div class="chips">
+                                    <span class="chip" *ngFor="let c of p.categories">{{ c }}</span>
+                                </div>
+
+                                <button class="ghost-cta" type="button" *ngIf="p.url"
+                                    (click)="openProject($event, p.url)"
+                                    [attr.aria-label]="'Abrir ' + p.title + ' en GitHub'">
+                                    Ver proyecto en GitHub
+                                </button>
+
+                                <button class="ghost-cta youtube" type="button" *ngIf="p.videoUrl"
+                                    (click)="openVideo($event, p.videoUrl)"
+                                    aria-label="Ver Video Demo en YouTube (se abre en pestaña nueva)">
+                                    Video Demo
+                                </button>
+                            </div>
+
+                            <div class="p-fade p-fade-top" *ngIf="!state(p.id).atTop" aria-hidden="true"></div>
+                            <div class="p-fade p-fade-bottom" *ngIf="!state(p.id).atBottom" aria-hidden="true"></div>
+
+                            <div class="p-scrollbar" *ngIf="state(p.id).can" aria-hidden="true">
+                                <div class="thumb" [style.height.%]="state(p.id).thumbH"
+                                    [style.top.%]="state(p.id).thumbTop">
+                                </div>
+                            </div>
                         </div>
-
-                        <button class="ghost-cta" type="button" *ngIf="p.url" (click)="openProject($event, p.url)"
-                            [attr.aria-label]="'Abrir ' + p.title + ' en GitHub'">
-                            Ver proyecto en GitHub
-                        </button>
-
-                        <!-- NUEVO: Botón Video Demo (solo si existe p.videoUrl) -->
-                        <button class="ghost-cta" type="button" *ngIf="p.videoUrl"
-                            (click)="openVideo($event, p.videoUrl)"
-                            aria-label="Ver Video Demo en YouTube (se abre en pestaña nueva)">
-                            Video Demo
-                        </button>
                     </div>
-
-                    <div class="p-fade p-fade-top" *ngIf="!state(p.id).atTop" aria-hidden="true"></div>
-                    <div class="p-fade p-fade-bottom" *ngIf="!state(p.id).atBottom" aria-hidden="true"></div>
-
-                    <div class="p-scrollbar" *ngIf="state(p.id).can" aria-hidden="true">
-                        <div class="thumb" [style.height.%]="state(p.id).thumbH" [style.top.%]="state(p.id).thumbTop">
-                        </div>
-                    </div>
-                </div>
+                </article>
             </div>
-        </article>
+        </div>
+    </div>
+
+    <!-- Dots -->
+    <div class="dots" *ngIf="totalPages() > 1" role="tablist" aria-label="Páginas del carrusel">
+        <button *ngFor="let _ of [].constructor(totalPages()); let i = index" class="dot" [class.active]="i === page()"
+            (click)="goToPage(i)" role="tab" [attr.aria-selected]="i===page()"></button>
     </div>
 </section>

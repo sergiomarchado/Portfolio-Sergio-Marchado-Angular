@@ -3,6 +3,14 @@ import { Project } from '../interfaces/project.interface';
 export const PROJECTS: Project[] = [
 
     {
+        id: 'minicorebank',
+        title: 'MiniCoreBank API',
+        short: 'API REST de núcleo bancario ligero (mini core) desarrollada con <b>Java 21</b>, <b>SpringBoot 3</b>, <b>Spring Security</b>, <b>Spring Data JPA</b> y <b>Hibernate</b>. Implementa autenticación y autorización con <b>JWT</b>, gestión de usuarios, cuentas y transacciones, y está documentada con <b>OpenAPI/Swagger</b>.',
+        img: 'assets/img/projects/ic_minicorebankapi.webp',
+        categories: ['JAVA/BACK'],
+        url: 'https://github.com/sergiomarchado/minicorebank',
+    },
+    {
         id: 'the-best-dam-kebap',
         title: 'THE BEST DAM KEBAB',
         short: 'App Android de comida a domicilio. Solución a pequeños negocios que no disponen de una solución nativa propia para poder ofrecer sus servicios. <br> <b>Jetpack Compose</b>, <b>Material3</b>, <b>Hilt (DI)</b>, <b>Firebase</b> y <b>DataStore</b>',
