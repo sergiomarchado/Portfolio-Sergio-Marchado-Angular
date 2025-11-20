@@ -2,6 +2,50 @@ import { Experience } from '../interfaces/experience.interface';
 
 export const EXPERIENCE: Experience[] = [
 
+
+    {
+        id: 'novomatic',
+        company: 'Novomatic Spain',
+        role: 'Backend Developer /Full Stack Developer',
+        start: '10/2025',
+        end: 'actualidad',
+        duration: 'actualidad',
+        location: 'Madrid, España',
+        logoUrl: 'assets/img/companies/logo-novo.webp',
+        summary: 'Desarrollo y mantenimiento de aplicaciones corporativas en entornos de alto rendimiento, trabajando con <strong>Java, Spring MVC, JSP, JDBC</strong> y bases de datos <strong>SQL Server y PostgreSQL</strong>. Participación activa en la resolución de incidencias críticas, análisis de código legacy, refactorización progresiva y mejoras funcionales tanto en backend como en frontend.',
+        tasks: [
+            // BACKEND — CORE
+            'Mantenimiento y desarrollo de nuevas funcionalidades en aplicaciones internas basadas en <strong>Java 8, Spring MVC y JDBC</strong>.',
+            'Resolución de incidencias críticas en producción (HTTP 500, <strong>NoSuchMethodError</strong>, incompatibilidades de librerías, fallos SQL y errores en controladores).',
+            'Depuración avanzada mediante análisis de logs, stacktraces y comportamiento en tiempo de ejecución bajo <strong>Apache Tomcat</strong>.',
+            'Refactorización de controladores, servicios y repositorios JDBC para mejorar legibilidad, rendimiento y consistencia.',
+            'Implementación y corrección de lógica de negocio compleja en métodos de acceso a datos y en procesos multi-tabla.',
+            'Optimización de consultas SQL en <strong>SQL Server</strong> y <strong>PostgreSQL</strong>, incluyendo índices, vistas y subconsultas.',
+
+            // BACKEND — ENTORNOS & ARQUITECTURA
+            'Mantenimiento y configuración de entornos de despliegue y pruebas, incluyendo <strong>Tomcat</strong>, configuración de WAR, properties y ajustes de contexto.',
+            'Diagnóstico de problemas originados por diferencias entre entornos (dev / pre / prod) y corrección de configuración para garantizar compatibilidad.',
+            'Migración progresiva y documentación de procesos heredados (legacy) con el fin de mejorar la estabilidad del sistema.',
+
+            // FRONTEND / JSP
+            'Actualización y mantenimiento de interfaces en <strong>JSP, JSTL, HTML, JavaScript</strong> y librerías internas.',
+            'Solución de problemas con formularios complejos (<strong>multipart/form-data</strong>, validación de parámetros, manejo de imágenes, uploads…).',
+            'Mejoras UX/UI ligeras dentro de límites del sistema legacy: validaciones, mensajes, layouts, comportamiento dinámico.',
+
+            // PROCESOS & COLABORACIÓN
+            'Trabajo diario en equipo con desarrolladores backend seniors, QA y analistas para completar sprints y corregir incidencias.',
+            'Documentación técnica de nuevas funcionalidades, bugs críticos y flujos procesados para uso interno.',
+            'Participación en metodología <strong>Scrum</strong> y uso de herramientas de gestión (Jira, Git, repos corporativos).'
+        ],
+        tech: ['Java 8', 'Spring MVC', 'JDBC', 'JSP', 'JSTL',
+            'SQL Server', 'PostgreSQL',
+            'Tomcat', 'HTML', 'JavaScript',
+            'Git', 'Scrum'],
+        references: [
+            { name: 'Jose Manuel Morales', position: 'Responsable I+D', phone: '' },
+        ],
+        url: 'https://www.novomatic-spain.com/'
+    },
     {
         id: 'fullstack-sinergia',
         company: 'Sinergia FP',
