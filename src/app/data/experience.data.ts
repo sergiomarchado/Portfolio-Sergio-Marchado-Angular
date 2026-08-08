@@ -6,41 +6,54 @@ export const EXPERIENCE: Experience[] = [
     {
         id: 'novomatic',
         company: 'Novomatic Spain',
-        role: 'Backend Developer /Full Stack Developer',
+        role: 'Backend Developer / Full Stack Developer',
         start: '10/2025',
         end: 'actualidad',
         duration: 'actualidad',
         location: 'Madrid, España',
         logoUrl: 'assets/img/companies/logo-novo.webp',
-        summary: 'Desarrollo y mantenimiento de aplicaciones corporativas en entornos de alto rendimiento, trabajando con <strong>Java, Spring MVC, JSP, JDBC</strong> y bases de datos <strong>SQL Server y PostgreSQL</strong>. Participación activa en la resolución de incidencias críticas, análisis de código legacy, refactorización progresiva y mejoras funcionales tanto en backend como en frontend.',
-        tasks: [
-            // BACKEND — CORE
-            'Mantenimiento y desarrollo de nuevas funcionalidades en aplicaciones internas basadas en <strong>Java 8, Spring MVC y JDBC</strong>.',
-            'Resolución de incidencias críticas en producción (HTTP 500, <strong>NoSuchMethodError</strong>, incompatibilidades de librerías, fallos SQL y errores en controladores).',
-            'Depuración avanzada mediante análisis de logs, stacktraces y comportamiento en tiempo de ejecución bajo <strong>Apache Tomcat</strong>.',
-            'Refactorización de controladores, servicios y repositorios JDBC para mejorar legibilidad, rendimiento y consistencia.',
-            'Implementación y corrección de lógica de negocio compleja en métodos de acceso a datos y en procesos multi-tabla.',
-            'Optimización de consultas SQL en <strong>SQL Server</strong> y <strong>PostgreSQL</strong>, incluyendo índices, vistas y subconsultas.',
-
-            // BACKEND — ENTORNOS & ARQUITECTURA
-            'Mantenimiento y configuración de entornos de despliegue y pruebas, incluyendo <strong>Tomcat</strong>, configuración de WAR, properties y ajustes de contexto.',
-            'Diagnóstico de problemas originados por diferencias entre entornos (dev / pre / prod) y corrección de configuración para garantizar compatibilidad.',
-            'Migración progresiva y documentación de procesos heredados (legacy) con el fin de mejorar la estabilidad del sistema.',
-
-            // FRONTEND / JSP
-            'Actualización y mantenimiento de interfaces en <strong>JSP, JSTL, HTML, JavaScript</strong> y librerías internas.',
-            'Solución de problemas con formularios complejos (<strong>multipart/form-data</strong>, validación de parámetros, manejo de imágenes, uploads…).',
-            'Mejoras UX/UI ligeras dentro de límites del sistema legacy: validaciones, mensajes, layouts, comportamiento dinámico.',
-
-            // PROCESOS & COLABORACIÓN
-            'Trabajo diario en equipo con desarrolladores backend seniors, QA y analistas para completar sprints y corregir incidencias.',
-            'Documentación técnica de nuevas funcionalidades, bugs críticos y flujos procesados para uso interno.',
-            'Participación en metodología <strong>Scrum</strong> y uso de herramientas de gestión (Jira, Git, repos corporativos).'
+        summary: 'Desarrollo y modernización de aplicaciones corporativas, desde la evolución de sistemas legacy hasta la creación de soluciones de telemetría con <strong>IoT</strong>. Actualmente desarrollando una nueva plataforma transversal con alcance de varios departamentos. Mi trabajo está principalmente orientado al backend con Java, Spring y Spring Boot, aunque también participo en el desarrollo frontend con JavaScript y Vite, así como en el diseño técnico, integración de sistemas y evolución de las aplicaciones a lo largo de todo su ciclo de vida.',
+        taskGroups: [
+            {
+                title: 'Modernización de sistemas legacy',
+                tasks: [
+                    'Modernización de una aplicación web legacy desarrollada con <strong>Java 8 y JSP</strong>, evolucionando progresivamente su arquitectura y dependencias hasta <strong>Java 17</strong>.',
+                    'Mejora del rendimiento, la estabilidad y la mantenibilidad de la aplicación mediante la actualización de componentes heredados y la refactorización del código.',
+                    'Diseño e implementación de nuevas funcionalidades orientadas a incrementar la <strong>trazabilidad de procesos críticos</strong> y <strong>optimizar el trabajo del equipo, consiguiendo un incremento del rendimiento diario</strong>.',
+                    'Análisis y adaptación del código existente para preservar la compatibilidad y el funcionamiento del sistema durante su evolución tecnológica.'
+                ]
+            },
+            {
+                title: 'IoT y comunicaciones',
+                tasks: [
+                    'Desarrollo de soluciones backend en <strong>Java</strong> para la comunicación con dispositivos <strong>IoT</strong> mediante el protocolo <strong>MQTT</strong>.',
+                    'Implementación de procesos para la recepción, tratamiento y persistencia de datos de los dispositivos IoT.',
+                    'Integración y trabajo con bases de datos MongoDB y PostgreSQL para el almacenamiento y consulta de información generada por los dispositivos.',
+                    'Desarrollo de consultas y procesos de explotación de datos para la generación de informes y análisis de información, seguimiento del comportamiento y obtención de métricas.'
+                ]
+            },
+            {
+                title: 'Nueva plataforma corporativa',
+                tasks: [
+                    'Desarrollo de una nueva plataforma corporativa de alcance transversal, con impacto en los procesos de distintos departamentos de la organización.',
+                    'Construcción del backend con <strong>Java 25 y Spring</strong>, aplicando un diseño orientado a facilitar la mantenibilidad y la evolución del proyecto.',
+                    'Desarrollo del frontend con un entorno moderno basado en <strong>Vite</strong> e integración con los servicios del backend.',
+                    'Planificación de una futura integración de inteligencia artificial mediante un sistema <strong>RAG local</strong>, concebido como un servicio independiente conectado al backend Java y desarrollado con <strong>LangChain</strong>.'
+                ]
+            },
+            {
+                title: 'Colaboración y ciclo de desarrollo',
+                tasks: [
+                    'Colaboración con los equipos y departamentos implicados para analizar necesidades, definir funcionalidades y mejorar la trazabilidad de procesos internos.',
+                    'Participación en el ciclo completo de desarrollo: análisis, implementación, pruebas, resolución de incidencias y evolución técnica.'
+                ]
+            }
         ],
-        tech: ['Java 8', 'Spring MVC', 'JDBC', 'JSP', 'JSTL',
-            'SQL Server', 'PostgreSQL',
-            'Tomcat', 'HTML', 'JavaScript',
-            'Git', 'Scrum'],
+        tech: ['Java 8', 'Java 17', 'Java 25', 'Python',
+            'Spring', 'Spring MVC', 'Spring Boot', 'JDBC', 'JSP', 'JSTL',
+            'SQL Server', 'PostgreSQL', 'MongoDB', 'SQL Server', 'Tomcat',
+            'Vite', 'HTML', 'CSS', 'JavaScript',
+            'MQTT', 'IoT', 'Git', 'Scrum', 'Bitbucket', 'Jira', 'Confluence', 'IntelliJ IDEA', 'Postman', 'LangChain', 'Códex', 'RAG'],
         references: [
             { name: 'Jose Manuel Morales', position: 'Responsable I+D', phone: '' },
         ],

@@ -99,18 +99,34 @@
                 -->
                 <p *ngIf="exp.summary" class="xp-summary" [innerHTML]="exp.summary"></p>
 
+                <!-- Responsabilidades agrupadas por área para experiencias de mayor alcance -->
+                <div *ngIf="exp.taskGroups?.length" class="xp-task-groups">
+                    <section class="xp-task-group" *ngFor="let group of exp.taskGroups">
+                        <h4 class="xp-task-group__title">
+                            <span class="xp-task-group__marker" aria-hidden="true"></span>
+                            {{ group.title }}
+                        </h4>
+                        <ul class="xp-tasks xp-tasks--grouped">
+                            <li *ngFor="let task of group.tasks" [innerHTML]="task"></li>
+                        </ul>
+                    </section>
+                </div>
+
                 <!--
                 Tareas/logros:
                 - Lista con HTML por item (mismo aviso de sanitización).
                 -->
-                <ul *ngIf="exp.tasks?.length" class="xp-tasks">
+                <ul *ngIf="!exp.taskGroups?.length && exp.tasks?.length" class="xp-tasks">
                     <li *ngFor="let t of exp.tasks" [innerHTML]="t"></li>
                 </ul>
 
                 <!-- Tecnologías/badges -->
-                <div *ngIf="exp.tech?.length" class="xp-tags">
-                    <span class="xp-tag" *ngFor="let t of exp.tech">{{ t }}</span>
-                </div>
+                <section *ngIf="exp.tech?.length" class="xp-tech">
+                    <h4 class="xp-subtitle">Tecnologías</h4>
+                    <div class="xp-tags">
+                        <span class="xp-tag" *ngFor="let t of exp.tech">{{ t }}</span>
+                    </div>
+                </section>
 
                 <!-- Referencias opcionales -->
                 <div *ngIf="exp.references?.length" class="xp-references">

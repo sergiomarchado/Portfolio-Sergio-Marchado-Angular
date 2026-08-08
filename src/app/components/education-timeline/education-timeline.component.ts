@@ -117,6 +117,15 @@ export class EducationTimelineComponent implements AfterViewInit, OnDestroy {
       imageUrl: 'assets/img/certificates/certifiawscloudpracticioner.webp',
       url: 'https://www.credly.com/badges/48ef373d-6395-424a-927e-c2d96a92a6b6/linked_in_profile',
       pdfUrl: 'https://www.credly.com/badges/48ef373d-6395-424a-927e-c2d96a92a6b6/linked_in_profile'
+    },
+    {
+      id: 'controldeversiones',
+      title: 'Control de versiones con Git, Github, BitBucket y SourceTree',
+      provider: 'Udemy',
+      year: '2026',
+      imageUrl: 'assets/img/certificates/cursocontrolversiones.webp',
+      url: 'https://www.udemy.com/course/control-de-versiones-con-git-github-bitbucket-sourcetree-jira-vcs/?couponCode=25BBPMXINACTIVE',
+      pdfUrl: 'https://www.udemy.com/certificate/UC-b501b7d6-85fe-4bfa-a0c4-d652679f5814/'
     }
   ]);
   // ==============================================

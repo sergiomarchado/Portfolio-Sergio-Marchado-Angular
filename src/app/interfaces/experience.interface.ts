@@ -8,6 +8,11 @@ export interface ExperienceReference {
     phone?: string;
 }
 
+export interface ExperienceTaskGroup {
+    title: string;
+    tasks: string[];
+}
+
 export interface Experience {
     id: string;
     company: string;
@@ -19,6 +24,7 @@ export interface Experience {
     logoUrl?: string;       // '/assets/img/companies/...'
     summary?: string;       // 1–2 líneas
     tasks?: string[];       // bullets
+    taskGroups?: ExperienceTaskGroup[]; // bloques temáticos de responsabilidades/logros
     tech?: string[];        // chips
     url?: string;           // enlace empresa/proyecto
     references?: ExperienceReference[]; // opcional

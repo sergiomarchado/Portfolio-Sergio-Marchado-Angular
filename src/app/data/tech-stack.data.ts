@@ -52,7 +52,7 @@ export const TECH_STACK: TechCategory[] = [
         items: [
             {
                 label: 'Android Studio',
-                iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Android_Studio_icon_%282023%29.svg/1200px-Android_Studio_icon_%282023%29.svg.png',
+                iconUrl: 'https://www.techspot.com/images2/downloads/topdownload/2025/01/2025-01-09-ts3_thumbs-d9e.png',
                 level: 'expert', about: 'IDE, Gradle, perfiles y emuladores.'
             },
             {
@@ -87,7 +87,7 @@ export const TECH_STACK: TechCategory[] = [
             },
             {
                 label: 'Firebase',
-                iconUrl: 'https://www.gstatic.com/devrel-devsite/prod/vce7dc8716edeb3714adfe4dd15b25490031be374149e3613a8b7fb0be9fc4a25/firebase/images/touchicon-180.png',
+                iconUrl: 'https://www.gstatic.com/devrel-devsite/prod/v25f01968170374b7bd062a383d0367da1beee7ed413abaee67eec4296f4ba687/firebase/images/touchicon-180.png',
                 level: 'solid', about: 'Backend en la nube, Firestore, Auth y hosting.'
             }
         ]
@@ -137,6 +137,11 @@ export const TECH_STACK: TechCategory[] = [
                 level: 'familiar', about: 'Funciones, tipos y rendimiento básico.'
             },
             {
+                label: 'MongoDB',
+                iconUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg',
+                level: 'solid', about: 'Modelado documental, colecciones, índices, consultas y agregaciones.'
+            },
+            {
                 label: 'HeidiSQL',
                 iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/32/HeidiSQL_logo_image.png',
                 level: 'solid', about: 'Cliente ligero para gestión de MySQL y PostgreSQL.'
@@ -171,7 +176,7 @@ export const TECH_STACK: TechCategory[] = [
             },
             {
                 label: 'IntelliJ IDEA',
-                iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/IntelliJ_IDEA_Icon.svg/1200px-IntelliJ_IDEA_Icon.svg.png',
+                iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/IntelliJ_IDEA_Icon.svg/500px-IntelliJ_IDEA_Icon.svg.png',
                 level: 'solid', about: 'Productividad con atajos, inspecciones y plugins.'
             },
             {
