@@ -11,6 +11,7 @@ export interface ExperienceReference {
 export interface ExperienceTaskGroup {
     title: string;
     tasks: string[];
+    fullWidth?: boolean; // Ocupa todas las columnas disponibles en layouts amplios
 }
 
 export interface Experience {

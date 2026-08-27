@@ -101,7 +101,8 @@
 
                 <!-- Responsabilidades agrupadas por área para experiencias de mayor alcance -->
                 <div *ngIf="exp.taskGroups?.length" class="xp-task-groups">
-                    <section class="xp-task-group" *ngFor="let group of exp.taskGroups">
+                    <section class="xp-task-group" [class.xp-task-group--full-width]="group.fullWidth"
+                        *ngFor="let group of exp.taskGroups">
                         <h4 class="xp-task-group__title">
                             <span class="xp-task-group__marker" aria-hidden="true"></span>
                             {{ group.title }}

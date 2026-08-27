@@ -6,52 +6,54 @@ export const EXPERIENCE: Experience[] = [
     {
         id: 'novomatic',
         company: 'Novomatic Spain',
-        role: 'Backend Developer / Full Stack Developer',
+        role: 'Lead Developer | Backend Developer',
         start: '10/2025',
         end: 'actualidad',
         duration: 'actualidad',
         location: 'Madrid, España',
         logoUrl: 'assets/img/companies/logo-novo.webp',
-        summary: 'Desarrollo y modernización de aplicaciones corporativas, desde la evolución de sistemas legacy hasta soluciones de telemetría con <strong>IoT</strong> y el desarrollo de nuevas plataformas internas. Actualmente participo en la construcción de una plataforma corporativa transversal, trabajando principalmente en backend con <strong>Java y Spring Boot</strong> y colaborando también en el desarrollo frontend con <strong>JavaScript y Vite</strong>. Mi trabajo abarca diseño de APIs REST, seguridad y autorización, persistencia de datos, integración entre sistemas, trazabilidad, testing y evolución técnica de las aplicaciones a lo largo de todo su ciclo de vida.',
+        summary: 'Desarrollo y modernización de aplicaciones corporativas, trabajando principalmente en backend con <strong>Java y Spring Boot</strong> y participando también en desarrollo frontend, arquitectura, integración de sistemas y evolución técnica.<br><br>Actualmente <strong>Lead Developer</strong> en el desarrollo de nueva plataforma corporativa transversal, liderando su definición técnica y evolución: arquitectura de la solución, diseño del backend, integración frontend/backend, seguridad, persistencia y criterios técnicos de desarrollo.',
         taskGroups: [
             {
                 title: 'Modernización de sistemas legacy',
                 tasks: [
                     'Modernización de una aplicación web legacy desarrollada con <strong>Java 8 y JSP</strong>, evolucionando progresivamente su arquitectura, dependencias y runtime hasta <strong>Java 17</strong>.',
-                    'Refactorización y actualización de componentes heredados para mejorar la <strong>mantenibilidad, estabilidad y rendimiento</strong> de la aplicación.',
-                    'Diseño e implementación de nuevas funcionalidades orientadas a mejorar la <strong>trazabilidad de procesos críticos</strong> y reducir tareas manuales dentro de los flujos de trabajo existentes.',
-                    'Análisis y adaptación del código existente para mantener la compatibilidad funcional y minimizar el impacto durante la evolución tecnológica del sistema.'
+                    'Refactorización y actualización de componentes heredados, con especial foco en la <strong>mantenibilidad, estabilidad, rendimiento y compatibilidad</strong> de la aplicación.',
+                    'Diseño e implementación de nuevas funcionalidades para mejorar la <strong>trazabilidad de procesos críticos</strong>, reducir tareas manuales y optimizar los flujos de trabajo internos.',
+                    'Análisis y adaptación del código existente para minimizar el impacto funcional durante la evolución tecnológica del sistema.'
                 ]
             },
             {
                 title: 'IoT y comunicaciones',
                 tasks: [
-                    'Desarrollo de soluciones backend en <strong>Java</strong>, dispositivos <strong>IoT</strong> y protocolo <strong>MQTT</strong>.',
-                    'Implementación de procesos para la recepción, tratamiento y persistencia de datos.',
-                    'Integración y trabajo con bases de datos MongoDB y PostgreSQL para el almacenamiento y consulta de información.',
-                    'Desarrollo de consultas y procesos de explotación de datos, análisis de información, métricas, etc.'
-                ]
-            },
-            {
-                title: 'Nueva plataforma corporativa',
-                tasks: [
-                    'Desarrollo de una nueva plataforma corporativa de alcance transversal, orientada a centralizar y digitalizar procesos utilizados por distintos departamentos de la organización.',
-                    'Diseño y desarrollo de una <strong>API REST con Java 25 y Spring Boot</strong>, estructurada mediante controladores, DTOs y validación, servicios transaccionales y una capa de persistencia basada en <strong>Spring Data JPA, Hibernate y PostgreSQL</strong>.',
-                    'Implementación de mecanismos de <strong>autenticación y autorización con Spring Security</strong>, incluyendo gestión de sesiones mediante cookies HTTP-only, MFA, protección CSRF y control de acceso basado en roles y permisos.',
-                    'Desarrollo de funcionalidades de <strong>auditoría, histórico y trazabilidad</strong> para el seguimiento de operaciones y modificaciones realizadas sobre la información gestionada por la plataforma.',
-                    'Desarrollo de una <strong>SPA con JavaScript nativo y Vite</strong>, utilizando una arquitectura modular basada en vistas, controladores, navegación, estado, seguridad y clientes HTTP.',
-                    'Implementación de navegación SPA mediante <strong>History API</strong> e integración con el backend mediante <strong>Fetch y APIs REST</strong>, adaptando rutas y acciones de interfaz a los permisos proporcionados por el servidor.',
-                    'Desarrollo de procesos de gestión documental y ficheros, manteniendo en <strong>PostgreSQL</strong> sus metadatos, relaciones e información asociada.',
-                    'Desarrollo y mantenimiento de <strong>pruebas automatizadas</strong> en backend y frontend para facilitar la evolución segura de la plataforma.',
-                    'Diseño de la evolución de la plataforma para incorporar capacidades de <strong>IA generativa mediante RAG</strong>, planteando un servicio local independiente integrado con el backend Java y orientado a la consulta contextual de documentación corporativa.'
+                    'Desarrollo de soluciones para lectura y análisis de datos gracias a MQTT y MongoDB de dispositivos <strong>IoT</strong> en Java.',
+                    'Implementación de procesos para la recepción, procesamiento, validación y persistencia de datos.',
+                    'Integración de información mediante <strong>PostgreSQL, MongoDB y SQL Server</strong> para su almacenamiento y consulta.',
+                    'Desarrollo de consultas, informes y procesos de explotación de datos para el análisis de información y métricas.'
                 ]
             },
             {
                 title: 'Colaboración y ciclo de desarrollo',
+                fullWidth: true,
                 tasks: [
-                    'Colaboración con equipos y departamentos implicados para analizar necesidades, definir funcionalidades y trasladar procesos de negocio a soluciones técnicas.',
+                    'Colaboración con distintos equipos y departamentos para analizar necesidades, definir funcionalidades y traducir procesos de negocio a soluciones técnicas.',
                     'Participación en el ciclo completo de desarrollo: <strong>análisis, diseño técnico, implementación, pruebas, resolución de incidencias, documentación y evolución</strong> de las aplicaciones.',
-                    'Documentación técnica de arquitectura, configuración, contratos entre frontend y backend y procedimientos de desarrollo para facilitar el mantenimiento y la incorporación de nuevos desarrolladores.'
+                    'Definición y documentación de arquitectura, configuración, contratos entre frontend y backend y procedimientos de desarrollo para facilitar el mantenimiento y la incorporación de nuevos desarrolladores.',
+                    'Desarrollo y mantenimiento de <strong>pruebas automatizadas</strong> en backend y frontend para favorecer una evolución segura y sostenible de los proyectos.'
+                ]
+            },
+            {
+                title: 'Nueva plataforma corporativa',
+                fullWidth: true,
+                tasks: [
+                    'Liderazgo técnico como <strong>Lead Developer</strong> de una nueva plataforma corporativa transversal, definiendo la arquitectura de la solución, los criterios técnicos de desarrollo y su evolución.',
+                    'Diseño y desarrollo de una <strong>API REST con Java 25 y Spring Boot</strong>, estructurada mediante Spring MVC, controladores, DTOs y validación, servicios transaccionales y persistencia con <strong>Spring Data JPA, Hibernate y PostgreSQL</strong>.',
+                    'Implementación de mecanismos de <strong>autenticación y autorización con Spring Security</strong>, incluyendo gestión de sesiones mediante cookies HTTP-only, MFA, protección CSRF y control de acceso basado en roles y permisos.',
+                    'Desarrollo de funcionalidades de <strong>auditoría, histórico y trazabilidad</strong> para el seguimiento de operaciones y modificaciones realizadas sobre la información gestionada por la plataforma.',
+                    'Desarrollo de una <strong>SPA con JavaScript nativo y Vite</strong>, utilizando una arquitectura modular basada en vistas, controladores, navegación, estado, seguridad y clientes HTTP.',
+                    'Integración frontend/backend mediante <strong>Fetch y APIs REST</strong>, con navegación basada en History API y adaptación de rutas y acciones de interfaz a los permisos proporcionados por el servidor.',
+                    'Desarrollo de procesos de gestión documental y ficheros, manteniendo en <strong>PostgreSQL</strong> sus metadatos, relaciones e información asociada.',
+                    'Análisis y diseño de la evolución de la plataforma para incorporar capacidades de <strong>IA generativa mediante una arquitectura RAG local</strong>, planteada como un servicio independiente integrado con el backend Java para la consulta contextual de documentación corporativa.'
                 ]
             }
         ],

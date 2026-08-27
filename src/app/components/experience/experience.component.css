@@ -480,6 +480,10 @@
     overflow: hidden;
 }
 
+.xp-task-group--full-width {
+    grid-column: 1 / -1;
+}
+
 .xp-task-group:nth-child(2) {
     --group-accent: #22d3ee;
 }
@@ -688,6 +692,16 @@
 }
 
 /* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+    .xp-task-groups {
+        grid-template-columns: 1fr;
+    }
+
+    .xp-task-group--full-width {
+        grid-column: auto;
+    }
+}
+
 @media (max-width: 640px) {
     .xp-timeline::before {
         left: 20px;
@@ -705,10 +719,6 @@
     .xp-logo img {
         width: 46px;
         height: 46px;
-    }
-
-    .xp-task-groups {
-        grid-template-columns: 1fr;
     }
 
     .xp-task-group {
