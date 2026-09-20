@@ -123,8 +123,9 @@
     background: linear-gradient(180deg, var(--card1), var(--card2));
     box-shadow: inset 0 0 0 1px var(--ring), 0 16px 42px rgba(10, 20, 40, .35);
     overflow: hidden;
-    transition: transform .28s ease, box-shadow .35s ease, filter .25s ease;
-    will-change: transform, box-shadow, filter;
+    transition:
+        transform var(--motion-base) var(--ease-emphasized),
+        box-shadow var(--motion-base) ease;
 }
 
 /* borde gradiente, pero más sutil y con barrido propio */
@@ -153,23 +154,21 @@
     opacity: .8;
     pointer-events: none;
     animation: borderPan 11s linear infinite;
+    animation-play-state: paused;
 }
 
 /* “nebula” ambiental distinta a experiencia */
 @keyframes nebula {
     0% {
         transform: translate3d(0, 0, 0) scale(1);
-        filter: blur(18px) saturate(115%);
     }
 
     50% {
         transform: translate3d(2%, -2%, 0) scale(1.02);
-        filter: blur(22px) saturate(125%);
     }
 
     100% {
         transform: translate3d(-2%, 2%, 0) scale(1);
-        filter: blur(18px) saturate(115%);
     }
 }
 
@@ -183,23 +182,31 @@
         radial-gradient(100% 120% at 15% 85%, rgba(34, 211, 238, .10), transparent 60%);
     mix-blend-mode: screen;
     opacity: .85;
+    filter: blur(18px) saturate(115%);
     pointer-events: none;
     animation: nebula 16s ease-in-out infinite alternate;
+    animation-play-state: paused;
+}
+
+.ed-card:hover::before,
+.ed-card:hover::after,
+.ed-card:focus-within::before,
+.ed-card:focus-within::after {
+    animation-play-state: running;
 }
 
 /* hover: diferente a experiencia (tilt lateral según columna) */
 @media (hover:hover) {
     .ed-item:nth-child(odd) .ed-card:hover {
-        transform: translateY(-10px) rotateY(-2deg) scale(1.01);
+        transform: translateY(-6px) rotateY(-1deg) scale(1.006);
     }
 
     .ed-item:nth-child(even) .ed-card:hover {
-        transform: translateY(-10px) rotateY(2deg) scale(1.01);
+        transform: translateY(-6px) rotateY(1deg) scale(1.006);
     }
 
     .ed-card:hover {
         box-shadow: 0 28px 64px rgba(60, 120, 255, .32);
-        filter: saturate(1.03);
     }
 }
 
@@ -280,46 +287,49 @@
     }
 }
 
-/* ===== REVEAL propio (slide desde lado correspondiente) ===== */
-.reveal-ready .ed-item:nth-child(odd) .ed-card {
+/* ===== REVEAL progresivo por tarjeta ===== */
+.ed-timeline.reveal-ready .ed-item:nth-child(odd) .ed-card {
     opacity: 0;
-    transform: translate(-12px, 12px) scale(.985);
+    transform: translate3d(-14px, 14px, 0) scale(.992);
 }
 
-.reveal-ready .ed-item:nth-child(even) .ed-card {
+.ed-timeline.reveal-ready .ed-item:nth-child(even) .ed-card {
     opacity: 0;
-    transform: translate(12px, 12px) scale(.985);
+    transform: translate3d(14px, 14px, 0) scale(.992);
 }
 
-.reveal-ready.in-view .ed-item:nth-child(odd) .ed-card {
-    animation: edInLeft var(--reveal) cubic-bezier(.2, .8, .2, 1) both;
+.ed-timeline.reveal-ready .ed-card,
+.ed-courses.reveal-ready .course-card {
+    transition:
+        opacity var(--motion-reveal) ease,
+        transform var(--motion-reveal) var(--ease-emphasized),
+        box-shadow var(--motion-base) ease;
+    transition-delay: var(--reveal-delay, 0ms);
 }
 
-.reveal-ready.in-view .ed-item:nth-child(even) .ed-card {
-    animation: edInRight var(--reveal) cubic-bezier(.2, .8, .2, 1) both;
+.ed-courses.reveal-ready .course-card {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0) scale(.992);
 }
 
-@keyframes edInLeft {
-    from {
-        opacity: 0;
-        transform: translate(-12px, 12px) scale(.985);
+.ed-timeline.reveal-ready .ed-item:nth-child(odd) .ed-card.in-view,
+.ed-timeline.reveal-ready .ed-item:nth-child(even) .ed-card.in-view,
+.ed-courses.reveal-ready .course-card.in-view {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+}
+
+@media (hover:hover) {
+    .ed-timeline.reveal-ready .ed-item:nth-child(odd) .ed-card.in-view:hover {
+        transform: translateY(-6px) rotateY(-1deg) scale(1.006);
     }
 
-    to {
-        opacity: 1;
-        transform: translate(0, 0) scale(1);
-    }
-}
-
-@keyframes edInRight {
-    from {
-        opacity: 0;
-        transform: translate(12px, 12px) scale(.985);
+    .ed-timeline.reveal-ready .ed-item:nth-child(even) .ed-card.in-view:hover {
+        transform: translateY(-6px) rotateY(1deg) scale(1.006);
     }
 
-    to {
-        opacity: 1;
-        transform: translate(0, 0) scale(1);
+    .ed-courses.reveal-ready .course-card.in-view:hover {
+        transform: translateY(-5px) scale(1.01);
     }
 }
 

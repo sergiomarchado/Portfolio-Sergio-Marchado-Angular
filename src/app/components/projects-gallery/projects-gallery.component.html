@@ -22,12 +22,11 @@
 
         <div class="projects-track" [style.transform]="trackTransform()">
             <!-- Cada página contiene una grid idéntica a la tuya -->
-            <div class="projects-page" *ngFor="let pg of pages(); let pgIdx = index">
+            <div class="projects-page" *ngFor="let pg of pages()">
                 <article class="p-card" *ngFor="let p of pg; trackBy: trackById; index as i" [class.open]="isOpen(p.id)"
                     (click)="toggleCard(p.id, $event)" (keydown)="onKeydown($event, p.id)" role="button" tabindex="0"
                     [attr.aria-label]="'Ver detalles del proyecto ' + p.title" [attr.aria-expanded]="isOpen(p.id)"
-                    [attr.data-aos]="'fade-up'" [attr.data-aos-delay]="(pgIdx * itemsPerView() + i) * 90"
-                    [attr.data-aos-offset]="80">
+                    [style.--card-delay]="(i * 55) + 'ms'">
 
                     <figure class="p-media">
                         <img class="p-media-img" [src]="p.img" [alt]="p.title" loading="lazy" />

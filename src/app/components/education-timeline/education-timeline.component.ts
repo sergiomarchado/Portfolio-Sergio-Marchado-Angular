@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, DestroyRef, OnDestroy, signal, ChangeDetectionStrategy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 type EduItem = {
@@ -132,24 +132,38 @@ export class EducationTimelineComponent implements AfterViewInit, OnDestroy {
 
   private io?: IntersectionObserver;
 
-  constructor(private destroyRef: DestroyRef) { }
+  constructor(private readonly hostRef: ElementRef<HTMLElement>) { }
 
   ngAfterViewInit(): void {
-    const container = document.querySelector<HTMLElement>('.ed-timeline');
-    const courses = document.querySelector<HTMLElement>('.ed-courses');
+    const timeline = this.hostRef.nativeElement.querySelector<HTMLElement>('.ed-timeline');
+    const courses = this.hostRef.nativeElement.querySelector<HTMLElement>('.ed-courses');
+    const educationCards = Array.from(this.hostRef.nativeElement.querySelectorAll<HTMLElement>('.ed-card'));
+    const courseCards = Array.from(this.hostRef.nativeElement.querySelectorAll<HTMLElement>('.course-card'));
+    const animatedCards = [...educationCards, ...courseCards];
 
-    const makeObserver = (el?: HTMLElement | null) => {
-      if (!el) return;
-      el.classList.add('reveal-ready');
-      this.io ??= new IntersectionObserver(
-        entries => entries.forEach(e => e.isIntersecting && e.target.classList.add('in-view')),
-        { threshold: 0.18 }
-      );
-      this.io.observe(el);
-    };
+    timeline?.classList.add('reveal-ready');
+    courses?.classList.add('reveal-ready');
+    educationCards.forEach((card, index) => card.style.setProperty('--reveal-delay', `${index * 65}ms`));
+    courseCards.forEach((card, index) => card.style.setProperty('--reveal-delay', `${index * 55}ms`));
 
-    makeObserver(container);
-    makeObserver(courses);
+    if (animatedCards.length === 0) return;
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      animatedCards.forEach(card => card.classList.add('in-view'));
+      return;
+    }
+
+    this.io = new IntersectionObserver(
+      entries => entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const card = entry.target as HTMLElement;
+        card.addEventListener('transitionend', () => card.style.setProperty('--reveal-delay', '0ms'), { once: true });
+        card.classList.add('in-view');
+        this.io?.unobserve(entry.target);
+      }),
+      { threshold: 0.01, rootMargin: '0px 0px -32px 0px' }
+    );
+
+    animatedCards.forEach(card => this.io?.observe(card));
   }
 
   ngOnDestroy(): void {

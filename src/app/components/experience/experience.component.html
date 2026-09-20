@@ -1,7 +1,7 @@
-<section class="xp-section" id="experience" aria-labelledby="xp-title">
+<section class="xp-section" aria-labelledby="xp-title">
     <!--
     Sección "Experiencia Laboral"
-    - id="experience": destino del enlace con [fragment] en el navbar.
+    - El host del componente aporta el destino #experience de navegación.
     - aria-labelledby vincula con el <h2> para accesibilidad.
     - Estructura:
         • Acciones (descargar CV / contactar / copiar email)
@@ -63,7 +63,8 @@
 
             <!-- Logo de la Empresa -->
             <div class="xp-logo">
-                <img *ngIf="exp.logoUrl" [src]="exp.logoUrl" [alt]="exp.company" />
+                <img *ngIf="exp.logoUrl" [src]="exp.logoUrl" [alt]="exp.company" width="60" height="60"
+                    loading="lazy" decoding="async" />
                 <div *ngIf="!exp.logoUrl" class="xp-logo-fallback">{{ exp.company[0] || '?' }}</div>
             </div>
 

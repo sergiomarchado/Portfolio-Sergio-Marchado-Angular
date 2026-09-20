@@ -20,11 +20,13 @@
     box-shadow: inset 0 0 0 1px var(--ring), 0 18px 40px rgba(0, 0, 0, .28);
     color: var(--text);
     text-align: center;
-    transition: transform .2s ease, box-shadow .25s ease;
+    transition:
+        transform var(--motion-base) var(--ease-emphasized),
+        box-shadow var(--motion-base) ease;
 }
 
 .clock-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-4px) scale(1.006);
     box-shadow: inset 0 0 0 1px var(--ring), 0 24px 56px rgba(60, 120, 255, .28);
 }
 

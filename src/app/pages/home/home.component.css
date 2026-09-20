@@ -46,7 +46,9 @@ body {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(15, 23, 42, .5);
+    background:
+        linear-gradient(180deg, rgba(3, 10, 24, .28), rgba(15, 23, 42, .62)),
+        radial-gradient(circle at 50% 40%, transparent 0 28%, rgba(3, 10, 24, .32) 78%);
     z-index: 1;
 }
 
@@ -62,7 +64,11 @@ body {
     background-color: #0f172a;
     /* crossfade */
     opacity: 0;
-    transition: opacity .5s ease, transform .3s ease, object-position .3s ease;
+    transition:
+        opacity 750ms var(--ease-standard),
+        transform var(--motion-slow) var(--ease-emphasized),
+        object-position var(--motion-slow) var(--ease-emphasized);
+    will-change: opacity;
 }
 
 .bg-video.is-active {
@@ -75,6 +81,22 @@ body {
     z-index: 2;
     padding: 0 20px;
     color: #fff;
+}
+
+.hero-panel {
+    animation: hero-panel-enter 820ms var(--ease-emphasized) 80ms backwards;
+}
+
+@keyframes hero-panel-enter {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 18px, 0) scale(.99);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
 }
 
 /* Titular principal del hero (fluid con clamp). */
@@ -99,7 +121,11 @@ body {
     display: grid;
     place-items: center;
     cursor: pointer;
-    transition: transform .15s ease, background .25s ease, box-shadow .25s ease, border-color .25s ease;
+    transition:
+        transform var(--motion-fast) var(--ease-spring),
+        background var(--motion-base) ease,
+        box-shadow var(--motion-base) ease,
+        border-color var(--motion-fast) ease;
     color: #fff;
 }
 
@@ -262,7 +288,11 @@ body {
     letter-spacing: .2px;
     /* para el relleno animado */
     overflow: hidden;
-    transition: transform .18s ease, box-shadow .25s ease, border-color .25s ease, color .25s ease;
+    transition:
+        transform var(--motion-fast) var(--ease-spring),
+        box-shadow var(--motion-base) ease,
+        border-color var(--motion-fast) ease,
+        color var(--motion-fast) ease;
 }
 
 /* “Relleno” que se expande en hover (barre de izquierda a derecha). */
@@ -273,7 +303,7 @@ body {
     background: var(--btn-blue);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform .35s ease;
+    transition: transform var(--motion-base) var(--ease-emphasized);
     z-index: 0;
 }
 
@@ -400,7 +430,7 @@ body {
     transform: translateX(-50%);
     font-size: 2rem;
     color: white;
-    animation: bounce 2s infinite, fadeIn 1s ease-in-out 1.5s forwards;
+    animation: bounce 2.4s var(--ease-standard) infinite, fadeIn var(--motion-slow) ease 1.2s forwards;
     /* queda oculto hasta completar fadeIn */
     opacity: 0;
     z-index: 1;
@@ -415,7 +445,7 @@ body {
     }
 
     50% {
-        transform: translate(-50%, 8px);
+        transform: translate(-50%, 6px);
     }
 }
 
@@ -448,11 +478,13 @@ section:not(.hero-video) {
     border-radius: 12px;
     padding: 20px;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+        transform var(--motion-base) var(--ease-emphasized),
+        box-shadow var(--motion-base) ease;
 }
 
 .project-card:hover {
-    transform: translateY(-8px) scale(1.02);
+    transform: translateY(-6px) scale(1.008);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
 }
 

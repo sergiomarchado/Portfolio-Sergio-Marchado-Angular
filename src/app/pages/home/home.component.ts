@@ -1,6 +1,5 @@
 import { Component, AfterViewInit, OnDestroy, ElementRef, ViewChild, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import AOS from 'aos';
 
 import { AboutPreviewComponent } from '../../components/about-preview/about-preview.component';
 import { TechStackComponent } from '../../components/tech-stack/tech-stack.component';
@@ -40,7 +39,6 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.initHeroCarousel();   // configura autoplay robusto + primer vídeo
     this.restartTyping();      // mantiene tu efecto de tipeo
-    this.initAOS();
   }
 
   ngOnDestroy(): void {
@@ -77,7 +75,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
       const stopOld = () => { current.pause(); current.removeEventListener('transitionend', stopOld); };
       current.addEventListener('transitionend', stopOld);
       // por si el navegador no dispara transitionend (edge cases)
-      setTimeout(stopOld, 600);
+      setTimeout(stopOld, 850);
 
       this.index = newIndex;
 
@@ -162,9 +160,5 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
       target.classList.add('type-run');
       caret.classList.add('caret-run');
     });
-  }
-
-  private initAOS(): void {
-    AOS.init({ duration: 1000, easing: 'ease-in-out', once: true, delay: 100 });
   }
 }

@@ -1,4 +1,4 @@
-:root {
+:host {
     /* Paleta */
     --accent: #60a5fa;
     --accent2: #22d3ee;
@@ -286,9 +286,11 @@
     padding: 14px 16px;
     background: linear-gradient(180deg, var(--card1), var(--card2));
     box-shadow: inset 0 0 0 1px var(--ring), 0 16px 42px rgba(10, 20, 40, .35);
-    transition: transform .28s ease, box-shadow .35s ease, background .25s ease, filter .25s ease;
+    transition:
+        transform var(--motion-base) var(--ease-emphasized),
+        box-shadow var(--motion-base) ease,
+        background var(--motion-base) ease;
     overflow: hidden;
-    will-change: transform, box-shadow, filter;
 }
 
 /* Borde gradiente animado (border-pan) */
@@ -317,23 +319,21 @@
     opacity: .55;
     pointer-events: none;
     animation: borderPan var(--border-pan) linear infinite;
+    animation-play-state: paused;
 }
 
 /* === AURORA AMBIENTAL ======================= */
 @keyframes auroraDrift {
     0% {
         transform: translate3d(0, 0, 0) scale(1);
-        filter: blur(20px) saturate(115%);
     }
 
     50% {
         transform: translate3d(2%, -2%, 0) scale(1.02);
-        filter: blur(24px) saturate(125%);
     }
 
     100% {
         transform: translate3d(-2%, 3%, 0) scale(1);
-        filter: blur(20px) saturate(115%);
     }
 }
 
@@ -348,15 +348,15 @@
         radial-gradient(140% 140% at 85% 45%, rgba(147, 197, 253, .10), transparent 65%);
     mix-blend-mode: screen;
     opacity: .85;
+    filter: blur(20px) saturate(115%);
     pointer-events: none;
     animation: auroraDrift 18s ease-in-out infinite alternate;
-    will-change: transform, filter, opacity;
+    animation-play-state: paused;
 }
 
 .xp-card:hover .xp-content {
-    transform: translateY(-12px) scale(1.01) rotateX(4deg);
+    transform: translateY(-6px) scale(1.006) rotateX(1deg);
     box-shadow: 0 32px 64px rgba(60, 120, 255, .3);
-    filter: saturate(1.03);
 }
 
 .xp-card:hover .xp-content::after {
@@ -435,6 +435,13 @@
     color: var(--text);
     background: rgba(96, 165, 250, .07);
     margin: .75rem 0 1rem;
+}
+
+.xp-card:hover .xp-content::before,
+.xp-card:hover .xp-content::after,
+.xp-card:focus-within .xp-content::before,
+.xp-card:focus-within .xp-content::after {
+    animation-play-state: running;
 }
 
 .xp-summary strong,
@@ -620,75 +627,19 @@
     text-decoration: underline;
 }
 
-/* ========== REVEAL (aparición escalonada) ========== */
-.reveal-ready .xp-card {
+/* ========== REVEAL (aparición escalonada por tarjeta) ========== */
+.xp-timeline.reveal-ready .xp-card {
     opacity: 0;
-    transform: translateY(16px) scale(.985);
+    transform: translate3d(0, 18px, 0) scale(.992);
+    transition:
+        opacity var(--motion-reveal) ease,
+        transform var(--motion-reveal) var(--ease-emphasized);
+    transition-delay: var(--reveal-delay, 0ms);
 }
 
-.reveal-ready.in-view .xp-card {
-    animation: xpIn .6s cubic-bezier(.2, .8, .2, 1) both;
-}
-
-@keyframes xpIn {
-    from {
-        opacity: 0;
-        transform: translateY(18px) scale(.985);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* stagger hasta 12 elementos por si crece el timeline */
-.reveal-ready.in-view .xp-card:nth-child(1) {
-    animation-delay: .04s;
-}
-
-.reveal-ready.in-view .xp-card:nth-child(2) {
-    animation-delay: .08s;
-}
-
-.reveal-ready.in-view .xp-card:nth-child(3) {
-    animation-delay: .12s;
-}
-
-.reveal-ready.in-view .xp-card:nth-child(4) {
-    animation-delay: .16s;
-}
-
-.reveal-ready.in-view .xp-card:nth-child(5) {
-    animation-delay: .20s;
-}
-
-.reveal-ready.in-view .xp-card:nth-child(6) {
-    animation-delay: .24s;
-}
-
-.reveal-ready.in-view .xp-card:nth-child(7) {
-    animation-delay: .28s;
-}
-
-.reveal-ready.in-view .xp-card:nth-child(8) {
-    animation-delay: .32s;
-}
-
-.reveal-ready.in-view .xp-card:nth-child(9) {
-    animation-delay: .36s;
-}
-
-.reveal-ready.in-view .xp-card:nth-child(10) {
-    animation-delay: .40s;
-}
-
-.reveal-ready.in-view .xp-card:nth-child(11) {
-    animation-delay: .44s;
-}
-
-.reveal-ready.in-view .xp-card:nth-child(12) {
-    animation-delay: .48s;
+.xp-timeline.reveal-ready .xp-card.in-view {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
 }
 
 /* ========== RESPONSIVE ========== */
@@ -725,12 +676,6 @@
         padding: 14px;
     }
 
-    /* 🔧 Fallback móvil: mostrar siempre las cards si el IO no añade .in-view */
-    .xp-timeline.reveal-ready .xp-card {
-        opacity: 1;
-        transform: none;
-        animation: none;
-    }
 }
 
 /* ========== ACCESIBILIDAD: REDUCE MOTION ========== */

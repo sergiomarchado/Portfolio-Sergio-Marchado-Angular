@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, signal, Renderer2, DestroyRef } from '@angular/core';
+import { Component, AfterViewInit, signal, Renderer2, DestroyRef, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TechCategory, TechItem } from '../../interfaces/tech-stack.interface';
 import { TECH_STACK } from '../../data/tech-stack.data';
@@ -21,7 +21,11 @@ export class TechStackComponent implements AfterViewInit {
   /** IO para revelar tarjetas al entrar en viewport (animación de aparición) */
   private io?: IntersectionObserver;
 
-  constructor(private renderer: Renderer2, private destroyRef: DestroyRef) { }
+  constructor(
+    private renderer: Renderer2,
+    private destroyRef: DestroyRef,
+    private readonly hostRef: ElementRef<HTMLElement>
+  ) { }
 
   // ---------- Helpers de apertura ----------
   /** Construye un id estable para cada item (cat + índice) */
@@ -75,44 +79,65 @@ export class TechStackComponent implements AfterViewInit {
    *     • Limpieza: desuscribir listeners al destruir (DestroyRef).
    */
   ngAfterViewInit() {
-    const grid = document.querySelector<HTMLElement>('.stack-network');
+    const grid = this.hostRef.nativeElement.querySelector<HTMLElement>('.stack-network');
     if (!grid) return;
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>('.stack-node'));
 
-    // 2) Reveal básico (clases para keyframes + IO para re-activar al reentrar)
-    grid.classList.add('reveal-enabled', 'in-view');
+    grid.classList.add('reveal-enabled');
+    cards.forEach((card, index) => {
+      card.style.setProperty('--reveal-delay', `${Math.min(index, 5) * 55}ms`);
+    });
+
+    const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduce || !('IntersectionObserver' in window)) {
+      grid.classList.add('in-view');
+      cards.forEach(card => card.classList.add('in-view'));
+      return;
+    }
+
     this.io = new IntersectionObserver(
-      entries => entries.forEach(e => e.isIntersecting && grid.classList.add('in-view')),
-      { threshold: 0.15 }
+      entries => entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        grid.classList.add('in-view');
+        const card = entry.target as HTMLElement;
+        card.addEventListener('transitionend', () => card.style.setProperty('--reveal-delay', '0ms'), { once: true });
+        card.classList.add('in-view');
+        this.io?.unobserve(entry.target);
+      }),
+      { threshold: 0.01, rootMargin: '0px 0px -32px 0px' }
     );
-    this.io.observe(grid);
-
-    // Limpieza del IO al destruir (evita leaks)
+    cards.forEach(card => this.io?.observe(card));
     this.destroyRef.onDestroy(() => this.io?.disconnect());
 
-    // 3) Respeto a preferencias del usuario sobre animaciones
-    const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduce) return;
+    // El tilt se limita a un cálculo por frame para mantenerlo fluido.
+    cards.forEach(card => {
+      let frameId: number | null = null;
+      let latestEvent: MouseEvent | null = null;
 
-    // 4) Tilt 3D ligero en cada tarjeta (usa variables CSS consumidas en :hover/transform)
-    grid.querySelectorAll<HTMLElement>('.stack-node').forEach(card => {
-
-      // Al mover el ratón dentro de la card, calcular offset relativo [-0.5, 0.5] y mapear a grados
       const unlistenMove = this.renderer.listen(card, 'mousemove', (ev: MouseEvent) => {
-        const r = card.getBoundingClientRect();
-        const x = (ev.clientX - r.left) / r.width - 0.5;
-        const y = (ev.clientY - r.top) / r.height - 0.5;
-        card.style.setProperty('--rx', `${(-y * 6).toFixed(2)}deg`); // rotación X inversa al eje Y del puntero
-        card.style.setProperty('--ry', `${(x * 8).toFixed(2)}deg`);  // rotación Y proporcional al eje X del puntero
+        latestEvent = ev;
+        if (frameId !== null) return;
+        frameId = requestAnimationFrame(() => {
+          if (!latestEvent) return;
+          const rect = card.getBoundingClientRect();
+          const x = (latestEvent.clientX - rect.left) / rect.width - 0.5;
+          const y = (latestEvent.clientY - rect.top) / rect.height - 0.5;
+          card.style.setProperty('--rx', `${(-y * 3).toFixed(2)}deg`);
+          card.style.setProperty('--ry', `${(x * 4).toFixed(2)}deg`);
+          frameId = null;
+        });
       });
 
-      // Al salir, limpiar variables para volver al estado neutro
       const unlistenLeave = this.renderer.listen(card, 'mouseleave', () => {
+        if (frameId !== null) cancelAnimationFrame(frameId);
+        frameId = null;
+        latestEvent = null;
         card.style.removeProperty('--rx');
         card.style.removeProperty('--ry');
       });
 
-      // Limpieza de listeners al destruir (sin implementar OnDestroy explícito)
       this.destroyRef.onDestroy(() => {
+        if (frameId !== null) cancelAnimationFrame(frameId);
         unlistenMove();
         unlistenLeave();
       });

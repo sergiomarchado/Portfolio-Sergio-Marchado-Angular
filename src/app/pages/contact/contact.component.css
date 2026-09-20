@@ -1,4 +1,4 @@
-:root {
+:host {
     --accent: #69a2ff;
     --accent2: #22e6ff;
     --ring: rgba(255, 255, 255, .12);
@@ -26,17 +26,14 @@
 @keyframes auroraMesh {
     0% {
         transform: translate3d(-2%, -1%, 0) scale(1);
-        filter: blur(28px) saturate(115%);
     }
 
     50% {
         transform: translate3d(2%, 1%, 0) scale(1.03);
-        filter: blur(34px) saturate(125%);
     }
 
     100% {
         transform: translate3d(-1%, 2%, 0) scale(1);
-        filter: blur(28px) saturate(115%);
     }
 }
 
@@ -50,6 +47,7 @@
         radial-gradient(140% 140% at 85% 45%, color-mix(in oklab, #93c5fd 16%, transparent), transparent 70%);
     mix-blend-mode: screen;
     opacity: .75;
+    filter: blur(28px) saturate(115%);
     z-index: -2;
     animation: auroraMesh 18s ease-in-out infinite alternate;
 }
@@ -68,6 +66,19 @@
 .contact-hero {
     text-align: center;
     margin-bottom: 18px;
+    animation: contact-enter var(--motion-reveal) var(--ease-emphasized) 60ms backwards;
+}
+
+@keyframes contact-enter {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 16px, 0) scale(.994);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
 }
 
 .title {
@@ -129,6 +140,18 @@
     gap: 16px;
 }
 
+.contact-layout > * {
+    animation: contact-enter var(--motion-reveal) var(--ease-emphasized) backwards;
+}
+
+.contact-layout > :first-child {
+    animation-delay: 120ms;
+}
+
+.contact-layout > :last-child {
+    animation-delay: 190ms;
+}
+
 @media (max-width: 980px) {
     .contact-layout {
         grid-template-columns: 1fr;
@@ -171,6 +194,12 @@
     opacity: .28;
     pointer-events: none;
     animation: borderPan 12s linear infinite;
+    animation-play-state: paused;
+}
+
+.panel:hover::before,
+.panel:focus-within::before {
+    animation-play-state: running;
 }
 
 /* ===== GRIDS DE BOTONES ===== */
@@ -187,35 +216,7 @@
     padding: 16px 12px;
 }
 
-/* ===== BOTONES: “neón flotante” ===== */
-@keyframes neonPulse {
-    0% {
-        box-shadow: 0 10px 28px rgba(0, 0, 0, .28), 0 0 0 rgba(18, 225, 255, 0), 0 0 0 rgba(62, 160, 255, 0);
-    }
-
-    50% {
-        box-shadow: 0 14px 36px rgba(0, 0, 0, .30), 0 0 18px rgba(18, 225, 255, .35), 0 0 36px rgba(62, 160, 255, .25);
-    }
-
-    100% {
-        box-shadow: 0 10px 28px rgba(0, 0, 0, .28), 0 0 0 rgba(18, 225, 255, 0), 0 0 0 rgba(62, 160, 255, 0);
-    }
-}
-
-@keyframes floatY {
-    0% {
-        transform: translateY(-4px) translateZ(0) rotateX(0deg) scale(1.01);
-    }
-
-    50% {
-        transform: translateY(-8px) translateZ(0) rotateX(2deg) scale(1.015);
-    }
-
-    100% {
-        transform: translateY(-4px) translateZ(0) rotateX(0deg) scale(1.01);
-    }
-}
-
+/* ===== BOTONES: neón ligero y estable ===== */
 @keyframes borderPanFast {
     0% {
         background-position: 0% 50%
@@ -240,8 +241,11 @@
     color: var(--text);
     background: linear-gradient(180deg, rgba(255, 255, 255, .10), rgba(255, 255, 255, .04));
     box-shadow: 0 10px 28px rgba(0, 0, 0, .28);
-    transition: filter .25s ease, border-color .2s ease, background .2s ease, transform .18s ease;
-    will-change: transform, box-shadow, filter;
+    transition:
+        transform var(--motion-fast) var(--ease-spring),
+        border-color var(--motion-fast) ease,
+        background var(--motion-base) ease,
+        box-shadow var(--motion-base) ease;
     transform-style: preserve-3d;
 }
 
@@ -290,16 +294,14 @@
 @media (hover:hover) {
     .btn:hover {
         border-color: color-mix(in oklab, var(--accent) 45%, transparent);
-        filter: saturate(1.06);
-        /* arranque del estado elevado; el “bamboleo” lo hace floatY */
-        transform: translateY(-4px) scale(1.01);
-        animation: neonPulse 1.8s ease-in-out infinite, floatY 2.4s ease-in-out infinite;
+        transform: translateY(-4px) scale(1.006);
+        box-shadow: 0 16px 38px rgba(0, 0, 0, .32), 0 0 24px rgba(18, 225, 255, .24);
     }
 
     .btn:hover::before {
         opacity: .95;
         transform: scale(1.04);
-        filter: blur(2px);
+        filter: blur(1px);
     }
 
     .btn:hover::after {

@@ -1,4 +1,4 @@
-:root {
+:host {
     /* Paleta base (las tuyas) */
     --page-bg: #051227;
     --card-bg1: #0a1b37;
@@ -59,6 +59,11 @@
     background-image: radial-gradient(circle at 50% 50%, rgba(105, 162, 255, .14) 1px, transparent 1px);
     background-size: 44px 44px;
     animation: gridMove 26s linear infinite;
+    animation-play-state: paused;
+}
+
+.stack-network.in-view {
+    animation-play-state: running;
 }
 
 @keyframes gridMove {
@@ -81,9 +86,11 @@
     padding: 18px 18px 14px;
     background: linear-gradient(180deg, var(--card-bg1), var(--card-bg2));
     box-shadow: 0 18px 42px rgba(5, 18, 39, .55);
-    transition: transform .28s ease, box-shadow .35s ease, opacity .6s ease, filter .35s ease;
+    transition:
+        transform var(--motion-base) var(--ease-emphasized),
+        box-shadow var(--motion-base) ease,
+        opacity var(--motion-reveal) ease;
     transform-style: preserve-3d;
-    will-change: transform, box-shadow, filter;
     /* preparado para tilt por variables (se actualizan desde TS) */
     transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
 }
@@ -115,6 +122,7 @@
     pointer-events: none;
     transition: opacity .35s ease;
     animation: borderPan 9s linear infinite;
+    animation-play-state: paused;
 }
 
 /* Halo exterior suave */
@@ -134,16 +142,16 @@
 /* Hover: levanta + acentúa neón */
 @media (hover:hover) {
     .stack-node:hover {
-        transform: translateY(-8px) scale(1.02) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+        transform: translateY(-6px) scale(1.008) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
         box-shadow:
             0 28px 60px rgba(60, 120, 255, .35),
             0 0 0 1px color-mix(in oklab, var(--neon-blue) 40%, transparent),
             0 0 54px var(--halo-soft);
-        filter: saturate(1.02);
     }
 
     .stack-node:hover::before {
         opacity: .95;
+        animation-play-state: running;
     }
 
     .stack-node:hover::after {
@@ -232,7 +240,6 @@
     overflow: hidden;
     box-shadow: inset 0 0 0 1px var(--ring);
     transition: transform .18s ease;
-    will-change: transform;
 }
 
 .icon-wrap img,
@@ -274,12 +281,14 @@
     pointer-events: none;
     transform-origin: 50% 50%;
     animation: spin var(--spin-slow) linear infinite;
+    animation-play-state: paused;
     box-shadow: 0 0 14px color-mix(in oklab, var(--neon-cyan) 28%, transparent);
 }
 
 .node-item:hover .icon-wrap::after,
 .node-item.open .icon-wrap::after {
     animation-duration: var(--spin-fast);
+    animation-play-state: running;
     opacity: 1;
 }
 
@@ -362,50 +371,22 @@
     box-shadow: 0 0 0 3px rgba(105, 162, 255, .35);
 }
 
-/* REVEAL con ligero 3D */
+/* REVEAL progresivo por tarjeta */
 .reveal-enabled .stack-node {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(.992) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-enabled .stack-node.in-view {
     opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
 }
 
-.reveal-enabled.in-view .stack-node {
-    animation: cardIn .6s cubic-bezier(.2, .8, .2, 1) both;
-}
-
-@keyframes cardIn {
-    from {
-        opacity: 0;
-        transform: translateY(18px) scale(.985) rotateX(var(--rx, 0)) rotateY(var(--ry, 0));
+@media (hover:hover) {
+    .reveal-enabled .stack-node.in-view:hover {
+        transform: translateY(-6px) scale(1.008) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
     }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1) rotateX(var(--rx, 0)) rotateY(var(--ry, 0));
-    }
-}
-
-/* Delays escalonados */
-.reveal-enabled.in-view .stack-node:nth-child(1) {
-    animation-delay: .02s;
-}
-
-.reveal-enabled.in-view .stack-node:nth-child(2) {
-    animation-delay: .06s;
-}
-
-.reveal-enabled.in-view .stack-node:nth-child(3) {
-    animation-delay: .10s;
-}
-
-.reveal-enabled.in-view .stack-node:nth-child(4) {
-    animation-delay: .14s;
-}
-
-.reveal-enabled.in-view .stack-node:nth-child(5) {
-    animation-delay: .18s;
-}
-
-.reveal-enabled.in-view .stack-node:nth-child(6) {
-    animation-delay: .22s;
 }
 
 /* Responsive */

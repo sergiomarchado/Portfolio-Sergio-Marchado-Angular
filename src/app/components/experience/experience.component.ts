@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EXPERIENCE } from '../../data/experience.data';
 import { Experience } from '../../interfaces/experience.interface';
@@ -22,32 +22,41 @@ export class ExperienceComponent implements AfterViewInit, OnDestroy {
   /** IntersectionObserver para disparar la animación "reveal" al entrar en viewport. */
   private io?: IntersectionObserver;
 
+  constructor(private readonly hostRef: ElementRef<HTMLElement>) { }
+
   /** Datos base para componer enlaces de contacto (mailto / Gmail / Outlook Web). */
   email = 'sergio@email.com';
   subject = 'Contacto desde portfolio';
   body = 'Hola Sergio, ';
 
-  /**
-   * Hook de ciclo de vida: el DOM ya existe.
-   * Paso a paso:
-   *  1) Localiza el contenedor del timeline (.xp-timeline). Si no existe, sal.
-   *  2) Añade la clase "reveal-ready" para estados iniciales en CSS.
-   *  3) Crea un IntersectionObserver:
-   *     - Cuando el timeline interseca (≥ 20%), añade la clase "in-view" para lanzar la animación.
-   *  4) Empieza a observar el elemento y guarda la instancia para limpiar luego.
-   *
-   * Nota: se consulta el documento global con querySelector por simplicidad.
-   * En apps complejas, podrías usar @ViewChild o ElementRef para acotar el scope.
-   */
+  /** Revela cada tarjeta al entrar en viewport y deja de observarla después. */
   ngAfterViewInit(): void {
-    const el = document.querySelector<HTMLElement>('.xp-timeline');
-    if (!el) return;
-    el.classList.add('reveal-ready');
+    const timeline = this.hostRef.nativeElement.querySelector<HTMLElement>('.xp-timeline');
+    const cards = Array.from(this.hostRef.nativeElement.querySelectorAll<HTMLElement>('.xp-card'));
+    if (!timeline || cards.length === 0) return;
+
+    timeline.classList.add('reveal-ready');
+    cards.forEach((card, index) => {
+      card.style.setProperty('--reveal-delay', `${Math.min(index, 5) * 55}ms`);
+    });
+
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      cards.forEach(card => card.classList.add('in-view'));
+      return;
+    }
+
     this.io = new IntersectionObserver(
-      entries => entries.forEach(e => e.isIntersecting && el.classList.add('in-view')),
-      { threshold: 0.2 } // Empieza a animar cuando ~20% del timeline es visible
+      entries => entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const card = entry.target as HTMLElement;
+        card.addEventListener('transitionend', () => card.style.setProperty('--reveal-delay', '0ms'), { once: true });
+        card.classList.add('in-view');
+        this.io?.unobserve(entry.target);
+      }),
+      { threshold: 0.01, rootMargin: '0px 0px -32px 0px' }
     );
-    this.io.observe(el);
+
+    cards.forEach(card => this.io?.observe(card));
   }
 
   /** Limpia el observer para evitar fugas de memoria cuando el componente se destruye. */

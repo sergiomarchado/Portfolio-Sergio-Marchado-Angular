@@ -47,11 +47,13 @@
     border: 6px solid #3b82f6;
     /* aro azul */
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-    transition: transform .35s ease, box-shadow .35s ease;
+    transition:
+        transform var(--motion-base) var(--ease-emphasized),
+        box-shadow var(--motion-base) ease;
 }
 
 .about-photo img:hover {
-    transform: scale(1.02);
+    transform: translateY(-4px) scale(1.012);
     /* Efecto zoom leve */
     box-shadow: 0 28px 90px rgba(0, 0, 0, 0.45);
 }
@@ -92,7 +94,7 @@
     background: linear-gradient(180deg, #3b82f6, rgba(59, 130, 246, 0.0));
     opacity: .8;
     transform: translateY(-6px);
-    animation: railFade 2.4s ease-in-out infinite alternate;
+    animation: railFade 3.6s var(--ease-standard) infinite alternate;
     border-radius: 2px;
 }
 

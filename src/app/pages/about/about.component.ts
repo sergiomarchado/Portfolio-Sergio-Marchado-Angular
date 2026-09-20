@@ -1,9 +1,10 @@
 import { Component, AfterViewInit, ElementRef, Renderer2, DestroyRef } from '@angular/core';
 import { RouterModule } from '@angular/router'; // 👈
+import { RevealOnScrollDirective } from '../../directives/reveal-on-scroll.directive';
 @Component({
   selector: 'app-about',
   standalone: true,                 // 👈
-  imports: [RouterModule],          // 👈 habilita routerLink en tu template
+  imports: [RouterModule, RevealOnScrollDirective], // 👈 habilita routerLink y reveal nativo
   templateUrl: './about.component.html',
   styleUrl: './about.component.css'
 })

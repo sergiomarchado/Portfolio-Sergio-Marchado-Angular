@@ -5,7 +5,7 @@ import { HomeComponent } from './home.component';
  * Pruebas unitarias básicas del HomeComponent.
  * - Verifica la creación del componente.
  * - Comprueba la presencia de elementos clave en el template:
- *   • Vídeo de héroe (#bgVideo)
+ *   • Vídeos de héroe con doble buffer
  *   • Secciones/child components: about preview, tech stack, projects gallery
  *
  * Nota: Son pruebas de “smoke test” (existencia en el DOM renderizado).
@@ -37,10 +37,9 @@ describe('HomeComponent', () => {
   });
 
   it('should render hero video element', () => {
-    // Busca el <video id="bgVideo"> del héroe.
-    const video: HTMLVideoElement | null =
-      fixture.nativeElement.querySelector('#bgVideo');
-    expect(video).not.toBeNull();
+    const videos: NodeListOf<HTMLVideoElement> =
+      fixture.nativeElement.querySelectorAll('.bg-video');
+    expect(videos.length).toBe(2);
   });
 
   it('should render About preview component', () => {

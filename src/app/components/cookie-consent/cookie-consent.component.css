@@ -1,4 +1,4 @@
-:root {
+:host {
     /* Tokens de color/estética reutilizados en el banner y el modal */
     --accent: #69a2ff;
     --accent2: #22e6ff;
@@ -33,6 +33,19 @@
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 18px 40px rgba(0, 0, 0, .35);
+    animation: cookie-banner-in var(--motion-slow) var(--ease-emphasized) both;
+}
+
+@keyframes cookie-banner-in {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 18px, 0) scale(.99);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
 }
 
 .cb-text {
@@ -72,7 +85,10 @@
     font-weight: 800;
     border: 1px solid transparent;
     cursor: pointer;
-    transition: transform .15s ease, box-shadow .25s ease, border-color .2s ease;
+    transition:
+        transform var(--motion-fast) var(--ease-spring),
+        box-shadow var(--motion-base) ease,
+        border-color var(--motion-fast) ease;
 }
 
 .btn:hover {
@@ -115,6 +131,12 @@
     place-items: center;
     /* margen interno en pantallas pequeñas */
     padding: 16px;
+    animation: cookie-backdrop-in var(--motion-base) ease both;
+}
+
+@keyframes cookie-backdrop-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .cookie-modal-content {
@@ -138,6 +160,19 @@
     color: var(--text);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    animation: cookie-dialog-in var(--motion-slow) var(--ease-emphasized) 40ms backwards;
+}
+
+@keyframes cookie-dialog-in {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 14px, 0) scale(.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+    }
 }
 
 .cm-header {
@@ -164,6 +199,12 @@
     height: 32px;
     cursor: pointer;
     border: 1px solid var(--ring);
+    transition: transform var(--motion-fast) var(--ease-spring), background var(--motion-fast) ease;
+}
+
+.cm-close:hover {
+    background: rgba(255, 255, 255, .14);
+    transform: rotate(8deg) scale(1.06);
 }
 
 .cm-intro {
@@ -221,7 +262,7 @@
     border-radius: 999px;
     background: rgba(255, 0, 0, 0.15);
     border: 2px solid var(--ring);
-    transition: background .2s ease, box-shadow .2s ease;
+    transition: background var(--motion-base) ease, box-shadow var(--motion-base) ease;
 }
 
 .slider::before {
@@ -234,7 +275,7 @@
     height: 22px;
     border-radius: 50%;
     background: #fff;
-    transition: transform .2s ease;
+    transition: transform var(--motion-base) var(--ease-spring);
 }
 
 /* ✅ Estado activado: cambia la pista y desplaza el thumb */

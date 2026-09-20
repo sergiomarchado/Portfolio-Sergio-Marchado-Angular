@@ -1,4 +1,4 @@
-:root {
+:host {
     /* Tokens base del footer: colores y transparencias reutilizables */
     --ring: rgba(255, 255, 255, .10);
     /* “ring” tenue para bordes/contornos sutiles */
@@ -156,7 +156,9 @@
     text-decoration: none;
     font-weight: 600;
     opacity: .9;
-    transition: opacity .2s ease, transform .2s ease;
+    transition:
+        opacity var(--motion-fast) ease,
+        transform var(--motion-fast) var(--ease-emphasized);
 }
 
 .footer-nav a:hover,
